@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://kit.fontawesome.com/eb84466c3b.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    <link rel="stylesheet" href="bulmacss.css" />
+    <title>Document</title>
+</head>
+
+<body>
+    <!--Navigation bar-->
+    <nav class="navbar is-primary is-spaced" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item">
+                <h1 class="title is-size-2-desktop is-size-2 has-text-white">
+                    <i class="fas fa-wallet mr-2" aria-hidden="true"></i>
+                    AhorrADAS
+                </h1>
+            </a>
+
+            <!--Navegation section-->
+            <div class="navbar-burger burger mt-2">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </div>
+        </div>
+
+        <div class="navbar-end">
+            <div class="navbar-end">
+                <a class="navbar-item" href="">
+                    <span class="icon-text">
+                        <span class="icon">
+                            <i class="fas fa-chart-line"></i>
+                        </span>
+                        <span>Balance</span>
+                    </span>
+                </a>
+
+                <a class="navbar-item" href="">
+                    <span class="icon-text">
+                        <span class="icon">
+                            <i class="fas fa-tag"></i>
+                        </span>
+                        <span>Categoria</span>
+                    </span>
+                </a>
+
+                <a class="navbar-item" href="#reportes">
+                    <span class="icon-text">
+                        <span class="icon">
+                            <i class="fas fa-chart-pie"></i>
+                        </span>
+                        <span>Reporte</span>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="section">
+        <div class="columns">
+            <!--Tamaño de las columnas y su posicion -->
+            <div class="column is-offset-1 is-3">
+                <article class="box">
+                    <h3 class="title is-3 has-text-weight-bold">
+                        Balance
+                    </h3>
+
+                    <div class="columns is-mobile is-vcentered">
+                        <div class="column is-size-5">
+                            Ganancias
+                        </div>
+                        <div class="column has-text-right has-text-success">
+                            +$0
+                        </div>
+                    </div>
+
+                    <div class="columns is-mobile is-vcentered">
+                        <div class="column is-size-5">
+                            Gastos
+                        </div>
+                        <div class="column has-text-right has-text-danger">
+                            -$0
+                        </div>
+                    </div>
+
+                    <div class="columns is-mobile is-vcentered">
+                        <div class="column is-size-4">
+                            Total
+                        </div>
+                        <div class="column has-text-weight-bold has-text-right">
+                            $0
+                        </div>
+                    </div>
+                </article>
+
+                <!-- BOX FILTROS-->
+                <article class="box">
+                    <div class="columns is-mobile is-vcentered">
+                        <div class="column is-size-5">
+                            <h3 class="title is-3">Filtros</h3>
+                        </div>
+
+                        <div class="columns pr-4 pt-2">
+                            <a>
+                                Ocultar filtros
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">
+                            Tipo
+                        </label>
+                        <div class="control">
+                            <div class="select is-fullwidth">
+                                <select>
+                                    <option>Todos</option>
+                                    <option>Gastos</option>
+                                    <option>Ganancias</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">
+                            Categoria
+                        </label>
+                        <div class="control ">
+                            <div class="select is-fullwidth">
+                                <select>
+                                    <option>Todas</option>
+                                    <option>Comidas</option>
+                                    <option>Servicio</option>
+                                    <option>Salidas</option>
+                                    <option>Educación</option>
+                                    <option>Trasporte</option>
+                                    <option>Trabajo</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label" for="date">
+                            Date
+                        </label>
+                        <div class="control">
+                            <input class="input" id="date" type="date">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">
+                            Ordenar por
+                        </label>
+                        <div class="control ">
+                            <div class="select is-fullwidth">
+                                <select>
+                                    <option>Mas reciente</option>
+                                    <option>Menos reciente</option>
+                                    <option>Mayor monto</option>
+                                    <option>Menos monto</option>
+                                    <option>A/Z</option>
+                                    <option>Z/A</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                </article>
+
+            </div>
+
+            <!--BOX OPERACIONES -->
+            <section class="column is-7-widescreen is-8-desktop">
+
+                <article class="box">
+                    <div class="columns is-mobile is-vcentered">
+                        <div class="column is-size-3">
+                            <h4 class="title is-4">
+                                Operaciones
+                            </h4>
+                        </div>
+                        <div class="columns pr-5">
+                            <button class="button is-primary">
+                                +Nueva Operacion
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="columns">
+                        <div class="column is-offset-3 is-6">
+                            <div class="image">
+                                <img src="image/undraw_wallet_aym5.svg">
+                            </div>
+                            <div class="column mt-6">
+                                <h4 class="has-text-centered title is-4 has-text-weight-bold">
+                                    Sin resultados
+                                </h4>
+                            </div>
+                            <div class="column mt-1">
+                                <span class="has-text-centered">
+                                    Cambia los filtros o agrega operaciones
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+            </section>
+
+    </section>
+    <!--REPORTES-->
+    <section id="reportes" class="column is-offset-3 is-7-widescreen is-8-desktop">
+        <div class="columns">
+
+            <div class="box">
+                <div class="column is-size-3">
+                    <h4 class="title is-4">
+                        Reportes
+                    </h4>
+                </div>
+                <div class="column is-offset-3 is-6">
+                    <div class="image">
+                        <img src="image/undraw_Charts_re_5qe9.svg">
+                    </div>
+                    <div class="column mt-6">
+                        <h4 class="has-text-centered title is-4 has-text-weight-bold">
+                            Operaciones Insuficientes
+                        </h4>
+                    </div>
+                    <div class="column mt-1">
+                        <span class="has-text-centered">
+                            Prueba agregando mas operaciones
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CATEGORIAS-->
+<section id="categorias" class="column is-offset-3 is-7-widescreen is-8-desktop">
+        <div class="columns">
+
+            <div class="box">
+                <div class="column is-size-3">
+                    <h4 class="title is-4">
+                        Categoria
+                    </h4>
+                </div>
+           
+                <h4>Nombre</h4>
+                <div class="field is-grouped is-fullwidth">
+                   
+                        <p class="control is-expanded is-full-widescreen">    
+                      <input class="input" type="text" >
+                    </p>
+                    <p class="control">
+                      <a class="button is-info">
+                        Agregar
+                      </a>
+                    </p>
+                  </div>
+                  
+            </div>
+        </div>
+    </section>
+
+    <script src="bulmajs.js"></script>
+
+</body>
+
+</html>
