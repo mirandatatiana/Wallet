@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 
-    <link rel="stylesheet" href="bulmacss.css" />
+    <link rel="stylesheet" href="app.css" />
     <title>Document</title>
 </head>
 
@@ -34,16 +34,16 @@
 
         <div class="navbar-end">
             <div class="navbar-end">
-                <a class="navbar-item" href="">
+                <a class="navbar-item pagina-principal-boton" href="#pagina-principal">
                     <span class="icon-text">
                         <span class="icon">
                             <i class="fas fa-chart-line"></i>
                         </span>
-                        <span>Balances</span>
+                        <span>Balance</span>
                     </span>
                 </a>
 
-                <a class="navbar-item" href="">
+                <a class="navbar-item boton-categorias" href="#categorias">
                     <span class="icon-text">
                         <span class="icon">
                             <i class="fas fa-tag"></i>
@@ -64,9 +64,9 @@
         </div>
     </nav>
 
-    <section class="section">
+    <section class="section" id="pagina-principal">
         <div class="columns">
-            <!--Tamaño de las columnas y su posicion -->
+            <!--Balance -->
             <div class="column is-offset-1 is-3">
                 <article class="box">
                     <h3 class="title is-3 has-text-weight-bold">
@@ -115,7 +115,7 @@
                         </div>
                     </div>
 
-                    <div class="field">
+                    <div class="field" id="filtros">
                         <label class="label">
                             Tipo
                         </label>
@@ -181,7 +181,7 @@
             </div>
 
             <!--BOX OPERACIONES -->
-            <section class="column is-7-widescreen is-8-desktop">
+            <section id="operaciones" class="column is-7-widescreen is-8-desktop">
 
                 <article class="box">
                     <div class="columns is-mobile is-vcentered">
@@ -191,7 +191,7 @@
                             </h4>
                         </div>
                         <div class="columns pr-5">
-                            <button class="button is-primary">
+                            <button id="buton-nuevas-opraciones" class="button is-primary">
                                 +Nueva Operacion
                             </button>
                         </div>
@@ -262,7 +262,7 @@
                 
                 <div class="field is-fullwidth">
                    <label class="label">Nombre</label>
-                        <p class="control   ">    
+                        <p class="control">    
                       <input class="input" type="text" >
                     </p>
                     <p class="control">
@@ -276,7 +276,7 @@
         
     </section>
     <!-- Al tocar el boton de operaciones -->
-    <section class="column is-offset-3 is-7-widescreen is-8-desktop">
+    <section id="buton-nuevas-opraciones" class="column is-offset-3 is-7-widescreen is-8-desktop nuevas-operaciones">
 
         <article class="box">
             <div class="columns is-mobile is-vcentered">
@@ -364,7 +364,7 @@
     </section>
 
      
-    <script src="bulmajs.js"></script>
+    <script src="javascript.js"></script>
 
 </body>
 
