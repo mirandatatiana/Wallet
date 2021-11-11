@@ -1,28 +1,39 @@
-const navBalance = document.querySelector(".pagina-principal-boton")
-const navCategorias = document.querySelector(".boton-categorias")
-const navReportes = document.querySelector("#reportes")
-const navNuevasOperaciones = document.querySelector(".nuevas-operaciones")
+const navBalanceboton = document.querySelector(".pagina-principal-boton")
+const navCategoriasboton = document.querySelector(".boton-categorias")
+const navReportesboton = document.querySelector(".boton-reportes")
+const navNuevasOperacionesboton = document.querySelector("#boton-nuevas-operaciones")
+const balancesection = document.querySelector("#pagina-principal")
+const categoriasection = document.querySelector("#categorias")
+const reportessection = document.querySelector("#reportes")
+const nuevasoperacionessection = document.querySelector("#nuevas-operaciones")
 
-navBalance.onclick = () => {
-    navCategorias.style.display = "none";
-    navReportes.style.display = "none";
-    navNuevasOperaciones.style.display = "none";
+
+
+navBalanceboton.onclick = () => {
+    categoriasection.style.display = "none";
+    reportessection.style.display = "none";
+    nuevasoperacionessection.style.display = "none";
+    balancesection.style.display = "block";
 
 }
 
-navCategorias.onclick = () => {
-    navReportes.style.display = "none";
-    navNuevasOperaciones.style.display = "none";
-    navBalance.style.display = "none";
+navCategoriasboton.onclick = () => {
+    balancesection.style.display = "none";
+    nuevasoperacionessection.style.display = "none";
+    balancesection.style.display = "none";
+    categoriasection.style.display = "block";
 }
 
-navReportes.onclick = () => {
-    navNuevasOperaciones.style.display = "none";
-    navBalance.style.display = "none";
-    navCategorias.style.display = "none";
+navReportesboton.onclick = () => {
+    nuevasoperacionessection.style.display = "none";
+    balancesection.style.display = "none";
+    categoriasection.style.display = "none";
+    reportessection.style.display = "block";
+
 }
-navNuevasOperaciones.onclick = () => {
-    navBalance.style.display = "none";
-    navCategorias.style.display = "none";
-    navReportes.style.display = "none";
+navNuevasOperacionesboton.onclick = () => {
+    balancesection.style.display = "none";
+    categoriasection.style.display = "none";
+    reportessection.style.display = "none";
+    nuevasoperacionessection.style.display = "block";
 }
