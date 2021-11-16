@@ -34,7 +34,9 @@ const gananciaBalance = document.getElementById("ganancia-balance");
 const totalBalance = document.getElementById("total-balance");
 
 //funcion para cambio de numeros en estados de ganacia, gasto y total.
-
+const actualizacionDatosDeBalance = () =>{
+    
+}
 
 
 navBalanceboton.onclick = () => {
