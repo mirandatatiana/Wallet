@@ -8,8 +8,7 @@
     <script src="https://kit.fontawesome.com/eb84466c3b.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-
-    <link rel="stylesheet" href="bulmacss.css" />
+    <link rel="stylesheet" href="app.css" />
     <title>Document</title>
 </head>
 
@@ -34,7 +33,7 @@
 
         <div class="navbar-end">
             <div class="navbar-end">
-                <a class="navbar-item" href="">
+                <a class="navbar-item pagina-principal-boton" href="#pagina-principal">
                     <span class="icon-text">
                         <span class="icon">
                             <i class="fas fa-chart-line"></i>
@@ -43,7 +42,7 @@
                     </span>
                 </a>
 
-                <a class="navbar-item" href="">
+                <a class="navbar-item boton-categorias" href="#categorias">
                     <span class="icon-text">
                         <span class="icon">
                             <i class="fas fa-tag"></i>
@@ -52,7 +51,7 @@
                     </span>
                 </a>
 
-                <a class="navbar-item" href="#reportes">
+                <a class="navbar-item boton-reportes" href="#reportes">
                     <span class="icon-text">
                         <span class="icon">
                             <i class="fas fa-chart-pie"></i>
@@ -64,9 +63,9 @@
         </div>
     </nav>
 
-    <section class="section">
+    <section class="section" id="pagina-principal">
         <div class="columns">
-            <!--Tamaño de las columnas y su posicion -->
+            <!--Balance -->
             <div class="column is-offset-1 is-3">
                 <article class="box">
                     <h3 class="title is-3 has-text-weight-bold">
@@ -77,7 +76,7 @@
                         <div class="column is-size-5">
                             Ganancias
                         </div>
-                        <div class="column has-text-right has-text-success">
+                        <div class="column has-text-right has-text-success" id="ganacia-balance">
                             +$0
                         </div>
                     </div>
@@ -86,7 +85,7 @@
                         <div class="column is-size-5">
                             Gastos
                         </div>
-                        <div class="column has-text-right has-text-danger">
+                        <div class="column has-text-right has-text-danger" id="gasto-balance">
                             -$0
                         </div>
                     </div>
@@ -95,7 +94,7 @@
                         <div class="column is-size-4">
                             Total
                         </div>
-                        <div class="column has-text-weight-bold has-text-right">
+                        <div class="column has-text-weight-bold has-text-right" id="total-balance">
                             $0
                         </div>
                     </div>
@@ -115,7 +114,7 @@
                         </div>
                     </div>
 
-                    <div class="field">
+                    <div class="field" id="filtros">
                         <label class="label">
                             Tipo
                         </label>
@@ -175,14 +174,11 @@
                             </div>
                         </div>
                     </div>
-
                 </article>
-
             </div>
 
             <!--BOX OPERACIONES -->
-            <section class="column is-7-widescreen is-8-desktop">
-
+            <section id="operaciones" class="column is-7-widescreen is-8-desktop">
                 <article class="box">
                     <div class="columns is-mobile is-vcentered">
                         <div class="column is-size-3">
@@ -191,7 +187,7 @@
                             </h4>
                         </div>
                         <div class="columns pr-5">
-                            <button class="button is-primary">
+                            <button id="boton-nuevas-operaciones" class="button is-primary">
                                 +Nueva Operacion
                             </button>
                         </div>
@@ -215,14 +211,12 @@
                         </div>
                     </div>
                 </article>
-
             </section>
-
     </section>
+
     <!--REPORTES-->
     <section id="reportes" class="column is-offset-3 is-7-widescreen is-8-desktop">
         <div class="columns">
-
             <div class="box">
                 <div class="column is-size-3">
                     <h4 class="title is-4">
@@ -249,122 +243,104 @@
     </section>
 
     <!-- CATEGORIAS-->
- <section id="categorias" class="column is-offset-3 is-7-widescreen is-8-desktop">
-            <div class="box">
-                <div class="columns is-mobile is-vcentered">
-                    <div class="column is-size-3">
-                        <h4 class="title is-4">
-                          Categorias
-                        </h4>
-                    </div>  
+    <section id="categorias" class="section column is-offset-3 is-7-widescreen is-8-desktop">
+        <div class="box">
+            <div class="columns is-mobile is-vcentered">
+                <div class="column is-size-3">
+                    <h4 class="title is-4">
+                        Categorias
+                    </h4>
                 </div>
-           
-                
-                <div class="field is-fullwidth">
-                   <label class="label">Nombre</label>
-                        <p class="control   ">    
-                      <input class="input" type="text" >
-                    </p>
-                    <p class="control">
-                      <a class="button is-info">
-                        Agregar
-                      </a>
-                    </p>
-                  </div>
-                  
             </div>
-        
-    </section>
-    <!-- Al tocar el boton de operaciones -->
-    <section class="column is-offset-3 is-7-widescreen is-8-desktop">
 
+            <div class="field is-fullwidth">
+                <label class="label">Nombre</label>
+                <p class="control">
+                    <input class="input" type="text">
+                </p>
+                <p class="control">
+                    <a class="button is-info">
+                        Agregar
+                    </a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Al tocar el boton de operaciones -->
+    <section id="nuevas-operaciones" class="column is-offset-3 is-7-widescreen is-8-desktop nuevas-operaciones">
         <article class="box">
             <div class="columns is-mobile is-vcentered">
                 <div class="column is-size-3">
                     <h4 class="title is-4">
                         Nueva Operacion
                     </h4>
-                </div>  
+                </div>
             </div>
 
-            
-                
-                    <div class="field is-fullwidth">
-                    <label class="label">
-                        Descripcion
-                    </label>
-                        <div class="control is-expanded is-full-widescreen">    
-                      <input class="input" type="text" >
-                    </div>
-                   
-                    </div>      
-            
-           
-                    <div class="field is-fullwidth">
-                    <label class="label">Monto</label>
-                        <div class="control is-expanded is-full-widescreen">    
-                      <input class="input" type="number" >
-                        </div>                  
-                    </div>      
-           
-            
-                    <div class="field is-fullwidth">
-                     <label class="label">
-                            Tipo
-                        </label>
-                        
-                        <div class="control is-expanded is-full-widescreen">    
-                
-                        
-                        <div class="control">
-                            <div class="select is-fullwidth">
-                                <select>
-                                
-                                    <option>Gastos</option>
-                                    <option>Ganancias</option>
-                                </select>
-                            </div>
+            <div class="field is-fullwidth">
+                <label class="label">
+                    Descripcion
+                </label>
+                <div class="control is-expanded is-full-widescreen">
+                    <input class="input" type="text" id="descripcion-operacion">
+                </div>
+            </div>
+
+            <div class="field is-fullwidth">
+                <label class="label">Monto</label>
+                <div class="control is-expanded is-full-widescreen">
+                    <input class="input" type="number" id="monto-operacion">
+                </div>
+            </div>
+
+            <div class="field is-fullwidth">
+                <label class="label">
+                    Tipo
+                </label>
+
+                <div class="control is-expanded is-full-widescreen">
+                    <div class="control">
+                        <div class="select is-fullwidth">
+                            <select id="tipo-de-operacion">
+                                <option value="gasto">Gastos</option>
+                                <option value="ganacia">Ganancias</option>
+                            </select>
                         </div>
-                    
                     </div>
-                  
-                    </div>      
-            
-            
-                    <div class="field  is-fullwidth">
-                    <label class="label">Categoria</label>
-                        <div class="control is-expanded is-full-widescreen">    
-                                    <div class="select is-fullwidth">
-                                        <select>
-                                            <option>Todas</option>
-                                            <option>Comidas</option>
-                                            <option>Servicio</option>
-                                            <option>Salidas</option>
-                                            <option>Educación</option>
-                                            <option>Trasporte</option>
-                                            <option>Trabajo</option>
-                                        </select>
-                                    </div>    
+                </div>
+            </div>
+
+            <div class="field  is-fullwidth">
+                <label class="label">Categoria</label>
+                <div class="control is-expanded is-full-widescreen">
+                    <div class="select is-fullwidth">
+                        <select id="categoria-de-operacion">
+                            <option>Todas</option>
+                            <option>Comidas</option>
+                            <option>Servicio</option>
+                            <option>Salidas</option>
+                            <option>Educación</option>
+                            <option>Trasporte</option>
+                            <option>Trabajo</option>
+                        </select>
                     </div>
-                   
-                </div>      
-           
-            
-                    <div class="field  is-fullwidth">
-                       
-                      <label class="label" for="date">Fecha</label>
-                       <div class="control is-expanded is-full-widescreen">
-                        <input class="input" id="date" type="date" >
-                    </div>
-                   
-                    </div>      
-            
+                </div>
+            </div>
+
+            <div class="field  is-fullwidth">
+                <label class="label" for="date">Fecha</label>
+                <div class="control is-expanded is-full-widescreen">
+                    <input class="input" id="date-operacion" type="date">
+                </div>
+            </div>
+
         </article>
-      
+
     </section>
 
-     
-    <script src="bulmajs.js"></script>
+
+    <script src="javascript.js"></script>
 
 </body>
 
