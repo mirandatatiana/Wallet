@@ -29,10 +29,13 @@ const tomarInfoDeOperacion = () =>{
 //añadir objeto al array de operaciones
 const operacionesRealizadas = [];
 const actualizarListaDeOperaciones = () =>{
+    //deberia ir un if para saber si hay info a guardar o si solo se necesita tomar del local storage 
     operacionesRealizadas.push(tomarInfoDeOperacion());
     const operacionesAJSON = JSON.stringify(operacionesRealizadas);
-    console.log(operacionesAJSON);
-  //  localStorage.setItem('operacionesRealizadas', operacionesAJSON);
+    localStorage.setItem('operacionesRealizadas', operacionesAJSON);
+    const listaActualizada = localStorage.getItem('operacionesRealizadas');
+    const listaActualizadaJS = JSON.parse(listaActualizada);
+    console.log(listaActualizadaJS);
 }
 
 botonSubmitOperacion.onclick = actualizarListaDeOperaciones;
