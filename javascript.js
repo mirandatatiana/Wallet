@@ -35,16 +35,8 @@ const actualizarListaDeOperaciones = () =>{
     localStorage.setItem('operacionesRealizadas', operacionesAJSON);
     const listaActualizada = localStorage.getItem('operacionesRealizadas');
     const listaActualizadaJS = JSON.parse(listaActualizada);
-<<<<<<< HEAD
-    console.log(listaActualizadaJS);
-}
-
-botonSubmitOperacion.onclick = actualizarListaDeOperaciones;
-
-=======
     return listaActualizadaJS;
 }
->>>>>>> josefina
 
 //sector balance
 const gastoBalance = document.getElementById("gasto-balance");
