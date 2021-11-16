@@ -30,8 +30,8 @@ const tomarInfoDeOperacion = () =>{
 const operacionesRealizadas = [];
 const actualizarListaDeOperaciones = () =>{
     operacionesRealizadas.push(tomarInfoDeOperacion());
-    console.log(operacionesRealizadas);
-  //  const operacionesAJSON = JSON.stringify(operacionesRealizadas);
+    const operacionesAJSON = JSON.stringify(operacionesRealizadas);
+    console.log(operacionesAJSON);
   //  localStorage.setItem('operacionesRealizadas', operacionesAJSON);
 }
 
