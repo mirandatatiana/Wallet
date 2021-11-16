@@ -15,7 +15,7 @@ const categoriaDeOperacion = document.getElementById("categoria-de-operacion");
 const dateOperacion = document.getElementById("date-operacion");
 const botonSubmitOperacion = document.getElementById("boton-submit-operacion");
 
-//variable objeto de operaicones
+//generar el obj de nueva operacion
 const tomarInfoDeOperacion = () =>{
     var operacion = {};
     operacion.desripcion = descripcionDeOperacion.value;
@@ -23,10 +23,20 @@ const tomarInfoDeOperacion = () =>{
     operacion.monto = montoOperacion.value;
     operacion.categoria = categoriaDeOperacion.value;
     operacion.fecha = dateOperacion.value;
-    console.log( operacion);
+    return operacion;
 }
 
-botonSubmitOperacion.onclick = tomarInfoDeOperacion;
+//añadir objeto al array de operaciones
+const operacionesRealizadas = [];
+const actualizarListaDeOperaciones = () =>{
+    operacionesRealizadas.push(tomarInfoDeOperacion());
+    console.log(operacionesRealizadas);
+  //  const operacionesAJSON = JSON.stringify(operacionesRealizadas);
+  //  localStorage.setItem('operacionesRealizadas', operacionesAJSON);
+}
+
+botonSubmitOperacion.onclick = actualizarListaDeOperaciones;
+
 
 //sector balance
 const gastoBalance = document.getElementById("gasto-balance");
