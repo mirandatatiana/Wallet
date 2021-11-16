@@ -35,19 +35,48 @@ const actualizarListaDeOperaciones = () =>{
     localStorage.setItem('operacionesRealizadas', operacionesAJSON);
     const listaActualizada = localStorage.getItem('operacionesRealizadas');
     const listaActualizadaJS = JSON.parse(listaActualizada);
+<<<<<<< HEAD
     console.log(listaActualizadaJS);
 }
 
 botonSubmitOperacion.onclick = actualizarListaDeOperaciones;
 
+=======
+    return listaActualizadaJS;
+}
+>>>>>>> josefina
 
 //sector balance
 const gastoBalance = document.getElementById("gasto-balance");
 const gananciaBalance = document.getElementById("ganancia-balance");
 const totalBalance = document.getElementById("total-balance");
 
-//funcion para cambio de numeros en estados de ganacia, gasto y total.
+//filtrar los montos por ganancia o gasto
+const filtroDeTipoDeOperacion = (arrayObj, condicion) =>{
+    arrayObj.filter(function(obj){
+        return obj.tipoDeOperacion.value === condicion;
+    });
+}
+//suma de montos para el balance 
+const sumaDeMontos = (arrayObj) =>{
+    return arrayObj.reduce(function(acc, elemento){
+        return acc + elemento.monto.value;
+    },0);
+}
 
+//funcion para cambio de numeros en estados de ganacia, gasto y total.
+const actualizacionDatosDeBalance = (arrayObj) =>{
+    //filtro los valores de tipo ganacia 
+    const ganancias = filtroDeTipoDeOperacion(arrayObj, "ganancia");
+    const gastos = filtroDeTipoDeOperacion(arrayObj, "gasto");
+    
+    //se suman los montos y lo actualizamos en el html
+    gananciaBalance.innerHTML = sumaDeMontos(ganancias);
+    gastoBalance.innerHTML = sumaDeMontos(gastos);
+
+    //actualiza el total de balance
+    totalBalance.innerHTML = sumaDeMontos(ganancias) - sumaDeMontos(gastos);
+}
 
 
 navBalanceboton.onclick = () => {
@@ -77,4 +106,9 @@ navNuevasOperacionesboton.onclick = () => {
     categoriasection.style.display = "none";
     reportessection.style.display = "none";
     nuevasoperacionessection.style.display = "block";
+}
+
+botonSubmitOperacion.onclick = () =>{
+    actualizarListaDeOperaciones; 
+    actualizacionDatosDeBalance(actualizarListaDeOperaciones);
 }
