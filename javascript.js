@@ -1,3 +1,4 @@
+//Navegacion de la pagina
 const navBalanceboton = document.querySelector(".pagina-principal-boton")
 const navCategoriasboton = document.querySelector(".boton-categorias")
 const navReportesboton = document.querySelector(".boton-reportes")
@@ -6,6 +7,9 @@ const balancesection = document.querySelector("#pagina-principal")
 const categoriasection = document.querySelector("#categorias")
 const reportessection = document.querySelector("#reportes")
 const nuevasoperacionessection = document.querySelector("#nuevas-operaciones")
+
+//InnerHTML
+const sinResultadosBackgruond = document.getElementById("sin-resultados-operaciones")
 
 //sector generar nueva opreacion
 const descripcionDeOperacion = document.getElementById("descripcion-operacion");
@@ -37,40 +41,55 @@ const actualizarListaDeOperaciones = () => {
     const listaActualizadaJS = JSON.parse(listaActualizada);
     return listaActualizadaJS;
 }
+let acc = ""
+const agregarOperacionesHTML = () => {
+    const agregarOperaciones = actualizarListaDeOperaciones()
+    const lista = document.getElementById("operaciones-guardadas")
 
+
+    const operacionesString = agregarOperaciones.reduce((acc, elemento, index) => {
+        return acc = acc + `<div> ${elemento.desripcion} </div>
+        <div> ${elemento.monto} </div>
+        <div> ${elemento.categoria} </div>
+        <div> ${elemento.fecha} </div>
+        `
+    }, "")
+    lista.innerHTML = operacionesString
+}
+agregarOperacionesHTML()
 //sector balance
-const gastoBalance = document.getElementById("gasto-balance");
-const gananciaBalance = document.getElementById("ganancia-balance");
-const totalBalance = document.getElementById("total-balance");
+// const gastoBalance = document.getElementById("gasto-balance");
+// const gananciaBalance = document.getElementById("ganancia-balance");
+// const totalBalance = document.getElementById("total-balance");
 
-//filtrar los montos por ganancia o gasto
-const filtroDeTipoDeOperacion = (arrayObj, condicion) => {
-    arrayObj.filter(function (obj) {
-        return obj.tipoDeOperacion.value === condicion;
-    });
-}
-//suma de montos para el balance 
-const sumaDeMontos = (arrayObj) => {
-    return arrayObj.reduce(function (acc, elemento) {
-        return acc + elemento.monto.value;
-    }, 0);
-}
+// //filtrar los montos por ganancia o gasto
+// const filtroDeTipoDeOperacion = (arrayObj, condicion) => {
+//     arrayObj.filter(function (obj) {
+//         return obj.tipoDeOperacion.value === condicion;
+//     });
+// }
+// //suma de montos para el balance 
+// const sumaDeMontos = (arrayObj) => {
+//     return arrayObj.reduce(function (acc, elemento) {
+//         return acc + elemento.monto.value;
+//     }, 0);
+// }
 
 //funcion para cambio de numeros en estados de ganacia, gasto y total.
-const actualizacionDatosDeBalance = (arrayObj) => {
-    //filtro los valores de tipo ganacia 
-    const ganancias = filtroDeTipoDeOperacion(arrayObj, "ganancia");
-    const gastos = filtroDeTipoDeOperacion(arrayObj, "gasto");
+// const actualizacionDatosDeBalance = (arrayObj) => {
+//     //filtro los valores de tipo ganacia 
+//     const ganancias = filtroDeTipoDeOperacion(arrayObj, "ganancia");
+//     const gastos = filtroDeTipoDeOperacion(arrayObj, "gasto");
 
-    //se suman los montos y lo actualizamos en el html
-    gananciaBalance.innerHTML = sumaDeMontos(ganancias);
-    gastoBalance.innerHTML = sumaDeMontos(gastos);
+//     //se suman los montos y lo actualizamos en el html
+//     gananciaBalance.innerHTML = sumaDeMontos(ganancias);
+//     gastoBalance.innerHTML = sumaDeMontos(gastos);
 
-    //actualiza el total de balance
-    totalBalance.innerHTML = sumaDeMontos(ganancias) - sumaDeMontos(gastos);
-}
+//     //actualiza el total de balance
+//     totalBalance.innerHTML = sumaDeMontos(ganancias) - sumaDeMontos(gastos);
+// }
 
-
+//navegacion
 navBalanceboton.onclick = () => {
     categoriasection.style.display = "none";
     reportessection.style.display = "none";
@@ -101,6 +120,15 @@ navNuevasOperacionesboton.onclick = () => {
 }
 
 botonSubmitOperacion.onclick = () => {
-    actualizarListaDeOperaciones;
-    actualizacionDatosDeBalance(actualizarListaDeOperaciones);
+
+
+
+
+    sinResultadosBackgruond.style.display = "none"
+    nuevasoperacionessection.style.display = "none"
+    balancesection.style.display = "block";
+
+    agregarOperacionesHTML()
+
+    // actualizacionDatosDeBalance(actualizarListaDeOperaciones);
 }

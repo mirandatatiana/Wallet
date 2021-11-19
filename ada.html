@@ -196,8 +196,10 @@
                             </button>
                         </div>
                     </div>
-
-                    <div class="columns">
+<div class="column" id="operaciones-guardadas">
+    
+</div>
+                    <div class="columns" id="sin-resultados-operaciones">
                         <div class="column is-offset-3 is-6">
                             <div class="image">
                                 <img src="image/undraw_wallet_aym5.svg">
@@ -294,7 +296,7 @@
                         Descripcion
                     </label>
                         <div class="control is-expanded is-full-widescreen">    
-                      <input class="input" type="text" value="">
+                      <input class="input" type="text" id="descripcion-operacion" >
                     </div>
                    
                     </div>      
@@ -303,7 +305,7 @@
                     <div class="field is-fullwidth">
                     <label class="label">Monto</label>
                         <div class="control is-expanded is-full-widescreen">    
-                      <input class="input" type="number" value="" >
+                      <input class="input" type="number" id="monto-operacion" >
                         </div>                  
                     </div>      
            
@@ -318,7 +320,7 @@
                         
                         <div class="control">
                             <div class="select is-fullwidth">
-                                <select>
+                                <select id="tipo-de-operacion">
                                 
                                     <option value="Gastos" >Gastos</option>
                                     <option value="Ganancias">Ganancias</option>
@@ -335,7 +337,7 @@
                     <label class="label">Categoria</label>
                         <div class="control is-expanded is-full-widescreen">    
                                     <div class="select is-fullwidth">
-                                        <select>
+                                        <select id="categoria-de-operacion" >
                                             <option value="Todas">Todas</option>
                                             <option value="Comidas">Comidas</option>
                                             <option value="Servicios">Servicio</option>
@@ -354,11 +356,11 @@
                        
                       <label class="label" for="date">Fecha</label>
                        <div class="control is-expanded is-full-widescreen">
-                        <input class="input" id="date" type="date" >
+                        <input class="input" id="date-operacion" type="date" >
                     </div>
                    
                     </div>   
-                    <div class="buttons boton-submit-operaciones is-right pt-5">  
+                    <div class="buttons is-right pt-5" id="boton-submit-operacion">  
                         <p> 
                     <button class="button is-light is-hovered is-focused boton-cancelar-operaciones">Cancelar</button>
                     <button class="button is-success is-hovered is-focused boton-agregar-operaciones">Agregar</button>
