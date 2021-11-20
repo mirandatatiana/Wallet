@@ -40,23 +40,32 @@ const actualizarListaDeOperaciones = () => {
     const listaActualizada = localStorage.getItem('operacionesRealizadas');
     const listaActualizadaJS = JSON.parse(listaActualizada);
     return listaActualizadaJS;
+
 }
+
 let acc = ""
 const agregarOperacionesHTML = () => {
     const agregarOperaciones = actualizarListaDeOperaciones()
     const lista = document.getElementById("operaciones-guardadas")
 
 
-    const operacionesString = agregarOperaciones.reduce((acc, elemento, index) => {
-        return acc = acc + `<div> ${elemento.desripcion} </div>
-        <div> ${elemento.monto} </div>
-        <div> ${elemento.categoria} </div>
-        <div> ${elemento.fecha} </div>
+    const operacionesString = agregarOperaciones.map((acc, elemento, index) => {
+        return acc = acc + `<div> ${acc.desripcion} </div>
+        <div> ${acc.monto} </div>
+        <div> ${acc.categoria} </div>
+        <div> ${acc.fecha} </div>c
         `
     }, "")
     lista.innerHTML = operacionesString
 }
-agregarOperacionesHTML()
+
+const operacionesEnSistema = () => {
+    sinResultadosBackgruond.classList.add("ocultar")
+    nuevasoperacionessection.classList.add("ocultar")
+    balancesection.classList.remove("ocultar");
+}
+
+
 //sector balance
 // const gastoBalance = document.getElementById("gasto-balance");
 // const gananciaBalance = document.getElementById("ganancia-balance");
@@ -119,16 +128,19 @@ navNuevasOperacionesboton.onclick = () => {
     nuevasoperacionessection.style.display = "block";
 }
 
-botonSubmitOperacion.onclick = () => {
 
+botonSubmitOperacion.onsubmit = () => {
 
-
-
-    sinResultadosBackgruond.style.display = "none"
-    nuevasoperacionessection.style.display = "none"
-    balancesection.style.display = "block";
-
+    tomarInfoDeOperacion()
+    actualizarListaDeOperaciones()
     agregarOperacionesHTML()
+    operacionesEnSistema()
+    // sinResultadosBackgruond.style.display = "none"
+    // nuevasoperacionessection.style.display = "none"
+    // balancesection.style.display = "block";
+
+
+
 
     // actualizacionDatosDeBalance(actualizarListaDeOperaciones);
 }
