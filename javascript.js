@@ -26,12 +26,13 @@ const tomarInfoDeOperacion = () => {
     operacion.tipo = tipoDeOperacion.value;
     operacion.monto = montoOperacion.value;
     operacion.categoria = categoriaDeOperacion.value;
-    operacion.fecha = dateOperacion.value;
+    operacion.fecha = dateOperacion.value; 
     return operacion;
 }
 
 //añadir objeto al array de operaciones
 const operacionesRealizadas = [];
+
 const actualizarListaDeOperaciones = () => {
     //deberia ir un if para saber si hay info a guardar o si solo se necesita tomar del local storage 
     operacionesRealizadas.push(tomarInfoDeOperacion());
@@ -42,6 +43,7 @@ const actualizarListaDeOperaciones = () => {
     return listaActualizadaJS;
 
 }
+const listaActualizadaJS = actualizarListaDeOperaciones();
 
 let acc = ""
 const agregarOperacionesHTML = () => {
@@ -67,36 +69,43 @@ const operacionesEnSistema = () => {
 
 
 //sector balance
-// const gastoBalance = document.getElementById("gasto-balance");
-// const gananciaBalance = document.getElementById("ganancia-balance");
-// const totalBalance = document.getElementById("total-balance");
+const gastoBalance = document.getElementById("gasto-balance");
+const gananciaBalance = document.getElementById("ganancia-balance");
+const totalBalance = document.getElementById("total-balance");
 
-// //filtrar los montos por ganancia o gasto
-// const filtroDeTipoDeOperacion = (arrayObj, condicion) => {
-//     arrayObj.filter(function (obj) {
-//         return obj.tipoDeOperacion.value === condicion;
-//     });
-// }
-// //suma de montos para el balance 
-// const sumaDeMontos = (arrayObj) => {
-//     return arrayObj.reduce(function (acc, elemento) {
-//         return acc + elemento.monto.value;
-//     }, 0);
-// }
+//filtrar los montos por ganancia o gasto
+const filtroDeTipoDeOperacion = (arrayObj, condicion) => {
+    if (condicion === "ganacia"){
+    arrayObj.filter(function (obj) {
+        return obj.tipo.value === "ganacia";
+    });
+    }
+    if (condicion === "gasto"){
+    arrayObj.filter(function (obj) {
+        return obj.tipo.value === "gasto";
+    });
+}
+}
+//suma de montos para el balance 
+const sumaDeMontos = (arrayObj) => {
+    arrayObj.reduce(function (acc, elemento) {
+        return acc + elemento.monto.value;
+    }, 0);
+}
 
 //funcion para cambio de numeros en estados de ganacia, gasto y total.
-// const actualizacionDatosDeBalance = (arrayObj) => {
-//     //filtro los valores de tipo ganacia 
-//     const ganancias = filtroDeTipoDeOperacion(arrayObj, "ganancia");
-//     const gastos = filtroDeTipoDeOperacion(arrayObj, "gasto");
+const actualizacionDatosDeBalance = (arrayObj) => {
+    //filtro los valores de tipo ganacia 
+    const ganancias = filtroDeTipoDeOperacion(arrayObj, "ganancia");
+    const gastos = filtroDeTipoDeOperacion(arrayObj, "gasto");
 
-//     //se suman los montos y lo actualizamos en el html
-//     gananciaBalance.innerHTML = sumaDeMontos(ganancias);
-//     gastoBalance.innerHTML = sumaDeMontos(gastos);
+    //se suman los montos y lo actualizamos en el html
+    gananciaBalance.innerHTML = sumaDeMontos(ganancias);
+    gastoBalance.innerHTML = sumaDeMontos(gastos);
 
-//     //actualiza el total de balance
-//     totalBalance.innerHTML = sumaDeMontos(ganancias) - sumaDeMontos(gastos);
-// }
+    //actualiza el total de balance
+    totalBalance.innerHTML = sumaDeMontos(ganancias) - sumaDeMontos(gastos);
+}
 
 //navegacion
 navBalanceboton.onclick = () => {
@@ -129,7 +138,7 @@ navNuevasOperacionesboton.onclick = () => {
 }
 
 
-botonSubmitOperacion.onsubmit = () => {
+botonSubmitOperacion.onclick = () => {
 
     tomarInfoDeOperacion()
     actualizarListaDeOperaciones()
@@ -139,8 +148,8 @@ botonSubmitOperacion.onsubmit = () => {
     // nuevasoperacionessection.style.display = "none"
     // balancesection.style.display = "block";
 
+    actualizarListaDeOperaciones();
 
 
-
-    // actualizacionDatosDeBalance(actualizarListaDeOperaciones);
+    actualizacionDatosDeBalance(listaActualizadaJS);
 }
