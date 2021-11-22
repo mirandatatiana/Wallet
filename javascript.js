@@ -31,35 +31,44 @@ const tomarInfoDeOperacion = () => {
 }
 
 //añadir objeto al array de operaciones
-const operacionesRealizadas = [];
 
-const actualizarListaDeOperaciones = () => {
-    //deberia ir un if para saber si hay info a guardar o si solo se necesita tomar del local storage 
-    operacionesRealizadas.push(tomarInfoDeOperacion());
+
+// const actualizarListaDeOperaciones = () => {
+//     //deberia ir un if para saber si hay info a guardar o si solo se necesita tomar del local storage 
+//     operacionesRealizadas.push(tomarInfoDeOperacion());
+//     const operacionesAJSON = JSON.stringify(operacionesRealizadas);
+//     localStorage.setItem('operacionesRealizadas', operacionesAJSON);
+//     const listaActualizada = localStorage.getItem('operacionesRealizadas');
+//     const listaActualizadaJS = JSON.parse(listaActualizada);
+//     return listaActualizadaJS;
+// }
+//actualizacion de datos en el local storage
+const actualizarListasDelLocalStorage = (callback, nomLista) =>{
+    //operacionesRealizadas.push(tomarInfoDeOperacion());
+    operacionesRealizadas.push(callback);    
     const operacionesAJSON = JSON.stringify(operacionesRealizadas);
-    localStorage.setItem('operacionesRealizadas', operacionesAJSON);
-    const listaActualizada = localStorage.getItem('operacionesRealizadas');
+    localStorage.setItem(nomLista, operacionesAJSON);
+}
+const tomarInfoDelLocalStorage = (nomLista) =>{
+    const listaActualizada = localStorage.getItem(nomLista);
     const listaActualizadaJS = JSON.parse(listaActualizada);
     return listaActualizadaJS;
-
 }
-const listaActualizadaJS = actualizarListaDeOperaciones();
+// // mostrar operaciones realizadas en el html
+// let acc = ""
+// const agregarOperacionesHTML = () => {
+//     const agregarOperaciones = actualizarListaDeOperaciones();
+//     const lista = document.getElementById("operaciones-guardadas");
 
-let acc = ""
-const agregarOperacionesHTML = () => {
-    const agregarOperaciones = actualizarListaDeOperaciones()
-    const lista = document.getElementById("operaciones-guardadas")
-
-
-    const operacionesString = agregarOperaciones.map((acc, elemento, index) => {
-        return acc = acc + `<div> ${acc.desripcion} </div>
-        <div> ${acc.monto} </div>
-        <div> ${acc.categoria} </div>
-        <div> ${acc.fecha} </div>c
-        `
-    }, "")
-    lista.innerHTML = operacionesString
-}
+//     const operacionesString = agregarOperaciones.map((acc, elemento, index) => {
+//         return acc = acc + `<div> ${acc.desripcion} </div>
+//         <div> ${acc.monto} </div>
+//         <div> ${acc.categoria} </div>
+//         <div> ${acc.fecha} </div>c
+//         `
+//     }, "");
+//     lista.innerHTML = operacionesString;
+// }
 
 const operacionesEnSistema = () => {
     sinResultadosBackgruond.classList.add("ocultar")
@@ -77,13 +86,13 @@ const totalBalance = document.getElementById("total-balance");
 const filtroDeTipoDeOperacion = (arrayObj, condicion) => {
     if (condicion === "ganacia"){
     const ganancias = arrayObj.filter(function (obj) {
-        return obj.tipo.value === "ganacia";
+        return obj.tipo === "ganacia";
     });
     return ganancias;
     }
     if (condicion === "gasto"){
     const gastos = arrayObj.filter(function (obj) {
-        return obj.tipo.value === "gasto";
+        return obj.tipo === "gasto";
     });
     return gastos;
     }
@@ -111,6 +120,17 @@ const actualizacionDatosDeBalance = (arrayObj) => {
 
     //actualiza el total de balance
     totalBalance.innerHTML = sumaDeMontos(ganancias) - sumaDeMontos(gastos);
+}
+//sector generar nueva categoria
+const inputCrearCategoria = document.getElementById("input-crear-categoria");
+const botonCrearCategoria = document.getElementById("boton-crear-categoria");
+
+//funcionalidad de generacion de nuevas categorias
+const arrayCategorias = [];
+
+const generarNuevaCategoria = () =>{
+    const categoria = inputCrearCategoria.value;
+    return categoria;
 }
 
 //navegacion
@@ -143,19 +163,19 @@ navNuevasOperacionesboton.onclick = () => {
     nuevasoperacionessection.style.display = "block";
 }
 
-
+const operacionesRealizadas = tomarInfoDelLocalStorage('operacionesRealizadas');
 botonSubmitOperacion.onclick = () => {
 
-    tomarInfoDeOperacion()
-    actualizarListaDeOperaciones()
-    agregarOperacionesHTML()
-    operacionesEnSistema()
+    // tomarInfoDeOperacion()
+    // //actualizarListaDeOperaciones()
+    // agregarOperacionesHTML()
+    // operacionesEnSistema()
     // sinResultadosBackgruond.style.display = "none"
     // nuevasoperacionessection.style.display = "none"
     // balancesection.style.display = "block";
 
-    actualizarListaDeOperaciones();
+    // actualizarListaDeOperaciones();
 
 
-    actualizacionDatosDeBalance(listaActualizadaJS);
+    actualizarListasDelLocalStorage(tomarInfoDeOperacion(),'operacionesRealizadas');
 }
