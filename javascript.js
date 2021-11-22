@@ -76,21 +76,25 @@ const totalBalance = document.getElementById("total-balance");
 //filtrar los montos por ganancia o gasto
 const filtroDeTipoDeOperacion = (arrayObj, condicion) => {
     if (condicion === "ganacia"){
-    arrayObj.filter(function (obj) {
+    const ganancias = arrayObj.filter(function (obj) {
         return obj.tipo.value === "ganacia";
     });
+    return ganancias;
     }
     if (condicion === "gasto"){
-    arrayObj.filter(function (obj) {
+    const gastos = arrayObj.filter(function (obj) {
         return obj.tipo.value === "gasto";
     });
+    return gastos;
+    }
 }
-}
+
 //suma de montos para el balance 
 const sumaDeMontos = (arrayObj) => {
-    arrayObj.reduce(function (acc, elemento) {
-        return acc + elemento.monto.value;
+    const total = arrayObj.reduce(function (acc, elemento) {
+        return acc + elemento.monto;
     }, 0);
+    return total;
 }
 
 //funcion para cambio de numeros en estados de ganacia, gasto y total.
@@ -98,6 +102,8 @@ const actualizacionDatosDeBalance = (arrayObj) => {
     //filtro los valores de tipo ganacia 
     const ganancias = filtroDeTipoDeOperacion(arrayObj, "ganancia");
     const gastos = filtroDeTipoDeOperacion(arrayObj, "gasto");
+    console.log(gastos);
+    console.log(arrayObj);
 
     //se suman los montos y lo actualizamos en el html
     gananciaBalance.innerHTML = sumaDeMontos(ganancias);
