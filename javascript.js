@@ -21,12 +21,13 @@ const botonSubmitOperacion = document.getElementById("boton-submit-operacion");
 
 //generar el obj de nueva operacion
 const tomarInfoDeOperacion = () => {
-    var operacion = {};
+    var operacion = operacionesRealizadas;
     operacion.desripcion = descripcionDeOperacion.value;
     operacion.tipo = tipoDeOperacion.value;
     operacion.monto = montoOperacion.value;
     operacion.categoria = categoriaDeOperacion.value;
     operacion.fecha = dateOperacion.value; 
+    console.log(operacion);
     return operacion;
 }
 
@@ -43,18 +44,25 @@ const tomarInfoDeOperacion = () => {
 //     return listaActualizadaJS;
 // }
 //actualizacion de datos en el local storage
-const actualizarListasDelLocalStorage = (callback, nomLista) =>{
+const actualizarListasDelLocalStorage = (arrayObj, callback, nomLista) =>{
     //operacionesRealizadas.push(tomarInfoDeOperacion());
-    operacionesRealizadas.push(callback);    
-    const operacionesAJSON = JSON.stringify(operacionesRealizadas);
+    console.log(arrayObj);
+    arrayObj.push(callback);    
+    const operacionesAJSON = JSON.stringify(arrayObj);
     localStorage.setItem(nomLista, operacionesAJSON);
 }
 const tomarInfoDelLocalStorage = (nomLista) =>{
     const listaActualizada = localStorage.getItem(nomLista);
     const listaActualizadaJS = JSON.parse(listaActualizada);
-    return listaActualizadaJS;
+    console.log(listaActualizadaJS)
+    if(listaActualizadaJS === null){
+        return {};
+    }else {
+        return listaActualizadaJS;
+    }
+    
 }
-// // mostrar operaciones realizadas en el html
+// mostrar operaciones realizadas en el html
 // let acc = ""
 // const agregarOperacionesHTML = () => {
 //     const agregarOperaciones = actualizarListaDeOperaciones();
@@ -126,10 +134,11 @@ const inputCrearCategoria = document.getElementById("input-crear-categoria");
 const botonCrearCategoria = document.getElementById("boton-crear-categoria");
 
 //funcionalidad de generacion de nuevas categorias
-const arrayCategorias = [];
 
 const generarNuevaCategoria = () =>{
-    const categoria = inputCrearCategoria.value;
+    const categoria = arrayCategorias;
+    categoria.categoria = inputCrearCategoria.value;
+    console.log(categoria);
     return categoria;
 }
 
@@ -164,6 +173,7 @@ navNuevasOperacionesboton.onclick = () => {
 }
 
 const operacionesRealizadas = tomarInfoDelLocalStorage('operacionesRealizadas');
+console.log(operacionesRealizadas)
 botonSubmitOperacion.onclick = () => {
 
     // tomarInfoDeOperacion()
@@ -174,8 +184,10 @@ botonSubmitOperacion.onclick = () => {
     // nuevasoperacionessection.style.display = "none"
     // balancesection.style.display = "block";
 
-    // actualizarListaDeOperaciones();
-
-
-    actualizarListasDelLocalStorage(tomarInfoDeOperacion(),'operacionesRealizadas');
+    actualizarListasDelLocalStorage(operacionesRealizadas, tomarInfoDeOperacion(),'operacionesRealizadas');
 }
+
+const arrayCategorias = tomarInfoDelLocalStorage('categoriasAñadidas');
+botonCrearCategoria.onclick = () =>{
+    actualizarListasDelLocalStorage(arrayCategorias, generarNuevaCategoria(),'categoriasAñadidas');
+} 
