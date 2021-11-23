@@ -26,55 +26,117 @@ const tomarInfoDeOperacion = () => {
     operacion.tipo = tipoDeOperacion.value;
     operacion.monto = montoOperacion.value;
     operacion.categoria = categoriaDeOperacion.value;
-    operacion.fecha = dateOperacion.value; 
+    operacion.fecha = dateOperacion.value;
     return operacion;
 }
 
 //añadir objeto al array de operaciones
 
+const operacionesRealizadas = [];
 
-// const actualizarListaDeOperaciones = () => {
-//     //deberia ir un if para saber si hay info a guardar o si solo se necesita tomar del local storage 
-//     operacionesRealizadas.push(tomarInfoDeOperacion());
-//     const operacionesAJSON = JSON.stringify(operacionesRealizadas);
-//     localStorage.setItem('operacionesRealizadas', operacionesAJSON);
-//     const listaActualizada = localStorage.getItem('operacionesRealizadas');
-//     const listaActualizadaJS = JSON.parse(listaActualizada);
-//     return listaActualizadaJS;
-// }
-//actualizacion de datos en el local storage
-const actualizarListasDelLocalStorage = (callback, nomLista) =>{
-    //operacionesRealizadas.push(tomarInfoDeOperacion());
-    operacionesRealizadas.push(callback);    
+const actualizarListaDeOperaciones = () => {
+    //deberia ir un if para saber si hay info a guardar o si solo se necesita tomar del local storage 
+    operacionesRealizadas.push(tomarInfoDeOperacion());
     const operacionesAJSON = JSON.stringify(operacionesRealizadas);
-    localStorage.setItem(nomLista, operacionesAJSON);
-}
-const tomarInfoDelLocalStorage = (nomLista) =>{
-    const listaActualizada = localStorage.getItem(nomLista);
+    localStorage.setItem('operacionesRealizadas', operacionesAJSON);
+    const listaActualizada = localStorage.getItem('operacionesRealizadas');
     const listaActualizadaJS = JSON.parse(listaActualizada);
     return listaActualizadaJS;
 }
+//actualizacion de datos en el local storage
+// const actualizarListasDelLocalStorage = (callback, nomLista) => {
+//     //operacionesRealizadas.push(tomarInfoDeOperacion());
+//     operacionesRealizadas.push(callback);
+//     const operacionesAJSON = JSON.stringify(operacionesRealizadas);
+//     localStorage.setItem(nomLista, operacionesAJSON);
+// }
+// const tomarInfoDelLocalStorage = (nomLista) => {
+//     const listaActualizada = localStorage.getItem(nomLista);
+//     const listaActualizadaJS = JSON.parse(listaActualizada);
+//     return listaActualizadaJS;
+// }
+let acc = ""
+const agregarOperacionesHTML = () => {
+    const agregarOperaciones = actualizarListaDeOperaciones()
+    const lista = document.getElementById("operaciones-guardadas")
+
+
+    const operacionesString = agregarOperaciones.reduce((acc, elemento, index) => {
+        return acc = acc + `<div> ${elemento.desripcion} </div>
+        <div> ${elemento.monto} </div>
+        <div> ${elemento.categoria} </div>
+        <div> ${elemento.fecha} </div>
+        `
+    }, "")
+    lista.innerHTML = operacionesString
+}
+agregarOperacionesHTML()
 // // mostrar operaciones realizadas en el html
 // let acc = ""
+//  const agregarOperacionesHTML = (array) => {
+//  const html = array.reduce(acc, elemento, index) => {
+//      return (acc + 
+//         `
+//         <div>
+//         <p>${elemento.desripcion} </p> 
+//         <p>${elemento.tipo} </p> 
+//         <p>${elemento.categoria} </p> 
+//         <p>${elemento.fecha} </p> 
+// </div>
+//         `);
+//  }, '');
+
+
+
+//     const agregarOperaciones = actualizarListasDelLocalStorage(tomarInfoDeOperacion(), 'operacionesRealizadas');
+//     const lista = document.getElementById("operaciones-guardadas")
+//     const operacionesString = agregarOperaciones.reduce((acc, elemento, index) => {
+//         return acc = acc + `<div> ${elemento.desripcion} </div>
+//         <div> ${elemento.monto} </div>
+//         <div> ${elemento.categoria} </div>
+//         <div> ${elemento.fecha} </div>
+//         `
+//     }, "")
+//     lista.innerHTML = operacionesString
+// }
+// agregarOperacionesHTML()
+
 // const agregarOperacionesHTML = () => {
-//     const agregarOperaciones = actualizarListaDeOperaciones();
+//     const pasarAHTML = tomarInfoDelLocalStorage();
+
+//     const operacionesString = pasarAHTML.map((elemento) => {
+//         return ` 
+//             <div> ${elemento.desripcion} </div>
+//             <div> ${elemento.monto} </div>
+//             <div> ${elemento.categoria} </div>
+//             <div> ${elemento.fecha} </div>
+//             `
+//     });
 //     const lista = document.getElementById("operaciones-guardadas");
 
-//     const operacionesString = agregarOperaciones.map((acc, elemento, index) => {
-//         return acc = acc + `<div> ${acc.desripcion} </div>
-//         <div> ${acc.monto} </div>
-//         <div> ${acc.categoria} </div>
-//         <div> ${acc.fecha} </div>c
-//         `
-//     }, "");
-//     lista.innerHTML = operacionesString;
-// }
+//     lista.innerHTML = operacionesString
 
-const operacionesEnSistema = () => {
-    sinResultadosBackgruond.classList.add("ocultar")
-    nuevasoperacionessection.classList.add("ocultar")
-    balancesection.classList.remove("ocultar");
-}
+// }
+// agregarOperacionesHTML()
+// lista.innerHTML = agregarOperacionesHTML()
+// const html = tomarInfoDeOperacion.reduce((acc, elemento, index) => {
+//     return acc = acc + `< div > ${ elemento.desripcion } </div >
+// <div> ${elemento.monto} </div>
+// <div> ${elemento.categoria} </div>
+// <div> ${elemento.fecha} </div>
+// `
+// }, '')
+
+// const lista = document.getElementById("operaciones-guardadas");
+
+// lista.innerHTML = html;
+
+
+// const operacionesEnSistema = () => {
+//     sinResultadosBackgruond.classList.add("ocultar")
+//     nuevasoperacionessection.classList.add("ocultar")
+//     balancesection.classList.remove("ocultar");
+// }
 
 
 //sector balance
@@ -84,17 +146,17 @@ const totalBalance = document.getElementById("total-balance");
 
 //filtrar los montos por ganancia o gasto
 const filtroDeTipoDeOperacion = (arrayObj, condicion) => {
-    if (condicion === "ganacia"){
-    const ganancias = arrayObj.filter(function (obj) {
-        return obj.tipo === "ganacia";
-    });
-    return ganancias;
+    if (condicion === "ganacia") {
+        const ganancias = arrayObj.filter(function (obj) {
+            return obj.tipo === "ganacia";
+        });
+        return ganancias;
     }
-    if (condicion === "gasto"){
-    const gastos = arrayObj.filter(function (obj) {
-        return obj.tipo === "gasto";
-    });
-    return gastos;
+    if (condicion === "gasto") {
+        const gastos = arrayObj.filter(function (obj) {
+            return obj.tipo === "gasto";
+        });
+        return gastos;
     }
 }
 
@@ -128,7 +190,7 @@ const botonCrearCategoria = document.getElementById("boton-crear-categoria");
 //funcionalidad de generacion de nuevas categorias
 const arrayCategorias = [];
 
-const generarNuevaCategoria = () =>{
+const generarNuevaCategoria = () => {
     const categoria = inputCrearCategoria.value;
     return categoria;
 }
@@ -163,19 +225,24 @@ navNuevasOperacionesboton.onclick = () => {
     nuevasoperacionessection.style.display = "block";
 }
 
-const operacionesRealizadas = tomarInfoDelLocalStorage('operacionesRealizadas');
+//const operacionesRealizadas = tomarInfoDelLocalStorage('operacionesRealizadas');
 botonSubmitOperacion.onclick = () => {
 
     // tomarInfoDeOperacion()
     // //actualizarListaDeOperaciones()
-    // agregarOperacionesHTML()
-    // operacionesEnSistema()
-    // sinResultadosBackgruond.style.display = "none"
-    // nuevasoperacionessection.style.display = "none"
-    // balancesection.style.display = "block";
+
+
+    sinResultadosBackgruond.style.display = "none"
+    nuevasoperacionessection.style.display = "none"
+    balancesection.style.display = "block";
 
     // actualizarListaDeOperaciones();
 
 
-    actualizarListasDelLocalStorage(tomarInfoDeOperacion(),'operacionesRealizadas');
+
+    agregarOperacionesHTML()
+    //actualizarListasDelLocalStorage(tomarInfoDeOperacion(), 'operacionesRealizadas');
+
 }
+
+//agregarOperacionesHTML(actualizarListasDelLocalStorage(tomarInfoDeOperacion(), 'operacionesRealizadas'));
