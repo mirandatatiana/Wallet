@@ -91,6 +91,7 @@ const filtroDeTipoDeOperacion = (arrayObj, condicion) => {
     return ganancias;
     }
     if (condicion === "gasto"){
+        console.log("1",arrayObj)
     const gastos = arrayObj.filter(function (obj) {
         return obj.tipo === "gasto";
     });
@@ -100,8 +101,9 @@ const filtroDeTipoDeOperacion = (arrayObj, condicion) => {
 
 //suma de montos para el balance 
 const sumaDeMontos = (arrayObj) => {
+    console.log(arrayObj);
     const total = arrayObj.reduce(function (acc, elemento) {
-        return acc + elemento.monto;
+        return acc + Number(elemento.monto);
     }, 0);
     return total;
 }
@@ -178,4 +180,7 @@ botonSubmitOperacion.onclick = () => {
 
 
     actualizarListasDelLocalStorage(tomarInfoDeOperacion(),'operacionesRealizadas');
+    actualizacionDatosDeBalance(operacionesRealizadas)
+
 }
+console.log(Number(operacionesRealizadas[0].monto))
