@@ -21,7 +21,7 @@ const botonSubmitOperacion = document.getElementById("boton-submit-operacion");
 
 //generar el obj de nueva operacion
 const tomarInfoDeOperacion = () => {
-    var operacion = operacionesRealizadas;
+    var operacion = {};
     operacion.desripcion = descripcionDeOperacion.value;
     operacion.tipo = tipoDeOperacion.value;
     operacion.monto = montoOperacion.value;
@@ -56,7 +56,7 @@ const tomarInfoDelLocalStorage = (nomLista) =>{
     const listaActualizadaJS = JSON.parse(listaActualizada);
     console.log(listaActualizadaJS)
     if(listaActualizadaJS === null){
-        return {};
+        return [];
     }else {
         return listaActualizadaJS;
     }
@@ -136,7 +136,7 @@ const botonCrearCategoria = document.getElementById("boton-crear-categoria");
 //funcionalidad de generacion de nuevas categorias
 
 const generarNuevaCategoria = () =>{
-    const categoria = arrayCategorias;
+    const categoria = {};
     categoria.categoria = inputCrearCategoria.value;
     console.log(categoria);
     return categoria;
