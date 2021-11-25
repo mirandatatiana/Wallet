@@ -8,9 +8,8 @@
     <script src="https://kit.fontawesome.com/eb84466c3b.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-
     <link rel="stylesheet" href="app.css" />
-    <title>Document</title>
+    <title>AhorrADAS</title>
 </head>
 
 <body>
@@ -175,9 +174,7 @@
                             </div>
                         </div>
                     </div>
-
                 </article>
-
             </div>
 
             <!--BOX OPERACIONES -->
@@ -196,9 +193,9 @@
                             </button>
                         </div>
                     </div>
-<div class="column" id="operaciones-guardadas">
-    
-</div>
+                    <div class="column" id="operaciones-guardadas">
+
+                    </div>
                     <div class="columns ocultar" id="sin-resultados-operaciones">
                         <div class="column is-offset-3 is-6">
                             <div class="image">
@@ -217,20 +214,19 @@
                         </div>
                     </div>
                 </article>
-
             </section>
-
     </section>
+
     <!--REPORTES-->
     <section id="reportes" class="column is-offset-3 is-7-widescreen is-8-desktop">
         <div class="columns">
-
             <div class="box">
                 <div class="column is-size-3">
                     <h4 class="title is-4">
                         Reportes
                     </h4>
                 </div>
+
                 <div class="column is-offset-3 is-6">
                     <div class="image">
                         <img src="image/undraw_Charts_re_5qe9.svg">
@@ -240,6 +236,7 @@
                             Operaciones Insuficientes
                         </h4>
                     </div>
+
                     <div class="column mt-1">
                         <span class="has-text-centered">
                             Prueba agregando mas operaciones
@@ -251,127 +248,112 @@
     </section>
 
     <!-- CATEGORIAS-->
- <section id="categorias" class="section column is-offset-3 is-7-widescreen is-8-desktop">
-            <div class="box">
-                <div class="columns is-mobile is-vcentered">
-                    <div class="column is-size-3">
-                        <h4 class="title is-4">
-                          Categorias
-                        </h4>
-                    </div>  
+    <section id="categorias" class="section column is-offset-3 is-7-widescreen is-8-desktop">
+        <div class="box">
+            <div class="columns is-mobile is-vcentered">
+                <div class="column is-size-3">
+                    <h4 class="title is-4">
+                        Categorias
+                    </h4>
                 </div>
-           
-                
-                <div class="field is-fullwidth">
-                   <label class="label">Nombre</label>
-                        <p class="control">    
-                      <input class="input" type="text" id="input-crear-categoria">
-                    </p>
-                    <p class="control">
-                      <a class="button is-info" id="boton-crear-categoria">
-                        Agregar
-                      </a>
-                    </p>
-                  </div>
-                  
             </div>
-        
+
+            <div class="field is-fullwidth">
+                <label class="label">Nombre</label>
+                <p class="control">
+                    <input class="input" type="text" id="input-crear-categoria">
+                </p>
+                <p class="control">
+                    <a class="button is-info" id="boton-crear-categoria">
+                        Agregar
+                    </a>
+                </p>
+            </div>
+        </div>
     </section>
+
     <!-- Al tocar el boton de operaciones -->
     <section id="nuevas-operaciones" class="column is-offset-2   is-two-thirds nuevas-operaciones ocultar">
-
         <article class="box">
             <div class="columns is-four-fifths is-mobile is-vcentered">
                 <div class="column is-size-8">
                     <h4 class="title is-size-2">
                         Nueva Operacion
                     </h4>
-                </div>  
+                </div>
             </div>
 
-            
-                
-                    <div class="field is-fullwidth">
-                    <label class="label">
-                        Descripcion
-                    </label>
-                        <div class="control is-expanded is-full-widescreen">    
-                      <input class="input" type="text" id="descripcion-operacion" >
-                    </div>
-                   
-                    </div>      
-            
-           
-                    <div class="field is-fullwidth">
-                    <label class="label">Monto</label>
-                        <div class="control is-expanded is-full-widescreen">    
-                      <input class="input" type="number" id="monto-operacion" >
-                        </div>                  
-                    </div>      
-           
-            
-                    <div class="field is-fullwidth">
-                     <label class="label">
-                            Tipo
-                        </label>
-                        
-                        <div class="control is-expanded is-full-widescreen">    
-                
-                        
-                        <div class="control">
-                            <div class="select is-fullwidth">
-                                <select id="tipo-de-operacion">
-                                
-                                    <option value="gasto" >Gastos</option>
-                                    <option value="ganancia">Ganancias</option>
-                                </select>
-                            </div>
+            <div class="field is-fullwidth">
+                <label class="label">
+                    Descripcion
+                </label>
+                <div class="control is-expanded is-full-widescreen">
+                    <input class="input" type="text" id="descripcion-operacion">
+                </div>
+
+            </div>
+
+            <div class="field is-fullwidth">
+                <label class="label">Monto</label>
+                <div class="control is-expanded is-full-widescreen">
+                    <input class="input" type="number" id="monto-operacion">
+                </div>
+            </div>
+
+            <div class="field is-fullwidth">
+                <label class="label">
+                    Tipo
+                </label>
+
+                <div class="control is-expanded is-full-widescreen">
+                    <div class="control">
+                        <div class="select is-fullwidth">
+                            <select id="tipo-de-operacion">
+
+                                <option value="gasto">Gastos</option>
+                                <option value="ganancia">Ganancias</option>
+                            </select>
                         </div>
-                    
                     </div>
-                  
-                    </div>      
-            
-            
-                    <div class="field  is-fullwidth">
-                    <label class="label">Categoria</label>
-                        <div class="control is-expanded is-full-widescreen">    
-                                    <div class="select is-fullwidth">
-                                        <select id="categoria-de-operacion" >
-                                            <option value="Todas">Todas</option>
-                                            <option value="Comidas">Comidas</option>
-                                            <option value="Servicios">Servicio</option>
-                                            <option value="Salidas">Salidas</option>
-                                            <option value="Educacion">Educación</option>
-                                            <option value="Transporte">Trasporte</option>
-                                            <option value="Trabajo">Trabajo</option>
-                                        </select>
-                                    </div>    
+
+                </div>
+            </div>
+
+            <div class="field  is-fullwidth">
+                <label class="label">Categoria</label>
+                <div class="control is-expanded is-full-widescreen">
+                    <div class="select is-fullwidth">
+                        <select id="categoria-de-operacion">
+                            <option value="Todas">Todas</option>
+                            <option value="Comidas">Comidas</option>
+                            <option value="Servicios">Servicio</option>
+                            <option value="Salidas">Salidas</option>
+                            <option value="Educacion">Educación</option>
+                            <option value="Transporte">Trasporte</option>
+                            <option value="Trabajo">Trabajo</option>
+                        </select>
                     </div>
-                   
-                </div>      
-           
-            
-                    <div class="field  is-fullwidth">
-                       
-                      <label class="label" for="date">Fecha</label>
-                       <div class="control is-expanded is-full-widescreen">
-                        <input class="input" id="date-operacion" type="date" >
-                    </div>
-                   
-                    </div>   
-                    <div class="buttons is-right pt-5" id="boton-submit-operacion">  
-                        <p> 
+                </div>
+            </div>
+
+            <div class="field  is-fullwidth">
+
+                <label class="label" for="date">Fecha</label>
+                <div class="control is-expanded is-full-widescreen">
+                    <input class="input" id="date-operacion" type="date">
+                </div>
+
+            </div>
+            <div class="buttons is-right pt-5" id="boton-submit-operacion">
+                <p>
                     <button class="button is-light is-hovered is-focused boton-cancelar-operaciones">Cancelar</button>
-                    <button class="button is-success is-hovered is-focused boton-agregar-operaciones" id="boton-submit-operacion">Agregar</button>
-        </p>
-    </div> 
-        
-                </article>
-      
+                    <button class="button is-success is-hovered is-focused boton-agregar-operaciones"
+                        id="boton-submit-operacion">Agregar</button>
+                </p>
+            </div>
+        </article>
     </section>
 
-     
     <script src="javascript.js"></script>
 
 </body>
