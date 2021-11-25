@@ -26,7 +26,7 @@ const tomarInfoDeOperacion = () => {
     operacion.tipo = tipoDeOperacion.value;
     operacion.monto = montoOperacion.value;
     operacion.categoria = categoriaDeOperacion.value;
-    operacion.fecha = dateOperacion.value; 
+    operacion.fecha = dateOperacion.value;
     return operacion;
 }
 
@@ -43,18 +43,23 @@ const tomarInfoDeOperacion = () => {
 //     return listaActualizadaJS;
 // }
 //actualizacion de datos en el local storage
-const actualizarListasDelLocalStorage = (callback, nomLista) =>{
+const actualizarListasDelLocalStorage = (arrayObj, callback, nomLista) =>{
     //operacionesRealizadas.push(tomarInfoDeOperacion());
-    operacionesRealizadas.push(callback);    
-    const operacionesAJSON = JSON.stringify(operacionesRealizadas);
+    arrayObj.push(callback);    
+    const operacionesAJSON = JSON.stringify(arrayObj);
     localStorage.setItem(nomLista, operacionesAJSON);
 }
 const tomarInfoDelLocalStorage = (nomLista) =>{
     const listaActualizada = localStorage.getItem(nomLista);
     const listaActualizadaJS = JSON.parse(listaActualizada);
-    return listaActualizadaJS;
+    if(listaActualizadaJS === null){
+        return [];
+    }else {
+        return listaActualizadaJS;
+    }
+    
 }
-// // mostrar operaciones realizadas en el html
+// mostrar operaciones realizadas en el html
 // let acc = ""
 // const agregarOperacionesHTML = () => {
 //     const agregarOperaciones = actualizarListaDeOperaciones();
@@ -84,15 +89,14 @@ const totalBalance = document.getElementById("total-balance");
 
 //filtrar los montos por ganancia o gasto
 const filtroDeTipoDeOperacion = (arrayObj, condicion) => {
-    if (condicion === "ganacia"){
-    const ganancias = arrayObj.filter(function (obj) {
-        return obj.tipo === "ganacia";
+    if (condicion === "ganancia"){
+        const ganancias = arrayObj.filter(function (obj) {
+        return obj.tipo === "ganancia";
     });
     return ganancias;
     }
     if (condicion === "gasto"){
-        console.log("1",arrayObj)
-    const gastos = arrayObj.filter(function (obj) {
+        const gastos = arrayObj.filter(function (obj) {
         return obj.tipo === "gasto";
     });
     return gastos;
@@ -101,11 +105,19 @@ const filtroDeTipoDeOperacion = (arrayObj, condicion) => {
 
 //suma de montos para el balance 
 const sumaDeMontos = (arrayObj) => {
-    console.log(arrayObj);
+    if(arrayObj === undefined){
+        return 0;
+    }
     const total = arrayObj.reduce(function (acc, elemento) {
         return acc + Number(elemento.monto);
     }, 0);
-    return total;
+    console.log ("12",total)
+    if(total <= 0 || total === NaN){
+        return 0;
+    }else {
+       return total; 
+    }
+    
 }
 
 //funcion para cambio de numeros en estados de ganacia, gasto y total.
@@ -113,25 +125,35 @@ const actualizacionDatosDeBalance = (arrayObj) => {
     //filtro los valores de tipo ganacia 
     const ganancias = filtroDeTipoDeOperacion(arrayObj, "ganancia");
     const gastos = filtroDeTipoDeOperacion(arrayObj, "gasto");
-    console.log(gastos);
-    console.log(arrayObj);
 
+    console.log("1",ganancias)
+    console.log("0",gastos)
     //se suman los montos y lo actualizamos en el html
     gananciaBalance.innerHTML = sumaDeMontos(ganancias);
     gastoBalance.innerHTML = sumaDeMontos(gastos);
 
     //actualiza el total de balance
-    totalBalance.innerHTML = sumaDeMontos(ganancias) - sumaDeMontos(gastos);
+    const montoTotalBalance = sumaDeMontos(ganancias) - sumaDeMontos(gastos);
+    cambiarColorSegunGananciaOGasto(montoTotalBalance);
+}
+
+const cambiarColorSegunGananciaOGasto = (monto, objetoACambiar) =>{
+    if(monto > 0){
+        objetoACambiar.classList.add("has-text-success");
+    }
+    if(monto < 0){
+        objetoACambiar.classList.add("has-text-danger");     
+    }
 }
 //sector generar nueva categoria
 const inputCrearCategoria = document.getElementById("input-crear-categoria");
 const botonCrearCategoria = document.getElementById("boton-crear-categoria");
 
 //funcionalidad de generacion de nuevas categorias
-const arrayCategorias = [];
 
 const generarNuevaCategoria = () =>{
-    const categoria = inputCrearCategoria.value;
+    const categoria = {};
+    categoria.categoria = inputCrearCategoria.value;
     return categoria;
 }
 
@@ -176,11 +198,14 @@ botonSubmitOperacion.onclick = () => {
     // nuevasoperacionessection.style.display = "none"
     // balancesection.style.display = "block";
 
-    // actualizarListaDeOperaciones();
-
-
-    actualizarListasDelLocalStorage(tomarInfoDeOperacion(),'operacionesRealizadas');
-    actualizacionDatosDeBalance(operacionesRealizadas)
-
+    actualizarListasDelLocalStorage(operacionesRealizadas, tomarInfoDeOperacion(),'operacionesRealizadas');
+    actualizacionDatosDeBalance(operacionesRealizadas);
 }
-console.log(Number(operacionesRealizadas[0].monto))
+
+const arrayCategorias = tomarInfoDelLocalStorage('categoriasAñadidas');
+botonCrearCategoria.onclick = () =>{
+    actualizarListasDelLocalStorage(arrayCategorias, generarNuevaCategoria(),'categoriasAñadidas');
+} 
+console.log(operacionesRealizadas.reduce(function (acc, elemento) {
+    return acc + Number(elemento.monto);
+}, 0));

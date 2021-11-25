@@ -78,7 +78,7 @@
                             Ganancias
                         </div>
                         <div class="column has-text-right has-text-success">
-                            +$0
+                            +$<span id="ganancia-balance">0</span>
                         </div>
                     </div>
 
@@ -87,7 +87,7 @@
                             Gastos
                         </div>
                         <div class="column has-text-right has-text-danger">
-                            -$0
+                            -$ <span id="gasto-balance">0</span>
                         </div>
                     </div>
 
@@ -96,7 +96,7 @@
                             Total
                         </div>
                         <div class="column has-text-weight-bold has-text-right">
-                            $0
+                            $ <span id="total-balance">0</span>
                         </div>
                     </div>
                 </article>
@@ -322,8 +322,8 @@
                             <div class="select is-fullwidth">
                                 <select id="tipo-de-operacion">
                                 
-                                    <option value="Gasto" >Gastos</option>
-                                    <option value="Ganancia">Ganancias</option>
+                                    <option value="gasto" >Gastos</option>
+                                    <option value="ganancia">Ganancias</option>
                                 </select>
                             </div>
                         </div>
