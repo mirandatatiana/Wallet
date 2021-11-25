@@ -111,13 +111,7 @@ const sumaDeMontos = (arrayObj) => {
     const total = arrayObj.reduce(function (acc, elemento) {
         return acc + Number(elemento.monto);
     }, 0);
-    console.log ("12",total)
-    if(total <= 0 || total === NaN){
-        return 0;
-    }else {
        return total; 
-    }
-    
 }
 
 //funcion para cambio de numeros en estados de ganacia, gasto y total.
@@ -126,22 +120,23 @@ const actualizacionDatosDeBalance = (arrayObj) => {
     const ganancias = filtroDeTipoDeOperacion(arrayObj, "ganancia");
     const gastos = filtroDeTipoDeOperacion(arrayObj, "gasto");
 
-    console.log("1",ganancias)
-    console.log("0",gastos)
     //se suman los montos y lo actualizamos en el html
     gananciaBalance.innerHTML = sumaDeMontos(ganancias);
     gastoBalance.innerHTML = sumaDeMontos(gastos);
 
     //actualiza el total de balance
     const montoTotalBalance = sumaDeMontos(ganancias) - sumaDeMontos(gastos);
-    cambiarColorSegunGananciaOGasto(montoTotalBalance);
+    cambiarColorSegunGananciaOGasto(montoTotalBalance,totalBalance);
+    totalBalance.innerHTML = montoTotalBalance;
 }
 
 const cambiarColorSegunGananciaOGasto = (monto, objetoACambiar) =>{
     if(monto > 0){
+        objetoACambiar.classList.remove("has-text-danger");
         objetoACambiar.classList.add("has-text-success");
     }
     if(monto < 0){
+        objetoACambiar.classList.remove("has-text-success");
         objetoACambiar.classList.add("has-text-danger");     
     }
 }
@@ -188,6 +183,7 @@ navNuevasOperacionesboton.onclick = () => {
 }
 
 const operacionesRealizadas = tomarInfoDelLocalStorage('operacionesRealizadas');
+actualizacionDatosDeBalance(operacionesRealizadas);
 botonSubmitOperacion.onclick = () => {
 
     // tomarInfoDeOperacion()
