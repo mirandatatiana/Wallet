@@ -26,8 +26,7 @@ const tomarInfoDeOperacion = () => {
     operacion.tipo = tipoDeOperacion.value;
     operacion.monto = montoOperacion.value;
     operacion.categoria = categoriaDeOperacion.value;
-    operacion.fecha = dateOperacion.value; 
-    console.log(operacion);
+    operacion.fecha = dateOperacion.value;
     return operacion;
 }
 
@@ -119,8 +118,6 @@ const actualizacionDatosDeBalance = (arrayObj) => {
     //filtro los valores de tipo ganacia 
     const ganancias = filtroDeTipoDeOperacion(arrayObj, "ganancia");
     const gastos = filtroDeTipoDeOperacion(arrayObj, "gasto");
-    console.log(gastos);
-    console.log(arrayObj);
 
     //se suman los montos y lo actualizamos en el html
     gananciaBalance.innerHTML = sumaDeMontos(ganancias);
@@ -138,7 +135,6 @@ const botonCrearCategoria = document.getElementById("boton-crear-categoria");
 const generarNuevaCategoria = () =>{
     const categoria = {};
     categoria.categoria = inputCrearCategoria.value;
-    console.log(categoria);
     return categoria;
 }
 
