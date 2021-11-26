@@ -7,7 +7,6 @@ const balancesection = document.querySelector("#pagina-principal")
 const categoriasection = document.querySelector("#categorias")
 const reportessection = document.querySelector("#reportes")
 const nuevasoperacionessection = document.querySelector("#nuevas-operaciones")
-
 //InnerHTML
 const sinResultadosBackgruond = document.getElementById("sin-resultados-operaciones")
 
@@ -197,7 +196,6 @@ botonCrearCategoria.onclick = () =>{
     actualizarListasDelLocalStorage(arrayCategorias, generarNuevaCategoria(),'categoriasAñadidas');
 }
 filtroTipo.onchange = () =>{
-    console.log("hola")
   const tipo = filtroDeTipoDeOperacion(operacionesRealizadas, filtroTipo.value)
   console.log(tipo)
 } 
