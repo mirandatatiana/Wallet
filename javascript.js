@@ -7,6 +7,7 @@ const balancesection = document.querySelector("#pagina-principal")
 const categoriasection = document.querySelector("#categorias")
 const reportessection = document.querySelector("#reportes")
 const nuevasoperacionessection = document.querySelector("#nuevas-operaciones")
+
 //InnerHTML
 const sinResultadosBackgruond = document.getElementById("sin-resultados-operaciones")
 
@@ -29,6 +30,31 @@ const tomarInfoDeOperacion = () => {
     return operacion;
 }
 
+//añadir objeto al array de operaciones
+
+
+// const actualizarListaDeOperaciones = () => {
+//     //deberia ir un if para saber si hay info a guardar o si solo se necesita tomar del local storage 
+//     operacionesRealizadas.push(tomarInfoDeOperacion());
+//     const operacionesAJSON = JSON.stringify(operacionesRealizadas);
+//     localStorage.setItem('operacionesRealizadas', operacionesAJSON);
+//     const listaActualizada = localStorage.getItem('operacionesRealizadas');
+//     const listaActualizadaJS = JSON.parse(listaActualizada);
+//     return listaActualizadaJS;
+// }
+//actualizacion de datos en el local storage
+// const actualizarListasDelLocalStorage = (callback, nomLista) => {
+//     //operacionesRealizadas.push(tomarInfoDeOperacion());
+//     operacionesRealizadas.push(callback);
+//     const operacionesAJSON = JSON.stringify(operacionesRealizadas);
+//     localStorage.setItem(nomLista, operacionesAJSON);
+// }
+// const tomarInfoDelLocalStorage = (nomLista) => {
+//     const listaActualizada = localStorage.getItem(nomLista);
+//     const listaActualizadaJS = JSON.parse(listaActualizada);
+//     return listaActualizadaJS;
+// }
+//actualizacion de datos en el local storage
 const actualizarListasDelLocalStorage = (arrayObj, callback, nomLista) => {
     //operacionesRealizadas.push(tomarInfoDeOperacion());
     arrayObj.push(callback);
@@ -46,32 +72,228 @@ const tomarInfoDelLocalStorage = (nomLista) => {
 
 }
 // mostrar operaciones realizadas en el html
+let acc = ""
+const agregarOperacionesHTML = (arrayObj) => {
+    const agregarOperaciones = tomarInfoDelLocalStorage(arrayObj)
+    const lista = document.getElementById("operaciones-guardadas")
+    const listaDeReportes = document.querySelector(".lista-reporte")
+
+    const operacionesString = agregarOperaciones.reduce((acc, elemento, index) => {
+        return acc = acc + `
+    <div class= "columns is-multiline is-mobile is-vcentered">
+          <div class= "column is-3-tablet is-6-mobile">
+            <h3 class= "has-text-weight-semibold">${elemento.desripcion} 
+        </h3>
+          </div>
+          <div class= "column is-3-tablet is-6-mobile has-text-right-mobile">
+            <span class= "tag is-primary is-light"> ${elemento.categoria} </span>
+    </div>
+            <div class= "column is-2-tablet has-text-gray is-hidden-mobile has-text-right-tablet" >
+         ${elemento.fecha}
+       </div>
+       
+       <div class= "column is-2-tablet is-6-mobile has-text-weight-bold has-text-right-tablet is-size-4-mobile">
+     ${elemento.monto}
+     </div>
+       <div class="column is-2-tablet is-6-mobile has-text-right">
+       <p class="is-fullwidht">
+       <a href="#" class="mr-3 is-size-7">Editarr</a>
+       <a href="#" class="is-size-7"> Eliminar </a> 
+      </p>
+       </div>
+    </div>
+        `
+    }, "")
+
+    lista.innerHTML = operacionesString
+    // listaDeReportes.innerHTML = `
+
+    // `
+}
+
+
+
+/* <div class= "box">
+    <div class= "columns">
+      <h3 class= "has-text-weight-semibold">Categoria con mayor ganancia <h3>
+      <span class= "tag is-primary is-light"> cateogia </span>
+      <div class= "column has-text-weight-bold has-text-right-tablet is-size-4-mobile">
+     80</div>
+     </div>
+  <div class= "columns is-mobile">
+
+     <h3 class= " column has-text-weight-semibold">Categoria con mayor gasto <h3>
+    <p class="column">
+      <span class= "mr-4 is-size-7 tag is-primary is-light"> categoria </span>
+      <div class= " is-size-7 has-text-weight-bold has-text-right ">
+       80
+    </p>
+</div>
+</div>
+<div class= "columns">
+
+  <h3 class= "has-text-weight-semibold">Categoria con mayor balance <h3>
+  <span class= "tag is-primary is-light"> categoria </span>
+  <div class= "column is-2-tablet is-6-mobile has-text-weight-bold has-text-right-tablet is-size-4-mobile">
+80
+</div>
+</div> */
+//  </div> 
+//  <div>
+//  <p class="column">
+//  <a href="#" class="mr-4 is-size-7">Editar</a>    
+//  <a href="#" class="is-size-7"> Eliminar </a> 
+//  </p>
+//    </div>
+//    </div>
+//                                   agregarOperacionesHTML()
+// // mostrar operaciones realizadas en el html
 // let acc = ""
+//  const agregarOperacionesHTML = (array) => {
+//  const html = array.reduce(acc, elemento, index) => {
+//      return (acc + 
+//         `
+//         <div>
+//         <p>${elemento.desripcion} </p> 
+//         <p>${elemento.tipo} </p> 
+//         <p>${elemento.categoria} </p> 
+//         <p>${elemento.fecha} </p> 
+// </div>
+//         `);
+//  }, '');
+
+
+
+//     const agregarOperaciones = actualizarListasDelLocalStorage(tomarInfoDeOperacion(), 'operacionesRealizadas');
+//     const lista = document.getElementById("operaciones-guardadas")
+//     const operacionesString = agregarOperaciones.reduce((acc, elemento, index) => {
+//         return acc = acc + `<div> ${elemento.desripcion} </div>
+//         <div> ${elemento.monto} </div>
+//         <div> ${elemento.categoria} </div>
+//         <div> ${elemento.fecha} </div>
+//         `
+//     }, "")
+//     lista.innerHTML = operacionesString
+// }
+// agregarOperacionesHTML()
+
 // const agregarOperacionesHTML = () => {
-//     const agregarOperaciones = actualizarListaDeOperaciones();
+//     const pasarAHTML = tomarInfoDelLocalStorage();
+
+//     const operacionesString = pasarAHTML.map((elemento) => {
+//         return ` 
+//             <div> ${elemento.desripcion} </div>
+//             <div> ${elemento.monto} </div>
+//             <div> ${elemento.categoria} </div>
+//             <div> ${elemento.fecha} </div>
+//             `
+//     });
 //     const lista = document.getElementById("operaciones-guardadas");
 
-//     const operacionesString = agregarOperaciones.map((acc, elemento, index) => {
-//         return acc = acc + `<div> ${acc.desripcion} </div>
-//         <div> ${acc.monto} </div>
-//         <div> ${acc.categoria} </div>
-//         <div> ${acc.fecha} </div>c
-//         `
-//     }, "");
-//     lista.innerHTML = operacionesString;
+//     lista.innerHTML = operacionesString
+
+// }
+// agregarOperacionesHTML()
+// lista.innerHTML = agregarOperacionesHTML()
+// const html = tomarInfoDeOperacion.reduce((acc, elemento, index) => {
+//     return acc = acc + `< div > ${ elemento.desripcion } </div >
+// <div> ${elemento.monto} </div>
+// <div> ${elemento.categoria} </div>
+// <div> ${elemento.fecha} </div>
+// `
+// }, '')
+
+// const lista = document.getElementById("operaciones-guardadas");
+
+// lista.innerHTML = html;
+
+
+// const operacionesEnSistema = () => {
+//     sinResultadosBackgruond.classList.add("ocultar")
+//     nuevasoperacionessection.classList.add("ocultar")
+//     balancesection.classList.remove("ocultar");
 // }
 
-const operacionesEnSistema = () => {
-    sinResultadosBackgruond.classList.add("ocultar")
-    nuevasoperacionessection.classList.add("ocultar")
-    balancesection.classList.remove("ocultar");
-}
-//sector filtro de operaciones 
-const filtroTipo = document.getElementById("filtro-tipo");
-const filtroCategoria = document.getElementById("filtro-categoria");
-const filtroFecha = document.getElementById("filtro-fecha");
-const modeloDeOrden = document.getElementById("modelo-de-orden");
 
+
+
+//Pagina de Categorias
+const categoriasCreadas = document.querySelector(".categorias-creadas")
+
+categoriasCreadas.innerHTML = `
+<div class="columns">
+   <div class="column">
+            <span class= "tag is-primary is-light"> Comida </span>
+       </div>
+<div>
+   <p class="column">
+   <a href="#" class="mr-4 is-size-7">Editar</a>    
+   <a href="#" class="is-size-7"> Eliminar </a> 
+   </p>
+     </div>
+     
+</div>
+<div class="columns">
+   <div class="column">
+            <span class= "tag is-primary is-light"> Servicio </span>
+       </div>
+<div>
+   <p class="column">
+   <a href="#" class="mr-4 is-size-7">Editar</a>    
+   <a href="#" class="is-size-7"> Eliminar </a> 
+   </p>
+     </div>
+     
+</div>
+<div class="columns">
+   <div class="column">
+            <span class= "tag is-primary is-light"> Salidas </span>
+       </div>
+<div>
+   <p class="column">
+   <a href="#" class="mr-4 is-size-7">Editar</a>    
+   <a href="#" class="is-size-7"> Eliminar </a> 
+   </p>
+     </div>
+</div>
+<div class="columns">
+   <div class="column">
+            <span class= "tag is-primary is-light"> Educación </span>
+       </div>
+<div>
+   <p class="column">
+   <a href="#" class="mr-4 is-size-7">Editar</a>    
+   <a href="#" class="is-size-7"> Eliminar </a> 
+   </p>
+     </div>
+     
+</div>
+<div class="columns">
+   <div class="column">
+            <span class= "tag is-primary is-light"> Trasnporte </span>
+       </div>
+<div>
+   <p class="column">
+   <a href="#" class="mr-4 is-size-7">Editar</a>    
+   <a href="#" class="is-size-7"> Eliminar </a> 
+   </p>
+     </div>
+     
+</div>
+<div class="columns">
+   <div class="column">
+            <span class= "tag is-primary is-light"> Trabajo </span>
+       </div>
+<div>
+   <p class="column">
+   <a href="#" class="mr-4 is-size-7">Editar</a>    
+   <a href="#" class="is-size-7"> Eliminar </a> 
+   </p>
+     </div>
+     
+</div>
+
+`
 //sector balance
 const gastoBalance = document.getElementById("gasto-balance");
 const gananciaBalance = document.getElementById("ganancia-balance");
@@ -91,12 +313,9 @@ const filtroDeTipoDeOperacion = (arrayObj, condicion) => {
         });
         return gastos;
     }
-    if (condicion === "todos") {
-        return arrayObj;
-    }
 }
 
-//suma de montos para el balance eeeeee
+//suma de montos para el balance 
 const sumaDeMontos = (arrayObj) => {
     if (arrayObj === undefined) {
         return 0;
@@ -177,25 +396,36 @@ navNuevasOperacionesboton.onclick = () => {
 
 const operacionesRealizadas = tomarInfoDelLocalStorage('operacionesRealizadas');
 actualizacionDatosDeBalance(operacionesRealizadas);
+agregarOperacionesHTML(tomarInfoDelLocalStorage('operacionesRealizadas'))
 botonSubmitOperacion.onclick = () => {
 
     // tomarInfoDeOperacion()
     // //actualizarListaDeOperaciones()
-    // agregarOperacionesHTML()
-    // operacionesEnSistema()
+
+
     // sinResultadosBackgruond.style.display = "none"
     // nuevasoperacionessection.style.display = "none"
     // balancesection.style.display = "block";
 
     actualizarListasDelLocalStorage(operacionesRealizadas, tomarInfoDeOperacion(), 'operacionesRealizadas');
+    agregarOperacionesHTML('operacionesRealizadas')
     actualizacionDatosDeBalance(operacionesRealizadas);
 }
 
 const arrayCategorias = tomarInfoDelLocalStorage('categoriasAñadidas');
 botonCrearCategoria.onclick = () => {
     actualizarListasDelLocalStorage(arrayCategorias, generarNuevaCategoria(), 'categoriasAñadidas');
+
+    // agregarOperacionesHTML()
+
 }
-filtroTipo.onchange = () => {
-    const tipo = filtroDeTipoDeOperacion(operacionesRealizadas, filtroTipo.value)
-    console.log(tipo)
-}
+console.log(operacionesRealizadas.reduce(function (acc, elemento) {
+    return acc + Number(elemento.monto);
+}, 0));
+
+
+    //actualizarListasDelLocalStorage(tomarInfoDeOperacion(), 'operacionesRealizadas');
+
+
+
+//agregarOperacionesHTML(actualizarListasDelLocalStorage(tomarInfoDeOperacion(), 'operacionesRealizadas'));
