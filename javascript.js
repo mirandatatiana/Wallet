@@ -212,6 +212,18 @@ const filtroDeTipoDeOperacion = (arrayObj, condicion) => {
         });
         return gastos;
     }
+    if(condicion === "todo"){
+        return arrayObj;
+    }
+}
+
+const filtroDeCategoriaDeOperacion = (arrayObj, condicion) =>{
+    const operacionesXCategoria = arrayObj.filter((operacion) => {
+        if (operacion.categoria === condicion) {
+          return operacion;
+        }
+      });
+      return operacionesXCategoria;
 }
 
 //suma de montos para el balance 
@@ -270,6 +282,14 @@ const modeloDeOrden = document.getElementById("modelo-de-orden");
 
 filtroTipo.onchange = () =>{
     const mostrar = filtroDeTipoDeOperacion(operacionesRealizadas, filtroTipo.value);
+    agregarOperacionesHTML(mostrar);
+}
+
+filtroCategoria.onchange = () =>{
+    const primerFiltro = filtroDeTipoDeOperacion(operacionesRealizadas, filtroTipo.value);
+    console.log(primerFiltro)
+    console.log(filtroCategoria.value)
+    const mostrar = filtroDeCategoriaDeOperacion(primerFiltro, filtroCategoria.value);
     agregarOperacionesHTML(mostrar);
 }
 
