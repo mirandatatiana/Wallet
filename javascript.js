@@ -30,19 +30,6 @@ const tomarInfoDeOperacion = () => {
     return operacion;
 }
 
-//añadir objeto al array de operaciones
-
-
-// const actualizarListaDeOperaciones = () => {
-//     //deberia ir un if para saber si hay info a guardar o si solo se necesita tomar del local storage 
-//     operacionesRealizadas.push(tomarInfoDeOperacion());
-//     const operacionesAJSON = JSON.stringify(operacionesRealizadas);
-//     localStorage.setItem('operacionesRealizadas', operacionesAJSON);
-//     const listaActualizada = localStorage.getItem('operacionesRealizadas');
-//     const listaActualizadaJS = JSON.parse(listaActualizada);
-//     return listaActualizadaJS;
-// }
-//actualizacion de datos en el local storage
 const actualizarListasDelLocalStorage = (arrayObj, callback, nomLista) =>{
     //operacionesRealizadas.push(tomarInfoDeOperacion());
     arrayObj.push(callback);    
@@ -80,7 +67,11 @@ const operacionesEnSistema = () => {
     nuevasoperacionessection.classList.add("ocultar")
     balancesection.classList.remove("ocultar");
 }
-
+//sector filtro de operaciones 
+const filtroTipo = document.getElementById("filtro-tipo");
+const filtroCategoria = document.getElementById("filtro-categoria");
+const filtroFecha = document.getElementById("filtro-fecha");
+const modeloDeOrden = document.getElementById("modelo-de-orden");
 
 //sector balance
 const gastoBalance = document.getElementById("gasto-balance");
@@ -100,6 +91,9 @@ const filtroDeTipoDeOperacion = (arrayObj, condicion) => {
         return obj.tipo === "gasto";
     });
     return gastos;
+    }
+    if (condicion === "todos"){
+        return arrayObj;
     }
 }
 
@@ -201,7 +195,9 @@ botonSubmitOperacion.onclick = () => {
 const arrayCategorias = tomarInfoDelLocalStorage('categoriasAñadidas');
 botonCrearCategoria.onclick = () =>{
     actualizarListasDelLocalStorage(arrayCategorias, generarNuevaCategoria(),'categoriasAñadidas');
+}
+filtroTipo.onchange = () =>{
+    console.log("hola")
+  const tipo = filtroDeTipoDeOperacion(operacionesRealizadas, filtroTipo.value)
+  console.log(tipo)
 } 
-console.log(operacionesRealizadas.reduce(function (acc, elemento) {
-    return acc + Number(elemento.monto);
-}, 0));
