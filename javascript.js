@@ -59,17 +59,73 @@ let acc = ""
 const agregarOperacionesHTML = () => {
     const agregarOperaciones = actualizarListaDeOperaciones()
     const lista = document.getElementById("operaciones-guardadas")
-
+    const listaDeReportes = document.querySelector(".lista-reporte")
 
     const operacionesString = agregarOperaciones.reduce((acc, elemento, index) => {
-        return acc = acc + `<div> ${elemento.desripcion} </div>
-        <div> ${elemento.monto} </div>
-        <div> ${elemento.categoria} </div>
-        <div> ${elemento.fecha} </div>
+        return acc = acc + `
+    <div class= "columns is-multiline is-mobile is-vcentered">
+          <div class= "column is-3-tablet is-6-mobile">
+            <h3 class= "has-text-weight-semibold">${elemento.desripcion} 
+        </h3>
+          </div>
+          <div class= "column is-3-tablet is-6-mobile has-text-right-mobile">
+            <span class= "tag is-primary is-light"> ${elemento.categoria} </span>
+    </div>
+            <div class= "column is-2-tablet has-text-gray is-hidden-mobile has-text-right-tablet" >
+         ${elemento.fecha}
+       </div>
+       
+       <div class= "column is-2-tablet is-6-mobile has-text-weight-bold has-text-right-tablet is-size-4-mobile">
+     ${elemento.monto}
+     </div>
+       <div class="column is-2-tablet is-6-mobile has-text-right">
+       <p class="is-fullwidht">
+       <a href="#" class="mr-3 is-size-7">Editar</a>
+       <a href="#" class="is-size-7"> Eliminar </a> 
+      </p>
+       </div>
+    </div>
         `
     }, "")
+
     lista.innerHTML = operacionesString
+    listaDeReportes.innerHTML = `
+  
+    `
 }
+{/* <div class= "box">
+    <div class= "columns">
+      <h3 class= "has-text-weight-semibold">Categoria con mayor ganancia <h3>
+      <span class= "tag is-primary is-light"> cateogia </span>
+      <div class= "column has-text-weight-bold has-text-right-tablet is-size-4-mobile">
+     80</div>
+     </div>
+  <div class= "columns is-mobile">
+
+     <h3 class= " column has-text-weight-semibold">Categoria con mayor gasto <h3>
+    <p class="column">
+      <span class= "mr-4 is-size-7 tag is-primary is-light"> categoria </span>
+      <div class= " is-size-7 has-text-weight-bold has-text-right ">
+       80
+    </p>
+</div>
+</div>
+<div class= "columns">
+
+  <h3 class= "has-text-weight-semibold">Categoria con mayor balance <h3>
+  <span class= "tag is-primary is-light"> categoria </span>
+  <div class= "column is-2-tablet is-6-mobile has-text-weight-bold has-text-right-tablet is-size-4-mobile">
+80
+</div>
+</div> */}
+//  </div> 
+//  <div>
+//  <p class="column">
+//  <a href="#" class="mr-4 is-size-7">Editar</a>    
+//  <a href="#" class="is-size-7"> Eliminar </a> 
+//  </p>
+//    </div>
+//    </div>
 agregarOperacionesHTML()
 // // mostrar operaciones realizadas en el html
 // let acc = ""
@@ -138,7 +194,82 @@ agregarOperacionesHTML()
 //     balancesection.classList.remove("ocultar");
 // }
 
+const categoriasCreadas = document.querySelector(".categorias-creadas")
 
+categoriasCreadas.innerHTML = `
+<div class="columns">
+   <div class="column">
+            <span class= "tag is-primary is-light"> Comida </span>
+       </div>
+<div>
+   <p class="column">
+   <a href="#" class="mr-4 is-size-7">Editar</a>    
+   <a href="#" class="is-size-7"> Eliminar </a> 
+   </p>
+     </div>
+     
+</div>
+<div class="columns">
+   <div class="column">
+            <span class= "tag is-primary is-light"> Servicio </span>
+       </div>
+<div>
+   <p class="column">
+   <a href="#" class="mr-4 is-size-7">Editar</a>    
+   <a href="#" class="is-size-7"> Eliminar </a> 
+   </p>
+     </div>
+     
+</div>
+<div class="columns">
+   <div class="column">
+            <span class= "tag is-primary is-light"> Salidas </span>
+       </div>
+<div>
+   <p class="column">
+   <a href="#" class="mr-4 is-size-7">Editar</a>    
+   <a href="#" class="is-size-7"> Eliminar </a> 
+   </p>
+     </div>
+</div>
+<div class="columns">
+   <div class="column">
+            <span class= "tag is-primary is-light"> Educación </span>
+       </div>
+<div>
+   <p class="column">
+   <a href="#" class="mr-4 is-size-7">Editar</a>    
+   <a href="#" class="is-size-7"> Eliminar </a> 
+   </p>
+     </div>
+     
+</div>
+<div class="columns">
+   <div class="column">
+            <span class= "tag is-primary is-light"> Trasnporte </span>
+       </div>
+<div>
+   <p class="column">
+   <a href="#" class="mr-4 is-size-7">Editar</a>    
+   <a href="#" class="is-size-7"> Eliminar </a> 
+   </p>
+     </div>
+     
+</div>
+<div class="columns">
+   <div class="column">
+            <span class= "tag is-primary is-light"> Trabajo </span>
+       </div>
+<div>
+   <p class="column">
+   <a href="#" class="mr-4 is-size-7">Editar</a>    
+   <a href="#" class="is-size-7"> Eliminar </a> 
+   </p>
+     </div>
+     
+</div>
+
+`
 //sector balance
 const gastoBalance = document.getElementById("gasto-balance");
 const gananciaBalance = document.getElementById("ganancia-balance");
