@@ -226,6 +226,15 @@ const filtroDeCategoriaDeOperacion = (arrayObj, condicion) =>{
       return operacionesXCategoria;
 }
 
+const filtroPorFecha = (arrayObj, condicion) =>{
+    const operacionesXFecha = arrayObj.filter((operacion) => {
+        if (operacion.fecha === condicion) {
+          return operacion;
+        }
+      });
+      return operacionesXFecha;
+}
+
 //suma de montos para el balance 
 const sumaDeMontos = (arrayObj) => {
     if (arrayObj === undefined) {
@@ -287,9 +296,15 @@ filtroTipo.onchange = () =>{
 
 filtroCategoria.onchange = () =>{
     const primerFiltro = filtroDeTipoDeOperacion(operacionesRealizadas, filtroTipo.value);
-    console.log(primerFiltro)
-    console.log(filtroCategoria.value)
     const mostrar = filtroDeCategoriaDeOperacion(primerFiltro, filtroCategoria.value);
+    agregarOperacionesHTML(mostrar);
+}
+
+filtroFecha.onchange = () =>{
+    const primerFiltro = filtroDeTipoDeOperacion(operacionesRealizadas, filtroTipo.value);
+    const segundoFiltro = filtroDeCategoriaDeOperacion(primerFiltro, filtroCategoria.value);
+    const mostrar = filtroPorFecha(segundoFiltro, filtroFecha.value);
+    console.log(filtroFecha.value)
     agregarOperacionesHTML(mostrar);
 }
 
