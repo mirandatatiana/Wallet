@@ -74,7 +74,7 @@ const tomarInfoDelLocalStorage = (nomLista) => {
 // mostrar operaciones realizadas en el html
 let acc = ""
 const agregarOperacionesHTML = (arrayObj) => {
-    const agregarOperaciones = tomarInfoDelLocalStorage(arrayObj)
+    const agregarOperaciones = arrayObj
     const lista = document.getElementById("operaciones-guardadas")
     const listaDeReportes = document.querySelector(".lista-reporte")
 
@@ -262,6 +262,16 @@ const generarNuevaCategoria = () => {
     categoria.categoria = inputCrearCategoria.value;
     return categoria;
 }
+//filtros para las opreaciones realizadas
+const filtroTipo = document.getElementById("filtro-tipo");
+const filtroCategoria = document.getElementById("filtro-categoria");
+const filtroFecha = document.getElementById("filtro-fecha");
+const modeloDeOrden = document.getElementById("modelo-de-orden");
+
+filtroTipo.onchange = () =>{
+    const mostrar = filtroDeTipoDeOperacion(operacionesRealizadas, filtroTipo.value);
+    agregarOperacionesHTML(mostrar);
+}
 
 //navegacion
 navBalanceboton.onclick = () => {
@@ -295,7 +305,7 @@ navNuevasOperacionesboton.onclick = () => {
 
 const operacionesRealizadas = tomarInfoDelLocalStorage('operacionesRealizadas');
 actualizacionDatosDeBalance(operacionesRealizadas);
-agregarOperacionesHTML(tomarInfoDelLocalStorage('operacionesRealizadas'))
+agregarOperacionesHTML(operacionesRealizadas);
 botonSubmitOperacion.onclick = () => {
 
     // tomarInfoDeOperacion()
@@ -307,7 +317,7 @@ botonSubmitOperacion.onclick = () => {
     // balancesection.style.display = "block";
 
     actualizarListasDelLocalStorage(operacionesRealizadas, tomarInfoDeOperacion(), 'operacionesRealizadas');
-    agregarOperacionesHTML('operacionesRealizadas')
+    agregarOperacionesHTML(operacionesRealizadas)
     actualizacionDatosDeBalance(operacionesRealizadas);
 }
 
