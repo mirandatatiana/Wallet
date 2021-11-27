@@ -235,6 +235,8 @@ const filtroPorFecha = (arrayObj, condicion) =>{
       return operacionesXFecha;
 }
 
+
+
 //suma de montos para el balance 
 const sumaDeMontos = (arrayObj) => {
     if (arrayObj === undefined) {
@@ -289,24 +291,12 @@ const filtroCategoria = document.getElementById("filtro-categoria");
 const filtroFecha = document.getElementById("filtro-fecha");
 const modeloDeOrden = document.getElementById("modelo-de-orden");
 
-filtroTipo.onchange = () =>{
-    const mostrar = filtroDeTipoDeOperacion(operacionesRealizadas, filtroTipo.value);
-    agregarOperacionesHTML(mostrar);
-}
+// filtroTipo.onchange = () =>{
+//     const mostrar = filtroDeTipoDeOperacion(operacionesRealizadas, filtroTipo.value);
+//     agregarOperacionesHTML(mostrar);
+// }
 
-filtroCategoria.onchange = () =>{
-    const primerFiltro = filtroDeTipoDeOperacion(operacionesRealizadas, filtroTipo.value);
-    const mostrar = filtroDeCategoriaDeOperacion(primerFiltro, filtroCategoria.value);
-    agregarOperacionesHTML(mostrar);
-}
 
-filtroFecha.onchange = () =>{
-    const primerFiltro = filtroDeTipoDeOperacion(operacionesRealizadas, filtroTipo.value);
-    const segundoFiltro = filtroDeCategoriaDeOperacion(primerFiltro, filtroCategoria.value);
-    const mostrar = filtroPorFecha(segundoFiltro, filtroFecha.value);
-    console.log(filtroFecha.value)
-    agregarOperacionesHTML(mostrar);
-}
 
 //navegacion
 navBalanceboton.onclick = () => {
@@ -363,7 +353,29 @@ botonCrearCategoria.onclick = () => {
     // agregarOperacionesHTML()
 
 }
+const filtroGeneral = (arrayObj) =>{
+    const primerFiltro = filtroDeTipoDeOperacion(operacionesRealizadas, filtroTipo.value);
+    const segundoFiltro = filtroDeCategoriaDeOperacion(primerFiltro, filtroCategoria.value);
+    const mostrar = filtroPorFecha(segundoFiltro, filtroFecha.value);
+    agregarOperacionesHTML(mostrar);
+}
+filtroTipo.onchange = () =>{
+    const primerFiltro = filtroDeTipoDeOperacion(operacionesRealizadas, filtroTipo.value);
+    const segundoFiltro = filtroDeCategoriaDeOperacion(primerFiltro, filtroCategoria.value);
+    const mostrar = filtroPorFecha(segundoFiltro, filtroFecha.value);
+    agregarOperacionesHTML(mostrar);
+    console.log (operacionesRealizadas)
+}
+filtroCategoria.onchange = filtroGeneral(operacionesRealizadas);
+    
 
+
+filtroFecha.onchange = () =>{
+    const primerFiltro = filtroDeTipoDeOperacion(operacionesRealizadas, filtroTipo.value);
+    const segundoFiltro = filtroDeCategoriaDeOperacion(primerFiltro, filtroCategoria.value);
+    const mostrar = filtroPorFecha(segundoFiltro, filtroFecha.value);
+    agregarOperacionesHTML(mostrar);
+}
     //actualizarListasDelLocalStorage(tomarInfoDeOperacion(), 'operacionesRealizadas');
 
 
