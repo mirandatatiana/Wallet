@@ -1,4 +1,6 @@
+
 //Navegacion de la pagina
+const botonInicio = document.getElementById("boton-inicio");
 const navBalanceboton = document.querySelector(".pagina-principal-boton")
 const navCategoriasboton = document.querySelector(".boton-categorias")
 const navReportesboton = document.querySelector(".boton-reportes")
@@ -19,18 +21,25 @@ const categoriaDeOperacion = document.getElementById("categoria-de-operacion");
 const dateOperacion = document.getElementById("date-operacion");
 const botonSubmitOperacion = document.getElementById("boton-submit-operacion");
 
-//generar el obj de nueva operacion
-const tomarInfoDeOperacion = () => {
-    var operacion = {};
-    operacion.desripcion = descripcionDeOperacion.value;
-    operacion.tipo = tipoDeOperacion.value;
-    operacion.monto = montoOperacion.value;
-    operacion.categoria = categoriaDeOperacion.value;
-    operacion.fecha = dateOperacion.value;
-    return operacion;
-}
 
-//añadir objeto al array de operaciones
+//filtros para las opreaciones realizadas
+const ocultarFiltros = document.getElementById("ocultar-filtros");
+const filtros = document.getElementById("filtros");
+const filtroTipo = document.getElementById("filtro-tipo");
+const filtroCategoria = document.getElementById("filtro-categoria");
+const filtroFecha = document.getElementById("filtro-fecha");
+const modeloDeOrden = document.getElementById("modelo-de-orden");
+
+//sector balance
+const gastoBalance = document.getElementById("gasto-balance");
+const gananciaBalance = document.getElementById("ganancia-balance");
+const totalBalance = document.getElementById("total-balance");
+
+//sector generar nueva categoria
+const inputCrearCategoria = document.getElementById("input-crear-categoria");
+const botonCrearCategoria = document.getElementById("boton-crear-categoria");
+const botonEditarCategoria = document.querySelectorAll("#boton-editar-categoria");
+const botonEliminarCategoria = document.querySelectorAll("#boton-eliminar-categoria");
 
 //actualizacion de datos en el local storage
 const actualizarListasDelLocalStorage = (arrayObj, callback, nomLista) => {
@@ -47,6 +56,17 @@ const tomarInfoDelLocalStorage = (nomLista) => {
         return listaActualizadaJS;
     }
 
+}
+
+//generar el obj de nueva operacion
+const tomarInfoDeOperacion = () => {
+    var operacion = {};
+    operacion.desripcion = descripcionDeOperacion.value;
+    operacion.tipo = tipoDeOperacion.value;
+    operacion.monto = montoOperacion.value;
+    operacion.categoria = categoriaDeOperacion.value;
+    operacion.fecha = dateOperacion.value;
+    return operacion;
 }
 
 // mostrar operaciones realizadas en el html
@@ -91,84 +111,30 @@ const agregarOperacionesHTML = (arrayObj) => {
 //Pagina de Categorias
 const categoriasCreadas = document.querySelector(".categorias-creadas")
 
-categoriasCreadas.innerHTML = `
-<div class="columns">
-    <div class="column">
-        <span class="tag is-primary is-light"> Comida </span>
-    </div>
-    <div>
-        <p class="column">
-            <a href="#" class="mr-4 is-size-7">Editar</a>
-            <a href="#" class="is-size-7"> Eliminar </a>
-        </p>
-    </div>
+const agregarCategoriasHTML = (arrayObj) => {
+    const agregarOperaciones = arrayObj
 
-</div>
-<div class="columns">
-    <div class="column">
-        <span class="tag is-primary is-light"> Servicio </span>
-    </div>
-    <div>
-        <p class="column">
-            <a href="#" class="mr-4 is-size-7">Editar</a>
-            <a href="#" class="is-size-7"> Eliminar </a>
-        </p>
-    </div>
+    const operacionesString = agregarOperaciones.reduce((acc, elemento) => {
+        return acc = acc + `
+        <div class="columns">
+            <div class="column">
+                <span class="tag is-primary is-light"> ${elemento.categoria} </span>
+            </div>
+            <div>
+                <p class="column">
+                    <a href="#" class="mr-4 is-size-7" id="boton-editar-categoria">Editar</a>
+                    <a href="#" class="is-size-7" id="boton-eliminar-categoria"> Eliminar </a>
+                </p>
+            </div>
+        </div>
+        `
+    }, "");
+    categoriasCreadas.innerHTML = operacionesString;
+    // listaDeReportes.innerHTML = `
 
-</div>
-<div class="columns">
-    <div class="column">
-        <span class="tag is-primary is-light"> Salidas </span>
-    </div>
-    <div>
-        <p class="column">
-            <a href="#" class="mr-4 is-size-7">Editar</a>
-            <a href="#" class="is-size-7"> Eliminar </a>
-        </p>
-    </div>
-</div>
-<div class="columns">
-    <div class="column">
-        <span class="tag is-primary is-light"> Educación </span>
-    </div>
-    <div>
-        <p class="column">
-            <a href="#" class="mr-4 is-size-7">Editar</a>
-            <a href="#" class="is-size-7"> Eliminar </a> 0
-        </p>
-    </div>
+    // `
+}
 
-</div>
-<div class="columns">
-    <div class="column">
-        <span class="tag is-primary is-light"> Trasnporte </span>
-    </div>
-    <div>
-        <p class="column">
-            <a href="#" class="mr-4 is-size-7">Editar</a>
-            <a href="#" class="is-size-7"> Eliminar </a>
-        </p>
-    </div>
-
-</div>
-<div class="columns">
-    <div class="column">
-        <span class="tag is-primary is-light"> Trabajo </span>
-    </div>
-    <div>
-        <p class="column">
-            <a href="#" class="mr-4 is-size-7">Editar</a>
-            <a href="#" class="is-size-7"> Eliminar </a>
-        </p>
-    </div>
-
-</div>
-
-`
-//sector balance
-const gastoBalance = document.getElementById("gasto-balance");
-const gananciaBalance = document.getElementById("ganancia-balance");
-const totalBalance = document.getElementById("total-balance");
 
 //filtrar los montos por ganancia o gasto
 const filtroDeTipoDeOperacion = (arrayObj, condicion) => {
@@ -198,16 +164,87 @@ const filtroDeCategoriaDeOperacion = (arrayObj, condicion) =>{
       return operacionesXCategoria;
 }
 
+const mayorQue = (arrayObj) =>{
+    var elementoMayor = arrayObj[0];
+    arrayObj.forEach((elemento)=>{
+        if(elemento.monto > elementoMayor.monto){
+            elementoMayor = elemento;
+        }
+        
+    });
+    return elementoMayor;
+}
+const menorQue = (arrayObj) =>{
+    var elementoMayor = arrayObj[0];
+    arrayObj.forEach((elemento)=>{
+        if(elemento.monto < elementoMayor.monto){
+            elementoMayor = elemento;
+        }
+    });
+    return elementoMayor;
+}
+const reporteGeneral = tomarInfoDelLocalStorage('reporteGeneral');;
+const resumenReporte = (arrayObj, condicion, callback, descripcion) =>{
+    const lista = filtroDeTipoDeOperacion(arrayObj, condicion);
+    if(condicion === "todos"){
+        
+    }
+    const valor = callback(lista);
+    if(valor !== undefined){
+        reporteGeneral.descripcion = descripcion;
+        reporteGeneral.categoria = valor.categoria;
+        reporteGeneral.mayorGanancia = valor.monto;  
+    }
+
+}
+const ordenarCategorias = (arrayObj) =>{
+    arrayObj.sort((categoria1, categoria2)=>{
+        if(categoria1.categoria < categoria2.categoria){
+            return -1;
+        }
+        if(categoria1.categoria > categoria2.categoria){
+            return 1
+        }
+        return 0;
+    });
+}
+
+const totalXCategoria = () =>{
+    ordenarCategorias(lista);
+    var elementoComparacion = lista[0];
+    var totalXCategoria = 0;
+    var totalGanancia = 0;
+    var totalGasto = 0;
+    lista.forEach((elemento)=>{
+        if(elementoComparacion.categoria === elemento.categoria){
+            totalXCategoria += Number(elemento.monto);
+            if(elemento.tipo === "gasto"){
+                totalGasto += elemento.monto;
+            }
+            if(elemento.tipo === "ganancia"){
+                totalGanancia += elemento.monto;
+            }
+            elementoComparacion = elemento;
+            lista.shift();
+        }
+    });
+}
+
+const totalXMes = () =>{
+
+}
 const filtroPorFecha = (arrayObj, condicion) =>{
     const operacionesXFecha = arrayObj.filter((operacion) => {
         if (operacion.fecha === condicion) {
           return operacion;
         }
-      });
-      return operacionesXFecha;
+    });
+    return operacionesXFecha;
 }
 
-
+const eliminarObjetoDeArray = (arrayObj, id) =>{
+    arrayObj.splice(id,1);
+}
 
 //suma de montos para el balance 
 const sumaDeMontos = (arrayObj) => {
@@ -247,10 +284,6 @@ const cambiarColorSegunGananciaOGasto = (monto, objetoACambiar) => {
     }
 }
 
-//sector generar nueva categoria
-const inputCrearCategoria = document.getElementById("input-crear-categoria");
-const botonCrearCategoria = document.getElementById("boton-crear-categoria");
-
 //funcionalidad de generacion de nuevas categorias
 const generarNuevaCategoria = () => {
     const categoria = {};
@@ -258,76 +291,139 @@ const generarNuevaCategoria = () => {
     return categoria;
 }
 
-//filtros para las opreaciones realizadas
-const filtroTipo = document.getElementById("filtro-tipo");
-const filtroCategoria = document.getElementById("filtro-categoria");
-const filtroFecha = document.getElementById("filtro-fecha");
-const modeloDeOrden = document.getElementById("modelo-de-orden");
-
-//navegacion
-navBalanceboton.onclick = () => {
-    categoriasection.style.display = "none";
-    reportessection.style.display = "none";
-    nuevasoperacionessection.style.display = "none";
-    balancesection.style.display = "block";
-
+const filtroGeneral = (arrayObj) =>{
+    const primerFiltro = filtroDeTipoDeOperacion(arrayObj, filtroTipo.value);
+    const segundoFiltro = filtroDeCategoriaDeOperacion(primerFiltro, filtroCategoria.value);
+    const mostrar = filtroPorFecha(segundoFiltro, filtroFecha.value);
+    agregarOperacionesHTML(mostrar);
+    return mostrar;
 }
 
-navCategoriasboton.onclick = () => {
-    balancesection.style.display = "none";
-    nuevasoperacionessection.style.display = "none";
-    balancesection.style.display = "none";
-    categoriasection.style.display = "block";
+const funcionSegunElementosBotonNav = (cat, repor, nuevaO, balance) =>{
+    categoriasection.classList.add = cat;
+    reportessection.style.display = repor;
+    nuevasoperacionessection.style.display = nuevaO;
+    balancesection.style.display = balance;
 }
 
-navReportesboton.onclick = () => {
-    nuevasoperacionessection.style.display = "none";
-    balancesection.style.display = "none";
-    categoriasection.style.display = "none";
-    reportessection.style.display = "block";
-
-}
-navNuevasOperacionesboton.onclick = () => {
-    balancesection.style.display = "none";
-    categoriasection.style.display = "none";
-    reportessection.style.display = "none";
-    nuevasoperacionessection.style.display = "block";
+//mostrar imagen de que no se encuentran resultados 
+const operacionesNoEncontradas = (mostrar) =>{
+    if(mostrar === []){
+        const parteHTML = document.getElementById("operaciones-filtro");
+        sinResultadosBackgruond.style.display = "block";
+        parteHTML.classList.add = "is-hidden";
+    }
 }
 
+//actualizamos html de pagina
+    //balance
 const operacionesRealizadas = tomarInfoDelLocalStorage('operacionesRealizadas');
 actualizacionDatosDeBalance(operacionesRealizadas);
 agregarOperacionesHTML(operacionesRealizadas);
+    //lista igual a operacionesRealizadas para utilizarla en las funciones de reporte 
+const lista = operacionesRealizadas;
+    //categorias
+const arrayCategorias = tomarInfoDelLocalStorage('categoriasAñadidas');
+agregarCategoriasHTML(arrayCategorias);
+resumenReporte (operacionesRealizadas, "ganancia", mayorQue, "Categoria con mayor ganancia");
+resumenReporte (operacionesRealizadas, "gasto", menorQue, "Categoria con mayor ganancia");
+
+//navegacion
+    //nose por qué no me funciona si uso este formato de funcion navNuevasOperacionesboton.onclick = funcionSegunElementosBotonNav( "none", "none", "block", "none"); 
+botonInicio.onclick = () =>{
+    funcionSegunElementosBotonNav("none", "none", "none", "block");
+}
+navBalanceboton.onclick = () => {  
+    funcionSegunElementosBotonNav("none", "none", "none", "block");
+}
+navCategoriasboton.onclick = () => { 
+    funcionSegunElementosBotonNav("block", "none", "none", "none");
+}
+navReportesboton.onclick = () => {  
+    funcionSegunElementosBotonNav( "none", "block", "none", "none");
+}
+navNuevasOperacionesboton.onclick = () => { 
+    funcionSegunElementosBotonNav( "none", "none", "block", "none");
+}
+
 botonSubmitOperacion.onclick = () => {
-
-    // tomarInfoDeOperacion()
-    // //actualizarListaDeOperaciones()
-
-
-    // sinResultadosBackgruond.style.display = "none"
-    // nuevasoperacionessection.style.display = "none"
-    // balancesection.style.display = "block";
-
+    sinResultadosBackgruond.style.display = "none"   
+    funcionSegunElementosBotonNav("none", "none", "none", "block");
     actualizarListasDelLocalStorage(operacionesRealizadas, tomarInfoDeOperacion(), 'operacionesRealizadas');
     agregarOperacionesHTML(operacionesRealizadas)
     actualizacionDatosDeBalance(operacionesRealizadas);
 }
 
-const arrayCategorias = tomarInfoDelLocalStorage('categoriasAñadidas');
 botonCrearCategoria.onclick = () => {
     actualizarListasDelLocalStorage(arrayCategorias, generarNuevaCategoria(), 'categoriasAñadidas');
-    // agregarOperacionesHTML()
+    agregarCategoriasHTML(arrayCategorias);
 }
-const filtroGeneral = (arrayObj) =>{
-    const primerFiltro = filtroDeTipoDeOperacion(operacionesRealizadas, filtroTipo.value);
-    const segundoFiltro = filtroDeCategoriaDeOperacion(primerFiltro, filtroCategoria.value);
-    const mostrar = filtroPorFecha(segundoFiltro, filtroFecha.value);
-    agregarOperacionesHTML(mostrar);
+
+//eventos de box de filtros
+ocultarFiltros.onclick = () =>{
+    filtros.classList.toggle("is-hidden");
+    console.log("000")
 }
-filtroTipo.onchange = filtroGeneral(operacionesRealizadas);
-filtroCategoria.onchange = filtroGeneral(operacionesRealizadas); 
-filtroFecha.onchange = filtroGeneral(operacionesRealizadas);
+filtroTipo.onchange = () => {
+operacionesNoEncontradas(filtroGeneral(operacionesRealizadas));   
+}
+filtroCategoria.onchange = () => {
+    filtroGeneral(operacionesRealizadas); 
+}
+filtroFecha.onchange = () => {
+    filtroGeneral(operacionesRealizadas);
+}
+modeloDeOrden.onchange = () => {
+    //no logre hacer una funcion unificada paa usarla todas las veces segun filtro modeloDeOrden
+    if(modeloDeOrden.value === "mayormonto"){
+        operacionesRealizadas.sort((categoria1, categoria2)=>{
+            return categoria1.monto - categoria2.monto;
+        });
+        filtroGeneral(operacionesRealizadas);
+    }
+    if(modeloDeOrden.value === "menormonto"){
+        operacionesRealizadas.sort((categoria1, categoria2)=>{
+            return categoria1.monto - categoria2.monto;
+        });
+        operacionesRealizadas.reverse();
+        filtroGeneral(operacionesRealizadas);
+    }
+    if(modeloDeOrden.value === "masreciente"){
+        operacionesRealizadas.sort((categoria1, categoria2)=>{
+            return categoria1.fecha - categoria2.fecha;
+        });
+        filtroGeneral(operacionesRealizadas);
+    }
+    if(modeloDeOrden.value === "menosreciente"){
+        operacionesRealizadas.sort((categoria1, categoria2)=>{
+            return categoria1.fecha - categoria2.fecha;
+        });
+        operacionesRealizadas.reverse();
+        filtroGeneral(operacionesRealizadas);
+    }
+    if(modeloDeOrden.value === "az"){
+        operacionesRealizadas.sort((categoria1, categoria2)=>{
+            return categoria1.descripcion - categoria2.descripcion;
+        });
+        filtroGeneral(operacionesRealizadas);
+    }
+    if(modeloDeOrden.value === "za"){
+        operacionesRealizadas.sort((categoria1, categoria2)=>{
+            return categoria1.descripcion - categoria2.descripcion;
+        });
+        operacionesRealizadas.reverse();
+        filtroGeneral(operacionesRealizadas);
+    }
+}
+
+botonEliminarCategoria.onclick = () =>{
+    eliminarObjetoDeArray(arrayCategorias, botonEliminarCategoria.id);
+    console.log(botonEliminarCategoria.id);
+    actualizarListasDelLocalStorage(arrayCategorias, generarNuevaCategoria(), 'categoriasAñadidas');
+    agregarCategoriasHTML(arrayCategorias);
+}
     //actualizarListasDelLocalStorage(tomarInfoDeOperacion(), 'operacionesRealizadas');
-
-
-
 //agregarOperacionesHTML(actualizarListasDelLocalStorage(tomarInfoDeOperacion(), 'operacionesRealizadas'));
+let fruits = ['Banana', 'Orange', 'Lemon', 'Apple', 'Mango']
+let citrus = fruits.splice(2,1)
+console.log(fruits)
