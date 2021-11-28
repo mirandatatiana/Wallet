@@ -167,9 +167,6 @@ const mayorQue = (arrayObj, condicion) =>{
         }
         
     });
-    if(elementoMayor === undefined){
-        elementoMayor.valor = 0;
-    }
     return elementoMayor;
 }
 const menorQue = (arrayObj, condicion) =>{
@@ -181,18 +178,19 @@ const menorQue = (arrayObj, condicion) =>{
     });
     return elementoMayor;
 }
-const reporteGeneral = {};
+const reporteGeneral = [];
 const reporte = (arrayObj, condicion, callback, descripcion) =>{
     const lista = filtroDeTipoDeOperacion(arrayObj, condicion);
     const valor = callback(lista);
     console.log(valor)
-    reporteGeneral.descripcion = descripcion;
-    reporteGeneral.categoria = valor.categoria;
-    reporteGeneral.mayorGanancia = valor.monto;  
+    if(valor !== undefined){
+        reporteGeneral.descripcion = descripcion;
+        reporteGeneral.categoria = valor.categoria;
+        reporteGeneral.mayorGanancia = valor.monto;  
+    }
+
 }
 
-const num = [1,6,8,5,2,1]
-console.log(mayorQue(num))
 const filtroPorFecha = (arrayObj, condicion) =>{
     const operacionesXFecha = arrayObj.filter((operacion) => {
         if (operacion.fecha === condicion) {
@@ -279,8 +277,9 @@ agregarOperacionesHTML(operacionesRealizadas);
     //categorias
 const arrayCategorias = tomarInfoDelLocalStorage('categoriasAñadidas');
 agregarCategoriasHTML(arrayCategorias);
-const x = reporte (operacionesRealizadas, "gasto", menorQue, "Categoria con mayor ganancia");
-console.log(x)
+reporte (operacionesRealizadas, "ganancia", mayorQue, "Categoria con mayor ganancia");
+reporte (operacionesRealizadas, "gasto", menorQue, "Categoria con mayor ganancia");
+console.log(reporteGeneral)
 
 //navegacion
     //nose por qué no me funciona si uso este formato de funcion navNuevasOperacionesboton.onclick = funcionSegunElementosBotonNav( "none", "none", "block", "none"); 
