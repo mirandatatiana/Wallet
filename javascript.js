@@ -38,8 +38,8 @@ const totalBalance = document.getElementById("total-balance");
 //sector generar nueva categoria
 const inputCrearCategoria = document.getElementById("input-crear-categoria");
 const botonCrearCategoria = document.getElementById("boton-crear-categoria");
-const botonEditarCategoria = document.querySelectorAll("#boton-editar-categoria");
-const botonEliminarCategoria = document.querySelectorAll("#boton-eliminar-categoria");
+const botonEditarCategoria = document.querySelectorAll(".boton-editar-categoria");
+const botonesEliminarCategoria = document.querySelectorAll(".boton-eliminar-categoria");
 
 //actualizacion de datos en el local storage
 const actualizarListasDelLocalStorage = (arrayObj, callback, nomLista) => {
@@ -51,6 +51,15 @@ const tomarInfoDelLocalStorage = (nomLista) => {
     const listaActualizada = localStorage.getItem(nomLista);
     const listaActualizadaJS = JSON.parse(listaActualizada);
     if (listaActualizadaJS === null) {
+        if(nomLista === 'categoriasAñadidas'){
+            return [{categoria: "todas"},
+                    {categoria: "comidas"},
+                    {categoria: "servicios"},
+                    {categoria: "salidas"},
+                    {categoria: "educacion"},
+                    {categoria: "transporte"},
+                    {categoria: "trabajo"}];
+        }
         return [];
     } else {
         return listaActualizadaJS;
@@ -112,9 +121,9 @@ const agregarOperacionesHTML = (arrayObj) => {
 const categoriasCreadas = document.querySelector(".categorias-creadas")
 
 const agregarCategoriasHTML = (arrayObj) => {
-    const agregarOperaciones = arrayObj
+    const agregarCategorias = arrayObj
 
-    const operacionesString = agregarOperaciones.reduce((acc, elemento) => {
+    const categoriasString = agregarCategorias.reduce((acc, elemento) => {
         return acc = acc + `
         <div class="columns">
             <div class="column">
@@ -122,17 +131,19 @@ const agregarCategoriasHTML = (arrayObj) => {
             </div>
             <div>
                 <p class="column">
-                    <a href="#" class="mr-4 is-size-7" id="boton-editar-categoria">Editar</a>
-                    <a href="#" class="is-size-7" id="boton-eliminar-categoria"> Eliminar </a>
+                    <a href="#" class="mr-4 is-size-7 boton-editar-categoria" >Editar</a>
+                    <a href="#" class=" boton-eliminar-categoria is-size-7" > Eliminar </a>
                 </p>
             </div>
         </div>
         `
     }, "");
-    categoriasCreadas.innerHTML = operacionesString;
-    // listaDeReportes.innerHTML = `
 
-    // `
+    const selectDeCategoria = agregarCategorias.reduce((acc, elemento) => {
+        return acc = acc + `<option value="${elemento.categoria}">${elemento.categoria}</option>`
+    }, "");
+    categoriasCreadas.innerHTML = categoriasString;
+    filtroCategoria.innerHTML = selectDeCategoria;
 }
 
 
@@ -233,11 +244,11 @@ const totalXCategoria = () =>{
 const totalXMes = () =>{
 
 }
-const filtroPorFecha = (arrayObj, condicion) =>{
-    const operacionesXFecha = arrayObj.filter((operacion) => {
-        if (operacion.fecha === condicion) {
-          return operacion;
-        }
+const filtroPorFecha = (arrayObj) =>{
+    const operacionesXFecha = arrayObj.map((operacion) => {
+        const operacionUtilizada = operacion;
+        operacionUtilizada.fecha = new Date(operacion.fecha).toLocaleDateString();
+        return operacionUtilizada;
     });
     return operacionesXFecha;
 }
@@ -294,7 +305,10 @@ const generarNuevaCategoria = () => {
 const filtroGeneral = (arrayObj) =>{
     const primerFiltro = filtroDeTipoDeOperacion(arrayObj, filtroTipo.value);
     const segundoFiltro = filtroDeCategoriaDeOperacion(primerFiltro, filtroCategoria.value);
-    const mostrar = filtroPorFecha(segundoFiltro, filtroFecha.value);
+    segundoFiltro.sort((elemento1, elemento2) => {
+        return new Date(elemento1.fecha) - new Date(elemento2.fecha)
+      })
+    const mostrar = filtroPorFecha(segundoFiltro);
     agregarOperacionesHTML(mostrar);
     return mostrar;
 }
@@ -362,7 +376,6 @@ botonCrearCategoria.onclick = () => {
 //eventos de box de filtros
 ocultarFiltros.onclick = () =>{
     filtros.classList.toggle("is-hidden");
-    console.log("000")
 }
 filtroTipo.onchange = () => {
 operacionesNoEncontradas(filtroGeneral(operacionesRealizadas));   
@@ -415,15 +428,30 @@ modeloDeOrden.onchange = () => {
         filtroGeneral(operacionesRealizadas);
     }
 }
-
-botonEliminarCategoria.onclick = () =>{
-    eliminarObjetoDeArray(arrayCategorias, botonEliminarCategoria.id);
-    console.log(botonEliminarCategoria.id);
-    actualizarListasDelLocalStorage(arrayCategorias, generarNuevaCategoria(), 'categoriasAñadidas');
-    agregarCategoriasHTML(arrayCategorias);
+for (let i = 0; i < botonesEliminarCategoria.length; i++) {
+    botonesEliminarCategoria[i].onclick = () =>{
+        console.log("jo")
+        const id = botonesEliminarCategoria[i].id;
+        eliminarObjetoDeArray(arrayCategorias, botonesEliminarCategoria[i].id);
+        const operacionesABorrar = filtroDeCategoriaDeOperacion(operacionesRealizadas,arrayCategorias[id].categoria);
+        operacionesRealizadas.foreach((elemento, i)=>{
+            if(operacionesABorrar[i].categoria === elemento.categoria){
+                operacionesRealizadas.splice(i,1);
+            }
+        });
+        actualizarListasDelLocalStorage(operacionesRealizadas, tomarInfoDeOperacion(), 'operacionesRealizadas');
+        actualizarListasDelLocalStorage(arrayCategorias, generarNuevaCategoria(), 'categoriasAñadidas');
+        agregarCategoriasHTML(arrayCategorias);
+    }
 }
+    // botonesBorrar[i].onclick = () => {
+    //   const id = botonesBorrar[i].id
+    //   console.log(id)
+    //   const indice = id.charAt(7)  // slice // split 
+    //   const categoriasFiltradas = categorias.filter((elemento, index) => {
+    //       return index != indice
+    //     })
+    // }
+  
     //actualizarListasDelLocalStorage(tomarInfoDeOperacion(), 'operacionesRealizadas');
 //agregarOperacionesHTML(actualizarListasDelLocalStorage(tomarInfoDeOperacion(), 'operacionesRealizadas'));
-let fruits = ['Banana', 'Orange', 'Lemon', 'Apple', 'Mango']
-let citrus = fruits.splice(2,1)
-console.log(fruits)
