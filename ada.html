@@ -16,7 +16,7 @@
     <nav class="navbar is-primary is-spaced" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
             <a class="navbar-item">
-                <h1 class="title is-size-2-desktop is-size-2 has-text-white">
+                <h1 class="title is-size-2-desktop is-size-2 has-text-white" id="boton-inicio">
                     <i class="fas fa-wallet mr-2" aria-hidden="true"></i>
                     AhorrADAS
                 </h1>
@@ -105,13 +105,13 @@
                         </div>
 
                         <div class="columns pr-4 pt-2">
-                            <a>
+                            <a id="ocultar-filtros">
                                 Ocultar filtros
                             </a>
                         </div>
                     </div>
-
-                    <div class="field" id="filtros">
+                <div id="filtros">
+                    <div class="field" >
                         <label class="label">
                             Tipo
                         </label>
@@ -132,8 +132,7 @@
                         </label>
                         <div class="control ">
                             <div class="select is-fullwidth">
-                                <select class="lista-categoria" id="filtro-categoria">
-                                    
+                                <select id="filtro-categoria">
                                 </select>
                             </div>
                         </div>
@@ -155,16 +154,17 @@
                         <div class="control ">
                             <div class="select is-fullwidth">
                                 <select id="modelo-de-orden">
-                                    <option>Mas reciente</option>
-                                    <option>Menos reciente</option>
-                                    <option>Mayor monto</option>
-                                    <option>Menos monto</option>
-                                    <option>A/Z</option>
-                                    <option>Z/A</option>
+                                    <option value="masreciente">Mas reciente</option>
+                                    <option value="menosreciente">Menos reciente</option>
+                                    <option value="mayormonto">Mayor monto</option>
+                                    <option value="menormonto">Menos monto</option>
+                                    <option value="az">A/Z</option>
+                                    <option value="za">Z/A</option>
                                 </select>
                             </div>
                         </div>
                     </div>
+                </div>
                 </article>
             </div>
 
@@ -184,19 +184,15 @@
                             </button>
                         </div>
                     </div>
-                    <!-- -->
+                    <!-- se muestran las operaciones filtradas-->
                     <div>
-                        <div class="columns has-text-weight-semibold is-hidden-mobile">
+                        <div class="columns has-text-weight-semibold is-hidden-mobile" id="operaciones-filtro">
                             <div class="column is-3">Descripcion</div>
                             <div class="column is-3">Categoria</div>
                             <div class="column is-2 has-text-right">Fecha</div>
                             <div class="column is-2 has-text-right">Monton</div>
                             <div class="column is-2 has-text-right">Acciones</div>
-
                         </div>
-                    </div>
-
-                    <div>
                         <div class="mb-3" id="operaciones-guardadas"></div>
                     </div>
         </div>
