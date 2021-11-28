@@ -38,6 +38,8 @@ const totalBalance = document.getElementById("total-balance");
 //sector generar nueva categoria
 const inputCrearCategoria = document.getElementById("input-crear-categoria");
 const botonCrearCategoria = document.getElementById("boton-crear-categoria");
+const botonEditarCategoria = document.querySelectorAll("#boton-editar-categoria");
+const botonEliminarCategoria = document.querySelectorAll("#boton-eliminar-categoria");
 
 //actualizacion de datos en el local storage
 const actualizarListasDelLocalStorage = (arrayObj, callback, nomLista) => {
@@ -120,8 +122,8 @@ const agregarCategoriasHTML = (arrayObj) => {
             </div>
             <div>
                 <p class="column">
-                    <a href="#" class="mr-4 is-size-7">Editar</a>
-                    <a href="#" class="is-size-7"> Eliminar </a>
+                    <a href="#" class="mr-4 is-size-7" id="boton-editar-categoria">Editar</a>
+                    <a href="#" class="is-size-7" id="boton-eliminar-categoria"> Eliminar </a>
                 </p>
             </div>
         </div>
@@ -162,7 +164,7 @@ const filtroDeCategoriaDeOperacion = (arrayObj, condicion) =>{
       return operacionesXCategoria;
 }
 
-const mayorQue = (arrayObj, condicion) =>{
+const mayorQue = (arrayObj) =>{
     var elementoMayor = arrayObj[0];
     arrayObj.forEach((elemento)=>{
         if(elemento.monto > elementoMayor.monto){
@@ -172,7 +174,7 @@ const mayorQue = (arrayObj, condicion) =>{
     });
     return elementoMayor;
 }
-const menorQue = (arrayObj, condicion) =>{
+const menorQue = (arrayObj) =>{
     var elementoMayor = arrayObj[0];
     arrayObj.forEach((elemento)=>{
         if(elemento.monto < elementoMayor.monto){
@@ -216,6 +218,12 @@ const totalXCategoria = () =>{
     lista.forEach((elemento)=>{
         if(elementoComparacion.categoria === elemento.categoria){
             totalXCategoria += Number(elemento.monto);
+            if(elemento.tipo === "gasto"){
+                totalGasto += elemento.monto;
+            }
+            if(elemento.tipo === "ganancia"){
+                totalGanancia += elemento.monto;
+            }
             elementoComparacion = elemento;
             lista.shift();
         }
@@ -230,11 +238,13 @@ const filtroPorFecha = (arrayObj, condicion) =>{
         if (operacion.fecha === condicion) {
           return operacion;
         }
-      });
-      return operacionesXFecha;
+    });
+    return operacionesXFecha;
 }
 
-
+const eliminarObjetoDeArray = (arrayObj, id) =>{
+    arrayObj.splice(id,1);
+}
 
 //suma de montos para el balance 
 const sumaDeMontos = (arrayObj) => {
@@ -364,6 +374,7 @@ filtroFecha.onchange = () => {
     filtroGeneral(operacionesRealizadas);
 }
 modeloDeOrden.onchange = () => {
+    //no logre hacer una funcion unificada paa usarla todas las veces segun filtro modeloDeOrden
     if(modeloDeOrden.value === "mayormonto"){
         operacionesRealizadas.sort((categoria1, categoria2)=>{
             return categoria1.monto - categoria2.monto;
@@ -404,6 +415,15 @@ modeloDeOrden.onchange = () => {
         filtroGeneral(operacionesRealizadas);
     }
 }
+
+botonEliminarCategoria.onclick = () =>{
+    eliminarObjetoDeArray(arrayCategorias, botonEliminarCategoria.id);
+    console.log(botonEliminarCategoria.id);
+    actualizarListasDelLocalStorage(arrayCategorias, generarNuevaCategoria(), 'categoriasAñadidas');
+    agregarCategoriasHTML(arrayCategorias);
+}
     //actualizarListasDelLocalStorage(tomarInfoDeOperacion(), 'operacionesRealizadas');
-    console.log("hola" ,filtroCategoria.value )
 //agregarOperacionesHTML(actualizarListasDelLocalStorage(tomarInfoDeOperacion(), 'operacionesRealizadas'));
+let fruits = ['Banana', 'Orange', 'Lemon', 'Apple', 'Mango']
+let citrus = fruits.splice(2,1)
+console.log(fruits)
