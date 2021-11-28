@@ -16,7 +16,7 @@
     <nav class="navbar is-primary is-spaced" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
             <a class="navbar-item">
-                <h1 class="title is-size-2-desktop is-size-2 has-text-white">
+                <h1 class="title is-size-2-desktop is-size-2 has-text-white" id="boton-inicio">
                     <i class="fas fa-wallet mr-2" aria-hidden="true"></i>
                     AhorrADAS
                 </h1>
@@ -105,13 +105,13 @@
                         </div>
 
                         <div class="columns pr-4 pt-2">
-                            <a>
+                            <a id="ocultar-filtros">
                                 Ocultar filtros
                             </a>
                         </div>
                     </div>
-
-                    <div class="field" id="filtros">
+                <div id="filtros">
+                    <div class="field" >
                         <label class="label">
                             Tipo
                         </label>
@@ -171,6 +171,7 @@
                             </div>
                         </div>
                     </div>
+                </div>
                 </article>
             </div>
 

@@ -1,5 +1,6 @@
 
 //Navegacion de la pagina
+const botonInicio = document.getElementById("boton-inicio");
 const navBalanceboton = document.querySelector(".pagina-principal-boton")
 const navCategoriasboton = document.querySelector(".boton-categorias")
 const navReportesboton = document.querySelector(".boton-reportes")
@@ -22,6 +23,8 @@ const botonSubmitOperacion = document.getElementById("boton-submit-operacion");
 
 
 //filtros para las opreaciones realizadas
+const ocultarFiltros = document.getElementById("ocultar-filtros");
+const filtros = document.getElementById("filtros");
 const filtroTipo = document.getElementById("filtro-tipo");
 const filtroCategoria = document.getElementById("filtro-categoria");
 const filtroFecha = document.getElementById("filtro-fecha");
@@ -178,7 +181,7 @@ const menorQue = (arrayObj, condicion) =>{
     });
     return elementoMayor;
 }
-const reporteGeneral = [];
+const reporteGeneral = tomarInfoDelLocalStorage('reporteGeneral');;
 const resumenReporte = (arrayObj, condicion, callback, descripcion) =>{
     const lista = filtroDeTipoDeOperacion(arrayObj, condicion);
     if(condicion === "todos"){
@@ -285,6 +288,7 @@ const filtroGeneral = (arrayObj) =>{
     agregarOperacionesHTML(mostrar);
     return mostrar;
 }
+
 const funcionSegunElementosBotonNav = (cat, repor, nuevaO, balance) =>{
     categoriasection.classList.add = cat;
     reportessection.style.display = repor;
@@ -292,6 +296,7 @@ const funcionSegunElementosBotonNav = (cat, repor, nuevaO, balance) =>{
     balancesection.style.display = balance;
 }
 
+//mostrar imagen de que no se encuentran resultados 
 const operacionesNoEncontradas = (mostrar) =>{
     if(mostrar === []){
         const parteHTML = document.getElementById("operaciones-filtro");
@@ -315,6 +320,9 @@ resumenReporte (operacionesRealizadas, "gasto", menorQue, "Categoria con mayor g
 
 //navegacion
     //nose por qué no me funciona si uso este formato de funcion navNuevasOperacionesboton.onclick = funcionSegunElementosBotonNav( "none", "none", "block", "none"); 
+botonInicio.onclick = () =>{
+    funcionSegunElementosBotonNav("none", "none", "none", "block");
+}
 navBalanceboton.onclick = () => {  
     funcionSegunElementosBotonNav("none", "none", "none", "block");
 }
@@ -341,6 +349,11 @@ botonCrearCategoria.onclick = () => {
     agregarCategoriasHTML(arrayCategorias);
 }
 
+//eventos de box de filtros
+ocultarFiltros.onclick = () =>{
+    filtros.classList.toggle("is-hidden");
+    console.log("000")
+}
 filtroTipo.onchange = () => {
 operacionesNoEncontradas(filtroGeneral(operacionesRealizadas));   
 }
@@ -350,7 +363,6 @@ filtroCategoria.onchange = () => {
 filtroFecha.onchange = () => {
     filtroGeneral(operacionesRealizadas);
 }
-
 modeloDeOrden.onchange = () => {
     if(modeloDeOrden.value === "mayormonto"){
         operacionesRealizadas.sort((categoria1, categoria2)=>{
