@@ -179,10 +179,12 @@ const menorQue = (arrayObj, condicion) =>{
     return elementoMayor;
 }
 const reporteGeneral = [];
-const reporte = (arrayObj, condicion, callback, descripcion) =>{
+const resumenReporte = (arrayObj, condicion, callback, descripcion) =>{
     const lista = filtroDeTipoDeOperacion(arrayObj, condicion);
+    if(condicion === "todos"){
+        
+    }
     const valor = callback(lista);
-    console.log(valor)
     if(valor !== undefined){
         reporteGeneral.descripcion = descripcion;
         reporteGeneral.categoria = valor.categoria;
@@ -190,7 +192,36 @@ const reporte = (arrayObj, condicion, callback, descripcion) =>{
     }
 
 }
+const ordenarCategorias = (arrayObj) =>{
+    arrayObj.sort((categoria1, categoria2)=>{
+        if(categoria1.categoria < categoria2.categoria){
+            return -1;
+        }
+        if(categoria1.categoria > categoria2.categoria){
+            return 1
+        }
+        return 0;
+    });
+}
 
+const totalXCategoria = () =>{
+    ordenarCategorias(lista);
+    var elementoComparacion = lista[0];
+    var totalXCategoria = 0;
+    var totalGanancia = 0;
+    var totalGasto = 0;
+    lista.forEach((elemento)=>{
+        if(elementoComparacion.categoria === elemento.categoria){
+            totalXCategoria += Number(elemento.monto);
+            elementoComparacion = elemento;
+            lista.shift();
+        }
+    });
+}
+
+const totalXMes = () =>{
+
+}
 const filtroPorFecha = (arrayObj, condicion) =>{
     const operacionesXFecha = arrayObj.filter((operacion) => {
         if (operacion.fecha === condicion) {
@@ -248,7 +279,7 @@ const generarNuevaCategoria = () => {
 }
 
 const filtroGeneral = (arrayObj) =>{
-    const primerFiltro = filtroDeTipoDeOperacion(operacionesRealizadas, filtroTipo.value);
+    const primerFiltro = filtroDeTipoDeOperacion(arrayObj, filtroTipo.value);
     const segundoFiltro = filtroDeCategoriaDeOperacion(primerFiltro, filtroCategoria.value);
     const mostrar = filtroPorFecha(segundoFiltro, filtroFecha.value);
     agregarOperacionesHTML(mostrar);
@@ -274,12 +305,13 @@ const operacionesNoEncontradas = (mostrar) =>{
 const operacionesRealizadas = tomarInfoDelLocalStorage('operacionesRealizadas');
 actualizacionDatosDeBalance(operacionesRealizadas);
 agregarOperacionesHTML(operacionesRealizadas);
+    //lista igual a operacionesRealizadas para utilizarla en las funciones de reporte 
+const lista = operacionesRealizadas;
     //categorias
 const arrayCategorias = tomarInfoDelLocalStorage('categoriasAñadidas');
 agregarCategoriasHTML(arrayCategorias);
-reporte (operacionesRealizadas, "ganancia", mayorQue, "Categoria con mayor ganancia");
-reporte (operacionesRealizadas, "gasto", menorQue, "Categoria con mayor ganancia");
-console.log(reporteGeneral)
+resumenReporte (operacionesRealizadas, "ganancia", mayorQue, "Categoria con mayor ganancia");
+resumenReporte (operacionesRealizadas, "gasto", menorQue, "Categoria con mayor ganancia");
 
 //navegacion
     //nose por qué no me funciona si uso este formato de funcion navNuevasOperacionesboton.onclick = funcionSegunElementosBotonNav( "none", "none", "block", "none"); 
@@ -310,13 +342,56 @@ botonCrearCategoria.onclick = () => {
 }
 
 filtroTipo.onchange = () => {
-    console.log(filtroGeneral(operacionesRealizadas)) 
 operacionesNoEncontradas(filtroGeneral(operacionesRealizadas));   
 }
-filtroCategoria.onchange = filtroGeneral(operacionesRealizadas); 
-filtroFecha.onchange = filtroGeneral(operacionesRealizadas);
+filtroCategoria.onchange = () => {
+    filtroGeneral(operacionesRealizadas); 
+}
+filtroFecha.onchange = () => {
+    filtroGeneral(operacionesRealizadas);
+}
+
+modeloDeOrden.onchange = () => {
+    if(modeloDeOrden.value === "mayormonto"){
+        operacionesRealizadas.sort((categoria1, categoria2)=>{
+            return categoria1.monto - categoria2.monto;
+        });
+        filtroGeneral(operacionesRealizadas);
+    }
+    if(modeloDeOrden.value === "menormonto"){
+        operacionesRealizadas.sort((categoria1, categoria2)=>{
+            return categoria1.monto - categoria2.monto;
+        });
+        operacionesRealizadas.reverse();
+        filtroGeneral(operacionesRealizadas);
+    }
+    if(modeloDeOrden.value === "masreciente"){
+        operacionesRealizadas.sort((categoria1, categoria2)=>{
+            return categoria1.fecha - categoria2.fecha;
+        });
+        filtroGeneral(operacionesRealizadas);
+    }
+    if(modeloDeOrden.value === "menosreciente"){
+        operacionesRealizadas.sort((categoria1, categoria2)=>{
+            return categoria1.fecha - categoria2.fecha;
+        });
+        operacionesRealizadas.reverse();
+        filtroGeneral(operacionesRealizadas);
+    }
+    if(modeloDeOrden.value === "az"){
+        operacionesRealizadas.sort((categoria1, categoria2)=>{
+            return categoria1.descripcion - categoria2.descripcion;
+        });
+        filtroGeneral(operacionesRealizadas);
+    }
+    if(modeloDeOrden.value === "za"){
+        operacionesRealizadas.sort((categoria1, categoria2)=>{
+            return categoria1.descripcion - categoria2.descripcion;
+        });
+        operacionesRealizadas.reverse();
+        filtroGeneral(operacionesRealizadas);
+    }
+}
     //actualizarListasDelLocalStorage(tomarInfoDeOperacion(), 'operacionesRealizadas');
-
-
-
+    console.log("hola" ,filtroCategoria.value )
 //agregarOperacionesHTML(actualizarListasDelLocalStorage(tomarInfoDeOperacion(), 'operacionesRealizadas'));
