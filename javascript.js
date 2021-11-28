@@ -302,9 +302,9 @@ botonSubmitOperacion.onclick = () => {
     // //actualizarListaDeOperaciones()
 
 
-    // sinResultadosBackgruond.style.display = "none"
-    // nuevasoperacionessection.style.display = "none"
-    // balancesection.style.display = "block";
+    sinResultadosBackgruond.style.display = "none"
+    nuevasoperacionessection.style.display = "none"
+    balancesection.style.display = "block";
 
     actualizarListasDelLocalStorage(operacionesRealizadas, tomarInfoDeOperacion(), 'operacionesRealizadas');
     agregarOperacionesHTML('operacionesRealizadas')
