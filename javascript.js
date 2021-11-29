@@ -270,7 +270,8 @@ const resumenReporte = () =>{
     operacion.mayorGanancia = categoriaConMayorBalance.monto; 
     reporteGeneral.push(operacion);
 }
-
+const meses = [0, 1, 2 , 3, 4, 5, 6, 7, 8, 9, 10, 11];
+console.log(meses.id)
 const totalXMes = () =>{
     const infoMesMayorGanancia = {};
     const infoMesMayorGasto = {};
@@ -296,11 +297,11 @@ const totalXMes = () =>{
         gastos = sumaDeMontos(gastos);
         if(mesMayorGanancia < ganancias){
             mesMayorGanancia = ganancias;
-            mesGanancia = array;
+            mesGanancia = operacionPorMes[array];
         }
         if(mesMayorGasto < gastos){
             mesMayorGasto = gastos;
-            mesGasto = array;
+            mesGasto = operacionPorMes[array];
         }
     });
     infoMesMayorGanancia = {
