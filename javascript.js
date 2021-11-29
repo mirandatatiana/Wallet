@@ -11,6 +11,7 @@ const nuevasoperacionessection = document.querySelector("#nuevas-operaciones")
 
 //InnerHTML
 const sinResultadosBackgruond = document.getElementById("sin-resultados-operaciones")
+const nuevaOperacionNuevaSeccion = document.querySelector(".operaciones-nuevas")
 
 //sector generar nueva opreacion
 const descripcionDeOperacion = document.getElementById("descripcion-operacion");
@@ -342,6 +343,12 @@ const filtroGeneral = (arrayObj) => {
     agregarOperacionesHTML(mostrar);
     return mostrar;
 }
+
+balancesection.style.display = "block";
+categoriasection.style.display = "none";
+sinResultadosBackgruond.style.display = "none";
+reportessection.style.display = "none";
+nuevaOperacionNuevaSeccion.style.display = "none";
 
 const funcionSegunElementosBotonNav = (cat, repor, nuevaO, balance) => {
     categoriasection.style.display = cat;
