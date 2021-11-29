@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -110,61 +111,61 @@
                             </a>
                         </div>
                     </div>
-                <div id="filtros">
-                    <div class="field" >
-                        <label class="label">
-                            Tipo
-                        </label>
-                        <div class="control">
-                            <div class="select is-fullwidth">
-                                <select id="filtro-tipo">
-                                    <option value="todo">Todos</option>
-                                    <option value="gasto">Gastos</option>
-                                    <option value="ganancia">Ganancias</option>
-                                </select>
+                    <div id="filtros">
+                        <div class="field">
+                            <label class="label">
+                                Tipo
+                            </label>
+                            <div class="control">
+                                <div class="select is-fullwidth">
+                                    <select id="filtro-tipo">
+                                        <option value="todo">Todos</option>
+                                        <option value="gasto">Gastos</option>
+                                        <option value="ganancia">Ganancias</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">
+                                Categoria
+                            </label>
+                            <div class="control ">
+                                <div class="select is-fullwidth">
+                                    <select id="filtro-categoria">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label" for="date">
+                                Date
+                            </label>
+                            <div class="control">
+                                <input class="input" id="filtro-fecha" type="date" value="1999-10-26">
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">
+                                Ordenar por
+                            </label>
+                            <div class="control ">
+                                <div class="select is-fullwidth">
+                                    <select id="modelo-de-orden">
+                                        <option value="masreciente">Mas reciente</option>
+                                        <option value="menosreciente">Menos reciente</option>
+                                        <option value="mayormonto">Mayor monto</option>
+                                        <option value="menormonto">Menos monto</option>
+                                        <option value="az">A/Z</option>
+                                        <option value="za">Z/A</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="field">
-                        <label class="label">
-                            Categoria
-                        </label>
-                        <div class="control ">
-                            <div class="select is-fullwidth">
-                                <select id="filtro-categoria">
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="field">
-                        <label class="label" for="date">
-                            Date
-                        </label>
-                        <div class="control">
-                            <input class="input" id="filtro-fecha" type="date" value="1999-10-26">
-                        </div>
-                    </div>
-
-                    <div class="field">
-                        <label class="label">
-                            Ordenar por
-                        </label>
-                        <div class="control ">
-                            <div class="select is-fullwidth">
-                                <select id="modelo-de-orden">
-                                    <option value="masreciente">Mas reciente</option>
-                                    <option value="menosreciente">Menos reciente</option>
-                                    <option value="mayormonto">Mayor monto</option>
-                                    <option value="menormonto">Menos monto</option>
-                                    <option value="az">A/Z</option>
-                                    <option value="za">Z/A</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 </article>
             </div>
 
@@ -186,7 +187,7 @@
                     </div>
                     <!-- se muestran las operaciones filtradas-->
                     <div>
-                       
+
                         <div class="mb-3" id="operaciones-guardadas"></div>
                     </div>
         </div>
@@ -365,7 +366,7 @@
                             <h4 class="has-text-weight-semibold has-text-right">Balance</h4>
                         </div>
                     </div>
-                
+
                     <div class="columns is-vcentered is-mobile">
                         <div class="column">
                             <h3 class="has-text-weight-semibold">mes</h3>
@@ -401,7 +402,7 @@
 
                 <label class="label">Nombre</label>
                 <div class="field is-grouped">
-                    
+
                     <p class="control is-expanded">
                         <input class="input" type="text" id="input-crear-categoria">
                     </p>
@@ -429,46 +430,46 @@
                 </div>
             </div>
 
-            
-                
-                    <div class="field is-fullwidth">
-                    <label class="label">
-                        Descripcion
-                    </label>
-                        <div class="control is-expanded is-full-widescreen">    
-                      <input class="input" type="text" id="descripcion-operacion" >
-                    </div>
-                   
-                    </div>      
-            
-           
-                    <div class="field is-fullwidth">
-                    <label class="label">Monto</label>
-                        <div class="control is-expanded is-full-widescreen">    
-                      <input class="input" type="number" id="monto-operacion">
-                        </div>                  
-                    </div>      
-           
-            
-                    <div class="field is-fullwidth">
-                     <label class="label">
-                            Tipo
-                        </label>
-                        
-                        <div class="control is-expanded is-full-widescreen">    
-                
-                        
-                        <div class="control">
-                            <div class="select is-fullwidth">
-                                <select id="tipo-de-operacion">
-                                
-                                    <option value="gasto" >Gastos</option>
-                                    <option value="ganancia">Ganancias</option>
-                                </select>
-                            </div>
+
+
+            <div class="field is-fullwidth">
+                <label class="label">
+                    Descripcion
+                </label>
+                <div class="control is-expanded is-full-widescreen">
+                    <input class="input" type="text" id="descripcion-operacion">
+                </div>
+
+            </div>
+
+
+            <div class="field is-fullwidth">
+                <label class="label">Monto</label>
+                <div class="control is-expanded is-full-widescreen">
+                    <input class="input" type="number" id="monto-operacion">
+                </div>
+            </div>
+
+
+            <div class="field is-fullwidth">
+                <label class="label">
+                    Tipo
+                </label>
+
+                <div class="control is-expanded is-full-widescreen">
+
+
+                    <div class="control">
+                        <div class="select is-fullwidth">
+                            <select id="tipo-de-operacion">
+
+                                <option value="gasto">Gastos</option>
+                                <option value="ganancia">Ganancias</option>
+                            </select>
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
 
             <div class="field  is-fullwidth">
@@ -507,4 +508,5 @@
 
     <script src="javascript.js"></script>
 </body>
+
 </html>
