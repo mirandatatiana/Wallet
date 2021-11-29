@@ -156,14 +156,14 @@ const agregarCategoriasHTML = (arrayObj) => {
 
     ` + selectDeCategoria;
 
-    //No Logrammos que el boton editar categoria funcionen
-    //     categoriaDeOperacion.innerHTML = `
-    //    <option value = "Comida"> Comida </option>
-    //    <option value = "Servicio"> Servicio </option>
-    //    <option value = "Salidas"> Salidas </option>
-    //    <option value = "Transporte"> Transporte </option>
-    //    <option value = "Trabajo"> Trabajo </option>
-    //    ` + selectDeCategoria
+    // No Logrammos que el boton editar categoria funcionen
+    categoriaDeOperacion.innerHTML = `
+       <option value = "Comida"> Comida </option>
+       <option value = "Servicio"> Servicio </option>
+       <option value = "Salidas"> Salidas </option>
+       <option value = "Transporte"> Transporte </option>
+       <option value = "Trabajo"> Trabajo </option>
+       ` + selectDeCategoria
 
 }
 
@@ -186,7 +186,7 @@ const filtroDeTipoDeOperacion = (arrayObj, condicion) => {
     }
 }
 //funcion box filtro
-const filtroDeCategoriaDeOperacion = (arrayObj, condicion) =>{
+const filtroDeCategoriaDeOperacion = (arrayObj, condicion) => {
     const operacionesXCategoria = arrayObj.filter((operacion) => {
         if (operacion.categoria === condicion) {
             return operacion;
@@ -194,7 +194,7 @@ const filtroDeCategoriaDeOperacion = (arrayObj, condicion) =>{
     });
     return operacionesXCategoria;
 }
-const filtroPorFecha = (arrayObj) =>{
+const filtroPorFecha = (arrayObj) => {
     const operacionesXFecha = arrayObj.map((operacion) => {
         const operacionUtilizada = operacion;
         operacionUtilizada.fecha = new Date(operacion.fecha).toLocaleDateString();
@@ -204,12 +204,12 @@ const filtroPorFecha = (arrayObj) =>{
 }
 
 // filtro general de box de filtros
-const filtroGeneral = (arrayObj) =>{
+const filtroGeneral = (arrayObj) => {
     const primerFiltro = filtroDeTipoDeOperacion(arrayObj, filtroTipo.value);
     const segundoFiltro = filtroDeCategoriaDeOperacion(primerFiltro, filtroCategoria.value);
     segundoFiltro.sort((elemento1, elemento2) => {
         return new Date(elemento1.fecha) - new Date(elemento2.fecha)
-      })
+    })
     const mostrar = filtroPorFecha(segundoFiltro);
     agregarOperacionesHTML(mostrar);
     return mostrar;
@@ -220,7 +220,7 @@ const mayorQue = (arrayObj) => {
     arrayObj.forEach((elemento) => {
         if (elemento.monto > elementoMayor.monto) {
             elementoMayor = elemento;
-        }     
+        }
     });
     return elementoMayor;
 }
@@ -234,22 +234,22 @@ const menorQue = (arrayObj) => {
     return elementoMayor;
 }
 const reporteGeneral = [];
-const totalXTipo = (arrayObj, condicion, callback, descripcion) =>{
+const totalXTipo = (arrayObj, condicion, callback, descripcion) => {
     var operacion = {};
     const lista = filtroDeTipoDeOperacion(arrayObj, condicion);
     const valor = callback(lista);
-    if(valor !== undefined){
+    if (valor !== undefined) {
         operacion.descripcion = descripcion;
         operacion.categoria = valor.categoria;
-        operacion.mayorMonto = valor.monto;  
+        operacion.mayorMonto = valor.monto;
         reporteGeneral.push(operacion);
     }
 }
 
 //ordena las categorias en ascendente, funcion para resumenReporte
-const ordenarCategorias = (arrayObj) =>{
-    arrayObj.sort((categoria1, categoria2)=>{
-        if(categoria1.categoria < categoria2.categoria){
+const ordenarCategorias = (arrayObj) => {
+    arrayObj.sort((categoria1, categoria2) => {
+        if (categoria1.categoria < categoria2.categoria) {
             return -1;
         }
         if (categoria1.categoria > categoria2.categoria) {
@@ -271,12 +271,12 @@ const sumaDeMontos = (arrayObj) => {
 }
 
 //cuenta las categorias que se usaron en operaciones realizadas
-const constadorCtaegoriasUtilizadas = () =>{
+const constadorCtaegoriasUtilizadas = () => {
     var acumulador = 0;
     var elementoComparacion = lista[0];
-    operacionesRealizadas.forEach((elemento)=>{
-        if(elementoComparacion.categoria !== elemento.categoria){
-            acumulador ++;
+    operacionesRealizadas.forEach((elemento) => {
+        if (elementoComparacion.categoria !== elemento.categoria) {
+            acumulador++;
         }
         elementoComparacion = elemento;
     });
@@ -396,39 +396,40 @@ const generarNuevaCategoria = () => {
     return categoria;
 }
 //eliminar objetos del array de categorias
-const eliminarObjetoDeArray = (arrayObj, id) =>{
-    arrayObj.splice(id,1);
+const eliminarObjetoDeArray = (arrayObj, id) => {
+    arrayObj.splice(id, 1);
 }
 
 
-//funcion de botones de navegacion del nav 
-const funcionSegunElementosBotonNav = (cat, repor, nuevaO, balance) =>{
-    categoriasection.classList.add = cat;
+
+
+
+//El estado de la pagina al entrar
+balancesection.style.display = "block";
+categoriasection.style.display = "none";
+sinResultadosBackgruond.style.display = "none";
+reportessection.style.display = "none";
+nuevaOperacionNuevaSeccion.style.display = "none";
+//Funcion para redirigir
+const funcionSegunElementosBotonNav = (cat, repor, nuevaO, balance) => {
+    categoriasection.style.display = cat;
     reportessection.style.display = repor;
     nuevaOperacionNuevaSeccion.style.display = nuevaO;
     balancesection.style.display = balance;
 }
 
-<<<<<<< HEAD:javascript.js
-// mostrar imagen de que no se encuentran resultados 
+
+//mostrar imagen de que no se encuentran resultados 
 const operacionesNoEncontradas = (mostrar) => {
     if (mostrar === []) {
         const parteHTML = document.getElementById("operaciones-filtro");
         sinResultadosBackgruond.style.display = "block";
-        parteHTML.classList.add = "is-hidden";
-=======
-//mostrar imagen de que no se encuentran resultados 
-const operacionesNoEncontradas = (mostrar) =>{
-    if(mostrar === []){
-        const parteHTML = document.getElementById("operaciones-filtro");
-        sinResultadosBackgruond.style.display = "block";
         parteHTML.classList.add("is-hidden");
->>>>>>> refs/remotes/origin/main:index.js
     }
 }
 
 //actualizamos html de pagina
-    //balance html: linea 63 -linea 98
+//balance html: linea 63 -linea 98
 const operacionesRealizadas = tomarInfoDelLocalStorage('operacionesRealizadas');
 actualizacionDatosDeBalance(operacionesRealizadas);
 agregarOperacionesHTML(operacionesRealizadas);
@@ -437,12 +438,12 @@ const lista = operacionesRealizadas;
 //categorias
 const arrayCategorias = tomarInfoDelLocalStorage('categoriasAñadidas');
 agregarCategoriasHTML(arrayCategorias);
-    //actualiza reporte general
+//actualiza reporte general
 //actualizarListasDelLocalStorage(reporteGeneral, resumenReporte(), 'reporteGeneral');
 
 //navegacion html: linea15 - linea 61
-    //nose por qué no me funciona si uso este formato de funcion navNuevasOperacionesboton.onclick = funcionSegunElementosBotonNav( "none", "none", "block", "none"); 
-botonInicio.onclick = () =>{
+//nose por qué no me funciona si uso este formato de funcion navNuevasOperacionesboton.onclick = funcionSegunElementosBotonNav( "none", "none", "block", "none"); 
+botonInicio.onclick = () => {
     funcionSegunElementosBotonNav("none", "none", "none", "block");
 }
 navBalanceboton.onclick = () => {
@@ -457,7 +458,6 @@ navReportesboton.onclick = () => {
 navNuevasOperacionesboton.onclick = () => {
     funcionSegunElementosBotonNav("none", "none", "block", "none");
 }
-<<<<<<< HEAD:javascript.js
 // botonEditarCategoria.onclick = () => {
 //     editarCategoria.style.display = "block"
 
@@ -468,24 +468,22 @@ navNuevasOperacionesboton.onclick = () => {
 
 
 //Funcion de enviar formulario de operaciones
-=======
 
 //eventos de box de filtros html: linea 100 - linea 169
-ocultarFiltros.onclick = () =>{
+ocultarFiltros.onclick = () => {
     filtros.classList.toggle("is-hidden");
 }
 filtroTipo.onchange = () => {
-    operacionesNoEncontradas(filtroGeneral(operacionesRealizadas));  
+    operacionesNoEncontradas(filtroGeneral(operacionesRealizadas));
 }
 filtroCategoria.onchange = () => {
-    filtroGeneral(operacionesRealizadas); 
+    filtroGeneral(operacionesRealizadas);
 }
 filtroFecha.onchange = () => {
     filtroGeneral(operacionesRealizadas);
 }
 
 //crear nueva operacion html: linea 426 - linea 502
->>>>>>> refs/remotes/origin/main:index.js
 botonSubmitOperacion.onclick = () => {
     sinResultadosBackgruond.style.display = "none";
 
@@ -553,7 +551,7 @@ modeloDeOrden.onchange = () => {
 //probamos con un conole.log botonEditarCategoria botonesEliminarCategoria
 //pero nos nos traia los botones de editar ni de borrar
 for (let i = 0; i < botonesEliminarCategoria.length; i++) {
-    botonesEliminarCategoria[i].onclick = () =>{
+    botonesEliminarCategoria[i].onclick = () => {
         const id = botonesEliminarCategoria[i].id;
         eliminarObjetoDeArray(arrayCategorias, botonesEliminarCategoria[i].id);
         const operacionesABorrar = filtroDeCategoriaDeOperacion(operacionesRealizadas, arrayCategorias[id].categoria);
