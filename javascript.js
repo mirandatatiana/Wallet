@@ -40,7 +40,7 @@ const inputCrearCategoria = document.getElementById("input-crear-categoria");
 const botonCrearCategoria = document.getElementById("boton-crear-categoria");
 const botonEditarCategoria = document.querySelectorAll(".boton-editar-categoria");
 const botonesEliminarCategoria = document.querySelectorAll(".boton-eliminar-categoria");
-
+const editarCategoria = document.querySelector(".editar-categoria")
 //actualizacion de datos en el local storage
 const actualizarListasDelLocalStorage = (arrayObj, callback, nomLista) => {
     arrayObj.push(callback);
@@ -157,13 +157,15 @@ const agregarCategoriasHTML = (arrayObj) => {
     <option value = "Trabajo"> Trabajo </option>
 
     ` + selectDeCategoria;
-    categoriaDeOperacion.innerHTML = `
-   <option value = "Comida"> Comida </option>
-   <option value = "Servicio"> Servicio </option>
-   <option value = "Salidas"> Salidas </option>
-   <option value = "Transporte"> Transporte </option>
-   <option value = "Trabajo"> Trabajo </option>
-   ` + selectDeCategoria
+
+    //No Logrammos que el boton editar categoria funcionen
+    //     categoriaDeOperacion.innerHTML = `
+    //    <option value = "Comida"> Comida </option>
+    //    <option value = "Servicio"> Servicio </option>
+    //    <option value = "Salidas"> Salidas </option>
+    //    <option value = "Transporte"> Transporte </option>
+    //    <option value = "Trabajo"> Trabajo </option>
+    //    ` + selectDeCategoria
 
 }
 
@@ -367,14 +369,14 @@ const funcionSegunElementosBotonNav = (cat, repor, nuevaO, balance) => {
     balancesection.style.display = balance;
 }
 
-//mostrar imagen de que no se encuentran resultados 
-// const operacionesNoEncontradas = (mostrar) => {
-//     if (mostrar === []) {
-//         const parteHTML = document.getElementById("operaciones-filtro");
-//         sinResultadosBackgruond.style.display = "block";
-//         parteHTML.classList.add = "is-hidden";
-//     }
-// }
+// mostrar imagen de que no se encuentran resultados 
+const operacionesNoEncontradas = (mostrar) => {
+    if (mostrar === []) {
+        const parteHTML = document.getElementById("operaciones-filtro");
+        sinResultadosBackgruond.style.display = "block";
+        parteHTML.classList.add = "is-hidden";
+    }
+}
 
 //actualizamos html de pagina
 //balance
@@ -406,6 +408,16 @@ navReportesboton.onclick = () => {
 navNuevasOperacionesboton.onclick = () => {
     funcionSegunElementosBotonNav("none", "none", "block", "none");
 }
+
+// botonEditarCategoria.onclick = () => {
+//     editarCategoria.style.display = "block"
+
+// }
+
+
+
+
+
 //Funcion de enviar formulario de operaciones
 botonSubmitOperacion.onclick = () => {
     sinResultadosBackgruond.style.display = "none";
