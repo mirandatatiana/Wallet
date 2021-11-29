@@ -408,7 +408,6 @@ navReportesboton.onclick = () => {
 navNuevasOperacionesboton.onclick = () => {
     funcionSegunElementosBotonNav("none", "none", "block", "none");
 }
-
 // botonEditarCategoria.onclick = () => {
 //     editarCategoria.style.display = "block"
 
