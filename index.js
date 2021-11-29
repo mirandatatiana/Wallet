@@ -124,11 +124,9 @@ const agregarOperacionesHTML = (arrayObj) => {
 }
 
 //Pagina de Categorias
-const categoriasCreadas = document.querySelector(".categorias-creadas")
-
+const categoriasCreadas = document.querySelector(".categorias-creadas");
 const agregarCategoriasHTML = (arrayObj) => {
     const agregarCategorias = arrayObj
-
     const categoriasString = agregarCategorias.reduce((acc, elemento) => {
         return acc = acc + `
         <div class="columns">
@@ -167,9 +165,6 @@ const agregarCategoriasHTML = (arrayObj) => {
 
 }
 
-
-
-
 //filtrar los montos por ganancia o gasto
 const filtroDeTipoDeOperacion = (arrayObj, condicion) => {
     if (condicion === "ganancia") {
@@ -188,14 +183,34 @@ const filtroDeTipoDeOperacion = (arrayObj, condicion) => {
         return arrayObj;
     }
 }
-
-const filtroDeCategoriaDeOperacion = (arrayObj, condicion) => {
+//funcion box filtro
+const filtroDeCategoriaDeOperacion = (arrayObj, condicion) =>{
     const operacionesXCategoria = arrayObj.filter((operacion) => {
         if (operacion.categoria === condicion) {
             return operacion;
         }
     });
     return operacionesXCategoria;
+}
+const filtroPorFecha = (arrayObj) =>{
+    const operacionesXFecha = arrayObj.map((operacion) => {
+        const operacionUtilizada = operacion;
+        operacionUtilizada.fecha = new Date(operacion.fecha).toLocaleDateString();
+        return operacionUtilizada;
+    });
+    return operacionesXFecha;
+}
+
+// filtro general de box de filtros
+const filtroGeneral = (arrayObj) =>{
+    const primerFiltro = filtroDeTipoDeOperacion(arrayObj, filtroTipo.value);
+    const segundoFiltro = filtroDeCategoriaDeOperacion(primerFiltro, filtroCategoria.value);
+    segundoFiltro.sort((elemento1, elemento2) => {
+        return new Date(elemento1.fecha) - new Date(elemento2.fecha)
+      })
+    const mostrar = filtroPorFecha(segundoFiltro);
+    agregarOperacionesHTML(mostrar);
+    return mostrar;
 }
 
 const mayorQue = (arrayObj) => {
@@ -228,9 +243,11 @@ const totalXTipo = (arrayObj, condicion, callback, descripcion) =>{
         reporteGeneral.push(operacion);
     }
 }
-const ordenarCategorias = (arrayObj) => {
-    arrayObj.sort((categoria1, categoria2) => {
-        if (categoria1.categoria < categoria2.categoria) {
+
+//ordena las categorias en ascendente, funcion para resumenReporte
+const ordenarCategorias = (arrayObj) =>{
+    arrayObj.sort((categoria1, categoria2)=>{
+        if(categoria1.categoria < categoria2.categoria){
             return -1;
         }
         if (categoria1.categoria > categoria2.categoria) {
@@ -240,7 +257,7 @@ const ordenarCategorias = (arrayObj) => {
     });
 }
 
-//suma de montos para el balance 
+//suma de montos enviados por parametro en general 
 const sumaDeMontos = (arrayObj) => {
     if (arrayObj === undefined) {
         return 0;
@@ -251,6 +268,7 @@ const sumaDeMontos = (arrayObj) => {
     return total;
 }
 
+//cuenta las categorias que se usaron en operaciones realizadas
 const constadorCtaegoriasUtilizadas = () =>{
     var acumulador = 0;
     var elementoComparacion = lista[0];
@@ -263,97 +281,86 @@ const constadorCtaegoriasUtilizadas = () =>{
     return acumulador;
 }
 
-const resumenReporte = () =>{
-    totalXTipo (lista, "ganancia", mayorQue, "Categoria con mayor ganancia");
-    totalXTipo (lista, "gasto", mayorQue, "Categoria con mayor gasto");
-    totalXMes();
-    ordenarCategorias(lista);
-    var operacion = {};
-    const sumaTotal = [];
-    const cantidadCategoriasUtilizadas = constadorCtaegoriasUtilizadas();
-    for (let i = 0; i < cantidadCategoriasUtilizadas; i++) {
-        var elementoComparacion = lista[0];
-        const elementosCategoria = lista.filter((elemento)=>{
-            if(elementoComparacion.categoria === elemento.categoria){
-                elementoComparacion = elemento;
-                lista.shift();
-                return elemento;
-            }
-        }); 
-        const ganancias = filtroDeTipoDeOperacion(elementosCategoria, "ganancia");
-        const gastos = filtroDeTipoDeOperacion(elementosCategoria, "gasto");
-        sumaTotal[i] = {
-            monto: sumaDeMontos(ganancias) - sumaDeMontos(gastos),
-            categoria: elementoComparacion.categoria
-        }
-    }
-    const categoriaConMayorBalance = mayorQue(sumaTotal);
-    operacion.descripcion = "Categoria con mayor balance";
-    operacion.categoria = categoriaConMayorBalance.categoria;
-    operacion.mayorGanancia = categoriaConMayorBalance.monto; 
-    reporteGeneral.push(operacion);
-}
+// funcion para la parte del resumen general, en el cual queriamos formar un array de obj con cada operacion pero creo que nos enroscamos mucho
+// const resumenReporte = () =>{
+//     totalXTipo (lista, "ganancia", mayorQue, "Categoria con mayor ganancia");
+//     totalXTipo (lista, "gasto", mayorQue, "Categoria con mayor gasto");
+//     totalXMes();
+//     ordenarCategorias(lista);
+//     var operacion = {};
+//     const sumaTotal = [];
+//     const cantidadCategoriasUtilizadas = constadorCtaegoriasUtilizadas();
+//     for (let i = 0; i < cantidadCategoriasUtilizadas; i++) {
+//         var elementoComparacion = lista[0];
+//         const elementosCategoria = lista.filter((elemento)=>{
+//             if(elementoComparacion.categoria === elemento.categoria){
+//                 elementoComparacion = elemento;
+//                 lista.shift();
+//                 return elemento;
+//             }
+//         }); 
+//         const ganancias = filtroDeTipoDeOperacion(elementosCategoria, "ganancia");
+//         const gastos = filtroDeTipoDeOperacion(elementosCategoria, "gasto");
+//         sumaTotal[i] = {
+//             monto: sumaDeMontos(ganancias) - sumaDeMontos(gastos),
+//             categoria: elementoComparacion.categoria
+//         }
+//     }
+//     const categoriaConMayorBalance = mayorQue(sumaTotal);
+//     operacion.descripcion = "Categoria con mayor balance";
+//     operacion.categoria = categoriaConMayorBalance.categoria;
+//     operacion.mayorGanancia = categoriaConMayorBalance.monto; 
+//     reporteGeneral.push(operacion);
+// }
+// const meses = [0, 1, 2 , 3, 4, 5, 6, 7, 8, 9, 10, 11];
+// const totalXMes = () =>{
+//     const infoMesMayorGanancia = {};
+//     const infoMesMayorGasto = {};
+//     const meses = [0, 1, 2 , 3, 4, 5, 6, 7, 8, 9, 10, 11];
+//     const operacionPorMes = [];
+//     meses.map((mes) => {
+//         operacionPorMes.push([mes]);
+//     });
+//     lista.map((operacion) => {
+//         const fecha = new Date(operacion.fecha + "11:00:00");
+//         const mes = fecha.getMonth();
+//         operacionPorMes[mes].push(operacion);
+//     });
 
-const totalXMes = () =>{
-    const infoMesMayorGanancia = {};
-    const infoMesMayorGasto = {};
-    const meses = [0, 1, 2 , 3, 4, 5, 6, 7, 8, 9, 10, 11];
-    const operacionPorMes = [];
-    meses.map((mes) => {
-        operacionPorMes.push([mes]);
-    });
-    lista.map((operacion) => {
-        const fecha = new Date(operacion.fecha + "11:00:00");
-        const mes = fecha.getMonth();
-        operacionPorMes[mes].push(operacion);
-    });
-
-    var mesMayorGanancia = 0;
-    var mesMayorGasto = 0;
-    var mesGanancia = 0;
-    var mesGasto = 0;
-    operacionPorMes.map((array) => {
-        var ganancias = filtroDeTipoDeOperacion(array, "ganancia");
-        var gastos = filtroDeTipoDeOperacion(array, "gasto");
-        ganancias = sumaDeMontos(ganancias); 
-        gastos = sumaDeMontos(gastos);
-        if(mesMayorGanancia < ganancias){
-            mesMayorGanancia = ganancias;
-            mesGanancia = array;
-        }
-        if(mesMayorGasto < gastos){
-            mesMayorGasto = gastos;
-            mesGasto = array;
-        }
-    });
-    infoMesMayorGanancia = {
-        descripcion: "Mes con mayor ganancia",
-        categoria: array.id,
-        mayorGanancia: mesMayorGanancia 
-    }
-    infoMesMayorGasto = {
-        descripcion: "Mes con mayor gasto",
-        categoria: array.id,
-        mayorGanancia: mesMayorGasto 
-    }
-    reporteGeneral.push(infoMesMayorGanancia);
-    reporteGeneral.push(infoMesMayorGasto);
-}
-
-const filtroPorFecha = (arrayObj) =>{
-    const operacionesXFecha = arrayObj.map((operacion) => {
-        const operacionUtilizada = operacion;
-        operacionUtilizada.fecha = new Date(operacion.fecha).toLocaleDateString();
-        return operacionUtilizada;
-    });
-    return operacionesXFecha;
-}
-
-const eliminarObjetoDeArray = (arrayObj, id) => {
-    arrayObj.splice(id, 1);
-}
+//     var mesMayorGanancia = 0;
+//     var mesMayorGasto = 0;
+//     var mesGanancia = 0;
+//     var mesGasto = 0;
+//     operacionPorMes.map((array) => {
+//         var ganancias = filtroDeTipoDeOperacion(array, "ganancia");
+//         var gastos = filtroDeTipoDeOperacion(array, "gasto");
+//         ganancias = sumaDeMontos(ganancias); 
+//         gastos = sumaDeMontos(gastos);
+//         if(mesMayorGanancia < ganancias){
+//             mesMayorGanancia = ganancias;
+//             mesGanancia = operacionPorMes[array];
+//         }
+//         if(mesMayorGasto < gastos){
+//             mesMayorGasto = gastos;
+//             mesGasto = operacionPorMes[array];
+//         }
+//     });
+//     infoMesMayorGanancia = {
+//         descripcion: "Mes con mayor ganancia",
+//         categoria: array.id,
+//         mayorGanancia: mesMayorGanancia 
+//     }
+//     infoMesMayorGasto = {
+//         descripcion: "Mes con mayor gasto",
+//         categoria: array.id,
+//         mayorGanancia: mesMayorGasto 
+//     }
+//     reporteGeneral.push(infoMesMayorGanancia);
+//     reporteGeneral.push(infoMesMayorGasto);
+// }
 
 //funcion para cambio de numeros en estados de ganacia, gasto y total.
+
 const actualizacionDatosDeBalance = (arrayObj) => {
     //filtro los valores de tipo ganacia 
     const ganancias = filtroDeTipoDeOperacion(arrayObj, "ganancia");
@@ -368,7 +375,7 @@ const actualizacionDatosDeBalance = (arrayObj) => {
     cambiarColorSegunGananciaOGasto(montoTotalBalance, totalBalance);
     totalBalance.innerHTML = montoTotalBalance;
 }
-
+//cambia de color dependiendo si es gato o ganancia
 const cambiarColorSegunGananciaOGasto = (monto, objetoACambiar) => {
     if (monto > 0) {
         objetoACambiar.classList.remove("has-text-danger");
@@ -386,42 +393,31 @@ const generarNuevaCategoria = () => {
     categoria.categoria = inputCrearCategoria.value;
     return categoria;
 }
-
-const filtroGeneral = (arrayObj) => {
-    const primerFiltro = filtroDeTipoDeOperacion(arrayObj, filtroTipo.value);
-    const segundoFiltro = filtroDeCategoriaDeOperacion(primerFiltro, filtroCategoria.value);
-    segundoFiltro.sort((elemento1, elemento2) => {
-        return new Date(elemento1.fecha) - new Date(elemento2.fecha)
-    })
-    const mostrar = filtroPorFecha(segundoFiltro);
-    agregarOperacionesHTML(mostrar);
-    return mostrar;
+//eliminar objetos del array de categorias
+const eliminarObjetoDeArray = (arrayObj, id) =>{
+    arrayObj.splice(id,1);
 }
-//El estado de la pagina al entrar
-balancesection.style.display = "block";
-categoriasection.style.display = "none";
-sinResultadosBackgruond.style.display = "none";
-reportessection.style.display = "none";
-nuevaOperacionNuevaSeccion.style.display = "none";
-//Funcion para redirigir
-const funcionSegunElementosBotonNav = (cat, repor, nuevaO, balance) => {
-    categoriasection.style.display = cat;
+
+
+//funcion de botones de navegacion del nav 
+const funcionSegunElementosBotonNav = (cat, repor, nuevaO, balance) =>{
+    categoriasection.classList.add = cat;
     reportessection.style.display = repor;
     nuevaOperacionNuevaSeccion.style.display = nuevaO;
     balancesection.style.display = balance;
 }
 
 //mostrar imagen de que no se encuentran resultados 
-// const operacionesNoEncontradas = (mostrar) => {
-//     if (mostrar === []) {
-//         const parteHTML = document.getElementById("operaciones-filtro");
-//         sinResultadosBackgruond.style.display = "block";
-//         parteHTML.classList.add = "is-hidden";
-//     }
-// }
+const operacionesNoEncontradas = (mostrar) =>{
+    if(mostrar === []){
+        const parteHTML = document.getElementById("operaciones-filtro");
+        sinResultadosBackgruond.style.display = "block";
+        parteHTML.classList.add("is-hidden");
+    }
+}
 
 //actualizamos html de pagina
-//balance
+    //balance html: linea 63 -linea 98
 const operacionesRealizadas = tomarInfoDelLocalStorage('operacionesRealizadas');
 actualizacionDatosDeBalance(operacionesRealizadas);
 agregarOperacionesHTML(operacionesRealizadas);
@@ -431,10 +427,11 @@ const lista = operacionesRealizadas;
 const arrayCategorias = tomarInfoDelLocalStorage('categoriasAñadidas');
 agregarCategoriasHTML(arrayCategorias);
     //actualiza reporte general
-actualizarListasDelLocalStorage(reporteGeneral, resumenReporte(), 'reporteGeneral');
-//navegacion
-//nose por qué no me funciona si uso este formato de funcion navNuevasOperacionesboton.onclick = funcionSegunElementosBotonNav( "none", "none", "block", "none"); 
-botonInicio.onclick = () => {
+//actualizarListasDelLocalStorage(reporteGeneral, resumenReporte(), 'reporteGeneral');
+
+//navegacion html: linea15 - linea 61
+    //nose por qué no me funciona si uso este formato de funcion navNuevasOperacionesboton.onclick = funcionSegunElementosBotonNav( "none", "none", "block", "none"); 
+botonInicio.onclick = () =>{
     funcionSegunElementosBotonNav("none", "none", "none", "block");
 }
 navBalanceboton.onclick = () => {
@@ -449,7 +446,22 @@ navReportesboton.onclick = () => {
 navNuevasOperacionesboton.onclick = () => {
     funcionSegunElementosBotonNav("none", "none", "block", "none");
 }
-//Funcion de enviar formulario de operaciones
+
+//eventos de box de filtros html: linea 100 - linea 169
+ocultarFiltros.onclick = () =>{
+    filtros.classList.toggle("is-hidden");
+}
+filtroTipo.onchange = () => {
+    operacionesNoEncontradas(filtroGeneral(operacionesRealizadas));  
+}
+filtroCategoria.onchange = () => {
+    filtroGeneral(operacionesRealizadas); 
+}
+filtroFecha.onchange = () => {
+    filtroGeneral(operacionesRealizadas);
+}
+
+//crear nueva operacion html: linea 426 - linea 502
 botonSubmitOperacion.onclick = () => {
     sinResultadosBackgruond.style.display = "none";
 
@@ -463,27 +475,14 @@ botonSubmitOperacion.onclick = () => {
     categoriaDeOperacion.value = "";
     dateOperacion.value = "";
 }
-//Funcion de enviar formulario de crear categorias
+
+//seccion de crear categoria html: linea 399 - linea 424
 botonCrearCategoria.onclick = () => {
     actualizarListasDelLocalStorage(arrayCategorias, generarNuevaCategoria(), 'categoriasAñadidas');
     agregarCategoriasHTML(arrayCategorias);
     inputCrearCategoria.value = "";
 }
 
-//eventos de box de filtros
-ocultarFiltros.onclick = () => {
-    filtros.classList.toggle("is-hidden");
-}
-filtroTipo.onchange = () => {
-    operacionesNoEncontradas(filtroGeneral(operacionesRealizadas));
-}
-filtroCategoria.onchange = () => {
-    filtroGeneral(operacionesRealizadas);
-}
-filtroFecha.onchange = () => {
-    filtroGeneral(operacionesRealizadas);
-}
-console.log(botonesEliminarCategoria)
 modeloDeOrden.onchange = () => {
     //no logre hacer una funcion unificada paa usarla todas las veces segun filtro modeloDeOrden
     if (modeloDeOrden.value === "mayormonto") {
@@ -526,9 +525,11 @@ modeloDeOrden.onchange = () => {
         filtroGeneral(operacionesRealizadas);
     }
 }
+
+//probamos con un conole.log botonEditarCategoria botonesEliminarCategoria
+//pero nos nos traia los botones de editar ni de borrar
 for (let i = 0; i < botonesEliminarCategoria.length; i++) {
-    botonesEliminarCategoria[i].onclick = () => {
-        console.log("jo")
+    botonesEliminarCategoria[i].onclick = () =>{
         const id = botonesEliminarCategoria[i].id;
         eliminarObjetoDeArray(arrayCategorias, botonesEliminarCategoria[i].id);
         const operacionesABorrar = filtroDeCategoriaDeOperacion(operacionesRealizadas, arrayCategorias[id].categoria);
@@ -542,5 +543,3 @@ for (let i = 0; i < botonesEliminarCategoria.length; i++) {
         agregarCategoriasHTML(arrayCategorias);
     }
 }
-    //actualizarListasDelLocalStorage(tomarInfoDeOperacion(), 'operacionesRealizadas');
-//agregarOperacionesHTML(actualizarListasDelLocalStorage(tomarInfoDeOperacion(), 'operacionesRealizadas'));
