@@ -53,12 +53,12 @@ const tomarInfoDelLocalStorage = (nomLista) => {
     if (listaActualizadaJS === null) {
         if (nomLista === 'categoriasAñadidas') {
             return [{ categoria: "todas" },
-            { categoria: "comidas" },
-            { categoria: "servicios" },
-            { categoria: "salidas" },
-            { categoria: "educacion" },
-            { categoria: "transporte" },
-            { categoria: "trabajo" }];
+            { categoria: "" },
+            { categoria: "" },
+            { categoria: "" },
+            { categoria: "" },
+            { categoria: "" },
+            { categoria: "" }];
         }
         return [];
     } else {
