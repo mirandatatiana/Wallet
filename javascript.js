@@ -131,8 +131,8 @@ const agregarCategoriasHTML = (arrayObj) => {
             </div>
             <div>
                 <p class="column">
-                    <a href="#" class="mr-4 is-size-7 boton-editar-categoria" >Editar</a>
-                    <a href="#" class=" boton-eliminar-categoria is-size-7" > Eliminar </a>
+                    <a class="mr-4 is-size-7 boton-editar-categoria" >Editar</a>
+                    <a class="boton-eliminar-categoria is-size-7" > Eliminar </a>
                 </p>
             </div>
         </div>
@@ -180,8 +180,7 @@ const mayorQue = (arrayObj) =>{
     arrayObj.forEach((elemento)=>{
         if(elemento.monto > elementoMayor.monto){
             elementoMayor = elemento;
-        }
-        
+        }     
     });
     return elementoMayor;
 }
@@ -194,19 +193,17 @@ const menorQue = (arrayObj) =>{
     });
     return elementoMayor;
 }
-const reporteGeneral = tomarInfoDelLocalStorage('reporteGeneral');;
-const resumenReporte = (arrayObj, condicion, callback, descripcion) =>{
+const reporteGeneral = [];
+const totalXTipo = (arrayObj, condicion, callback, descripcion) =>{
+    var operacion = {};
     const lista = filtroDeTipoDeOperacion(arrayObj, condicion);
-    if(condicion === "todos"){
-        
-    }
     const valor = callback(lista);
     if(valor !== undefined){
-        reporteGeneral.descripcion = descripcion;
-        reporteGeneral.categoria = valor.categoria;
-        reporteGeneral.mayorGanancia = valor.monto;  
+        operacion.descripcion = descripcion;
+        operacion.categoria = valor.categoria;
+        operacion.mayorMonto = valor.monto;  
+        reporteGeneral.push(operacion);
     }
-
 }
 const ordenarCategorias = (arrayObj) =>{
     arrayObj.sort((categoria1, categoria2)=>{
@@ -220,30 +217,106 @@ const ordenarCategorias = (arrayObj) =>{
     });
 }
 
-const totalXCategoria = () =>{
-    ordenarCategorias(lista);
+//suma de montos para el balance 
+const sumaDeMontos = (arrayObj) => {
+    if (arrayObj === undefined) {
+        return 0;
+    }
+    const total = arrayObj.reduce(function (acc, elemento) {
+        return acc + Number(elemento.monto);
+    }, 0);
+    return total;
+}
+
+const constadorCtaegoriasUtilizadas = () =>{
+    var acumulador = 0;
     var elementoComparacion = lista[0];
-    var totalXCategoria = 0;
-    var totalGanancia = 0;
-    var totalGasto = 0;
-    lista.forEach((elemento)=>{
-        if(elementoComparacion.categoria === elemento.categoria){
-            totalXCategoria += Number(elemento.monto);
-            if(elemento.tipo === "gasto"){
-                totalGasto += elemento.monto;
-            }
-            if(elemento.tipo === "ganancia"){
-                totalGanancia += elemento.monto;
-            }
-            elementoComparacion = elemento;
-            lista.shift();
+    operacionesRealizadas.forEach((elemento)=>{
+        if(elementoComparacion.categoria !== elemento.categoria){
+            acumulador ++;
         }
+        elementoComparacion = elemento;
     });
+    return acumulador;
+}
+
+const resumenReporte = () =>{
+    totalXTipo (lista, "ganancia", mayorQue, "Categoria con mayor ganancia");
+    totalXTipo (lista, "gasto", mayorQue, "Categoria con mayor gasto");
+    totalXMes();
+    ordenarCategorias(lista);
+    var operacion = {};
+    const sumaTotal = [];
+    const cantidadCategoriasUtilizadas = constadorCtaegoriasUtilizadas();
+    for (let i = 0; i < cantidadCategoriasUtilizadas; i++) {
+        var elementoComparacion = lista[0];
+        const elementosCategoria = lista.filter((elemento)=>{
+            if(elementoComparacion.categoria === elemento.categoria){
+                elementoComparacion = elemento;
+                lista.shift();
+                return elemento;
+            }
+        }); 
+        const ganancias = filtroDeTipoDeOperacion(elementosCategoria, "ganancia");
+        const gastos = filtroDeTipoDeOperacion(elementosCategoria, "gasto");
+        sumaTotal[i] = {
+            monto: sumaDeMontos(ganancias) - sumaDeMontos(gastos),
+            categoria: elementoComparacion.categoria
+        }
+    }
+    const categoriaConMayorBalance = mayorQue(sumaTotal);
+    operacion.descripcion = "Categoria con mayor balance";
+    operacion.categoria = categoriaConMayorBalance.categoria;
+    operacion.mayorGanancia = categoriaConMayorBalance.monto; 
+    reporteGeneral.push(operacion);
 }
 
 const totalXMes = () =>{
+    const infoMesMayorGanancia = {};
+    const infoMesMayorGasto = {};
+    const meses = [0, 1, 2 , 3, 4, 5, 6, 7, 8, 9, 10, 11];
+    const operacionPorMes = [];
+    meses.map((mes) => {
+        operacionPorMes.push([mes]);
+    });
+    lista.map((operacion) => {
+        const fecha = new Date(operacion.fecha + "11:00:00");
+        const mes = fecha.getMonth();
+        operacionPorMes[mes].push(operacion);
+    });
 
+    var mesMayorGanancia = 0;
+    var mesMayorGasto = 0;
+    var mesGanancia = 0;
+    var mesGasto = 0;
+    operacionPorMes.map((array) => {
+        var ganancias = filtroDeTipoDeOperacion(array, "ganancia");
+        var gastos = filtroDeTipoDeOperacion(array, "gasto");
+        ganancias = sumaDeMontos(ganancias); 
+        gastos = sumaDeMontos(gastos);
+        if(mesMayorGanancia < ganancias){
+            mesMayorGanancia = ganancias;
+            mesGanancia = array;
+        }
+        if(mesMayorGasto < gastos){
+            mesMayorGasto = gastos;
+            mesGasto = array;
+        }
+    });
+    infoMesMayorGanancia = {
+        descripcion: "Mes con mayor ganancia",
+        categoria: array.id,
+        mayorGanancia: mesMayorGanancia 
+    }
+    infoMesMayorGasto = {
+        descripcion: "Mes con mayor gasto",
+        categoria: array.id,
+        mayorGanancia: mesMayorGasto 
+    }
+    reporteGeneral.push(infoMesMayorGanancia);
+    reporteGeneral.push(infoMesMayorGasto);
 }
+
 const filtroPorFecha = (arrayObj) =>{
     const operacionesXFecha = arrayObj.map((operacion) => {
         const operacionUtilizada = operacion;
@@ -255,17 +328,6 @@ const filtroPorFecha = (arrayObj) =>{
 
 const eliminarObjetoDeArray = (arrayObj, id) =>{
     arrayObj.splice(id,1);
-}
-
-//suma de montos para el balance 
-const sumaDeMontos = (arrayObj) => {
-    if (arrayObj === undefined) {
-        return 0;
-    }
-    const total = arrayObj.reduce(function (acc, elemento) {
-        return acc + Number(elemento.monto);
-    }, 0);
-    return total;
 }
 
 //funcion para cambio de numeros en estados de ganacia, gasto y total.
@@ -339,9 +401,8 @@ const lista = operacionesRealizadas;
     //categorias
 const arrayCategorias = tomarInfoDelLocalStorage('categoriasAñadidas');
 agregarCategoriasHTML(arrayCategorias);
-resumenReporte (operacionesRealizadas, "ganancia", mayorQue, "Categoria con mayor ganancia");
-resumenReporte (operacionesRealizadas, "gasto", menorQue, "Categoria con mayor ganancia");
-
+    //actualiza reporte general
+actualizarListasDelLocalStorage(reporteGeneral, resumenReporte(), 'reporteGeneral');
 //navegacion
     //nose por qué no me funciona si uso este formato de funcion navNuevasOperacionesboton.onclick = funcionSegunElementosBotonNav( "none", "none", "block", "none"); 
 botonInicio.onclick = () =>{
@@ -366,11 +427,17 @@ botonSubmitOperacion.onclick = () => {
     actualizarListasDelLocalStorage(operacionesRealizadas, tomarInfoDeOperacion(), 'operacionesRealizadas');
     agregarOperacionesHTML(operacionesRealizadas)
     actualizacionDatosDeBalance(operacionesRealizadas);
+    descripcionDeOperacion.value = "";
+    tipoDeOperacion.value = "";
+    montoOperacion.value = "";
+    categoriaDeOperacion.value = "";
+    dateOperacion.value = "";
 }
 
 botonCrearCategoria.onclick = () => {
     actualizarListasDelLocalStorage(arrayCategorias, generarNuevaCategoria(), 'categoriasAñadidas');
     agregarCategoriasHTML(arrayCategorias);
+    inputCrearCategoria.value = "";
 }
 
 //eventos de box de filtros
@@ -386,6 +453,7 @@ filtroCategoria.onchange = () => {
 filtroFecha.onchange = () => {
     filtroGeneral(operacionesRealizadas);
 }
+console.log(botonesEliminarCategoria)
 modeloDeOrden.onchange = () => {
     //no logre hacer una funcion unificada paa usarla todas las veces segun filtro modeloDeOrden
     if(modeloDeOrden.value === "mayormonto"){
@@ -444,14 +512,5 @@ for (let i = 0; i < botonesEliminarCategoria.length; i++) {
         agregarCategoriasHTML(arrayCategorias);
     }
 }
-    // botonesBorrar[i].onclick = () => {
-    //   const id = botonesBorrar[i].id
-    //   console.log(id)
-    //   const indice = id.charAt(7)  // slice // split 
-    //   const categoriasFiltradas = categorias.filter((elemento, index) => {
-    //       return index != indice
-    //     })
-    // }
-  
     //actualizarListasDelLocalStorage(tomarInfoDeOperacion(), 'operacionesRealizadas');
 //agregarOperacionesHTML(actualizarListasDelLocalStorage(tomarInfoDeOperacion(), 'operacionesRealizadas'));
