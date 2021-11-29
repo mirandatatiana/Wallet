@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <!--Navigation bar-->
+    <!--Barra de navegacion-->
     <nav class="navbar is-primary is-spaced" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
             <a class="navbar-item">
@@ -23,7 +23,7 @@
                 </h1>
             </a>
 
-            <!--Navegation section-->
+            <!--Seccion de navegacion-->
             <div class="navbar-burger burger mt-2">
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
@@ -33,7 +33,7 @@
 
         <div class="navbar-end">
             <div class="navbar-end">
-                <a class="navbar-item pagina-principal-boton" href="#pagina-principal">
+                <a class="navbar-item pagina-principal-boton" aria-label="Boton Balance" href="#pagina-principal">
                     <span class="icon-text">
                         <span class="icon">
                             <i class="fas fa-chart-line"></i>
@@ -41,7 +41,7 @@
                         <span>Balance</span>
                     </span>
                 </a>
-                <a class="navbar-item boton-categorias" href="#categorias">
+                <a class="navbar-item boton-categorias" aria-label="Boton Categorias" href="#categorias">
                     <span class="icon-text">
                         <span class="icon">
                             <i class="fas fa-tag"></i>
@@ -49,7 +49,7 @@
                         <span>Categoria</span>
                     </span>
                 </a>
-                <a class="navbar-item boton-reportes" href="#reportes">
+                <a class="navbar-item boton-reportes" aria-label="Boton Reportes" href="#reportes">
                     <span class="icon-text">
                         <span class="icon">
                             <i class="fas fa-chart-pie"></i>
@@ -63,7 +63,7 @@
 
     <section class="section ocultar" id="pagina-principal">
         <div class="columns">
-            <!--Balance -->
+            <!-- Seccion Balance -->
             <div class="column is-offset-1 is-3">
                 <article class="box">
                     <h3 class="title is-3 has-text-weight-bold">
@@ -98,7 +98,7 @@
                     </div>
                 </article>
 
-                <!-- BOX FILTROS-->
+                <!-- Seccion Filtros-->
                 <article class="box">
                     <div class="columns is-mobile is-vcentered">
                         <div class="column is-size-5">
@@ -106,70 +106,66 @@
                         </div>
 
                         <div class="columns pr-4 pt-2">
-                            <a id="ocultar-filtros">
+                            <a id="ocultar-filtros" aria-label="Boton Ocultar Filtros">
                                 Ocultar filtros
                             </a>
                         </div>
                     </div>
-                    <div id="filtros">
-                        <div class="field">
-                            <label class="label">
-                                Tipo
-                            </label>
-                            <div class="control">
-                                <div class="select is-fullwidth">
-                                    <select id="filtro-tipo">
-                                        <option value="todo">Todos</option>
-                                        <option value="gasto">Gastos</option>
-                                        <option value="ganancia">Ganancias</option>
-                                    </select>
-                                </div>
+                <div id="filtros">
+                    <div class="field" >
+                        <label class="label">
+                            Tipo
+                        </label>
+                        <div class="control">
+                            <div class="select is-fullwidth">
+                                <select id="filtro-tipo" aria-label="Seleccionar tipo">
+                                    <option value="todo" aria-label="Todos">Todos</option>
+                                    <option value="gasto" aria-label="gastos" >Gastos</option>
+                                    <option value="ganancia" aria-label="ganancias">Ganancias</option>
+                                </select>
                             </div>
                         </div>
 
-                        <div class="field">
-                            <label class="label">
-                                Categoria
-                            </label>
-                            <div class="control ">
-                                <div class="select is-fullwidth">
-                                    <select id="filtro-categoria">
-                                    </select>
-                                </div>
+                    <div class="field">
+                        <label class="label">
+                            Categoria
+                        </label>
+                        <div class="control ">
+                            <div class="select is-fullwidth">
+                                <select id="filtro-categoria" aria-label="Seleccioar Categorias">
+                                </select>
                             </div>
                         </div>
 
-                        <div class="field">
-                            <label class="label" for="date">
-                                Date
-                            </label>
-                            <div class="control">
-                                <input class="input" id="filtro-fecha" type="date" value="1999-10-26">
-                            </div>
+                    <div class="field">
+                        <label class="label" for="date">
+                            Date
+                        </label>
+                        <div class="control">
+                            <input aria-label="Fecha" class="input" id="filtro-fecha" type="date" value="1999-10-26">
                         </div>
 
-                        <div class="field">
-                            <label class="label">
-                                Ordenar por
-                            </label>
-                            <div class="control ">
-                                <div class="select is-fullwidth">
-                                    <select id="modelo-de-orden">
-                                        <option value="masreciente">Mas reciente</option>
-                                        <option value="menosreciente">Menos reciente</option>
-                                        <option value="mayormonto">Mayor monto</option>
-                                        <option value="menormonto">Menos monto</option>
-                                        <option value="az">A/Z</option>
-                                        <option value="za">Z/A</option>
-                                    </select>
-                                </div>
+                    <div class="field">
+                        <label class="label">
+                            Ordenar por
+                        </label>
+                        <div class="control ">
+                            <div class="select is-fullwidth">
+                                <select id="modelo-de-orden" aria-label="Seleccionar Ordenar por">
+                                    <option aria-label="mas reciente" value="masreciente">Mas reciente</option>
+                                    <option aria-label="menos reciente" value="menosreciente">Menos reciente</option>
+                                    <option aria-label="mayor monto" value="mayormonto">Mayor monto</option>
+                                    <option aria-label="menor monto" value="menormonto">Menos monto</option>
+                                    <option aria-label="de la A la Z" value="az">A/Z</option>
+                                    <option aria-label="de la Z a A" value="za">Z/A</option>
+                                </select>
                             </div>
                         </div>
                     </div>
                 </article>
             </div>
 
-            <!--BOX OPERACIONES -->
+            <!--Seccion OPERACIONES -->
             <section id="operaciones" class="column is-7-widescreen is-8-desktop ">
                 <article class="box">
                     <div class="columns is-mobile is-vcentered">
@@ -180,22 +176,23 @@
                         </div>
 
                         <div class="columns pr-5">
-                            <button id="boton-nuevas-operaciones" class="button is-primary">
+                            <button id="boton-nuevas-operaciones"  aria-label="Boton Nueva Operaciones" class="button is-primary">
                                 +Nueva Operacion
                             </button>
                         </div>
                     </div>
-                    <!-- se muestran las operaciones filtradas-->
+                    <!-- Operaciones Guardadas-->
                     <div>
 
                         <div class="mb-3" id="operaciones-guardadas"></div>
                     </div>
         </div>
-
-        <div class="columns" id="sin-resultados-operaciones">
+ <!-- Operaciones sin resultado -->
+ <div class="box" id="sin-resultados-operaciones">
+        <div class="columns"    >
             <div class="column is-offset-3 is-6">
                 <div class="image">
-                    <img src="image/undraw_wallet_aym5.svg">
+                    <img src="image/undraw_wallet_aym5.svg" aria-label="Imagen de billetera">
                 </div>
 
                 <div class="column mt-6">
@@ -211,14 +208,16 @@
                 </div>
             </div>
         </div>
+
+</div>        
         </article>
     </section>
     </section>
 
-    <!--REPORTES-->
+    <!-- Seccion de REPORTES-->
     <section id="reportes" class="column is-offset-3 is-7-widescreen is-8-desktop">
         <div class="columns">
-            <div class="box box-reportes">
+            <div class="box box-reportes" id="reportes">
                 <div class="column is-size-3">
                     <h4 class="title is-4">
                         Reportes
@@ -227,7 +226,7 @@
 
                 <div class="column is-offset-3 is-6 is-hidden-mobile">
                     <div class="image">
-                        <img src="image/undraw_Charts_re_5qe9.svg">
+                        <img src="image/undraw_Charts_re_5qe9.svg" aria-label="Imagen de Reportes">
                     </div>
                     <div class="column mt-6">
                         <h4 class="has-text-centered title is-4 has-text-weight-bold">
@@ -390,7 +389,7 @@
         </div>
     </section>
 
-    <!-- CATEGORIAS-->
+    <!--Seccion de CATEGORIAS-->
     <section class="section column is-offset-3 is-7-widescreen is-8-desktop">
         <div class="box " id="categorias">
             <div class="column is-mobile is-expanded">
@@ -404,10 +403,10 @@
                 <div class="field is-grouped">
 
                     <p class="control is-expanded">
-                        <input class="input" type="text" id="input-crear-categoria">
+                        <input class="input" type="text" id="input-crear-categoria" aria-label="Crear nuevas Categorias">
                     </p>
                     <p class="control is-expanded">
-                        <a class="button is-success" id="boton-crear-categoria">
+                        <a class="button is-success" id="boton-crear-categoria" aria-label="Boton crear nuevas Categorias">
                             Agregar
                         </a>
                     </p>
@@ -419,9 +418,9 @@
         </div>
     </section>
 
-    <!-- Al tocar el boton de operaciones -->
+    <!-- Seccion desplegada al tocar el boton de Nuevas Operaciones -->
     <section id="nuevas-operaciones" class="column is-offset-2   is-two-thirds nuevas-operaciones ocultar">
-        <article class="box">
+        <article class="box operaciones-nuevas">
             <div class="columns is-four-fifths is-mobile is-vcentered">
                 <div class="column is-size-8">
                     <h4 class="title is-size-2">
@@ -430,42 +429,43 @@
                 </div>
             </div>
 
-
-
-            <div class="field is-fullwidth">
-                <label class="label">
-                    Descripcion
-                </label>
-                <div class="control is-expanded is-full-widescreen">
-                    <input class="input" type="text" id="descripcion-operacion">
-                </div>
-
-            </div>
-
-
-            <div class="field is-fullwidth">
-                <label class="label">Monto</label>
-                <div class="control is-expanded is-full-widescreen">
-                    <input class="input" type="number" id="monto-operacion">
-                </div>
-            </div>
-
-
-            <div class="field is-fullwidth">
-                <label class="label">
-                    Tipo
-                </label>
-
-                <div class="control is-expanded is-full-widescreen">
-
-
-                    <div class="control">
-                        <div class="select is-fullwidth">
-                            <select id="tipo-de-operacion">
-
-                                <option value="gasto">Gastos</option>
-                                <option value="ganancia">Ganancias</option>
-                            </select>
+            
+            <!-- Formulario de Nuevas Operaciones -->
+                    <div class="field is-fullwidth operaciones-nuevas">
+                    <label class="label">
+                        Descripcion
+                    </label>
+                        <div class="control is-expanded is-full-widescreen">    
+                      <input class="input" type="text" id="descripcion-operacion" aria-label="Formulario Descripcion">
+                    </div>
+                   
+                    </div>      
+            
+           
+                    <div class="field is-fullwidth">
+                    <label class="label">Monto</label>
+                        <div class="control is-expanded is-full-widescreen">    
+                      <input class="input" type="number" id="monto-operacion" aria-label="Formulario Monto">
+                        </div>                  
+                    </div>      
+           
+            
+                    <div class="field is-fullwidth">
+                     <label class="label">
+                            Tipo
+                        </label>
+                        
+                        <div class="control is-expanded is-full-widescreen">    
+                
+                        
+                        <div class="control">
+                            <div class="select is-fullwidth">
+                                <select id="tipo-de-operacion" aria-label="Seleccionar tipo">
+                                
+                                    <option value="gasto" >Gastos</option>
+                                    <option value="ganancia">Ganancias</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -476,14 +476,7 @@
                 <label class="label">Categoria</label>
                 <div class="control is-expanded is-full-widescreen">
                     <div class="select is-fullwidth">
-                        <select id="categoria-de-operacion">
-                            <option value="todas">Todas</option>
-                            <option value="comidas">Comidas</option>
-                            <option value="servicio">Servicio</option>
-                            <option value="salidas">Salidas</option>
-                            <option value="educacion">Educación</option>
-                            <option value="transporte">Trasporte</option>
-                            <option value="trabajo">Trabajo</option>
+                        <select id="filtro-categoria" class="categoria-de-operacion">
                         </select>
                     </div>
                 </div>
@@ -492,15 +485,15 @@
             <div class="field  is-fullwidth">
                 <label class="label" for="date">Fecha</label>
                 <div class="control is-expanded is-full-widescreen">
-                    <input class="input" id="date-operacion" type="date">
+                    <input class="input" id="date-operacion" type="date" aria-label="Fecha">
                 </div>
             </div>
 
             <div class="buttons is-right pt-5" id="boton-submit-operacion">
                 <p>
-                    <button class="button is-light is-hovered is-focused boton-cancelar-operaciones">Cancelar</button>
+                    <button class="button is-light is-hovered is-focused boton-cancelar-operaciones" aria-label="Boton Cancelar">Cancelar</button>
                     <button class="button is-success is-hovered is-focused boton-agregar-operaciones"
-                        id="boton-submit-operacion">Agregar</button>
+                        id="boton-submit-operacion" aria-label="Boton agregar">Agregar</button>
                 </p>
             </div>
         </article>

@@ -11,12 +11,13 @@ const nuevasoperacionessection = document.querySelector("#nuevas-operaciones")
 
 //InnerHTML
 const sinResultadosBackgruond = document.getElementById("sin-resultados-operaciones")
+const nuevaOperacionNuevaSeccion = document.querySelector(".operaciones-nuevas")
 
 //sector generar nueva opreacion
 const descripcionDeOperacion = document.getElementById("descripcion-operacion");
 const tipoDeOperacion = document.getElementById("tipo-de-operacion");
 const montoOperacion = document.getElementById("monto-operacion");
-const categoriaDeOperacion = document.getElementById("categoria-de-operacion");
+const categoriaDeOperacion = document.querySelector(".categoria-de-operacion");
 const dateOperacion = document.getElementById("date-operacion");
 const botonSubmitOperacion = document.getElementById("boton-submit-operacion");
 
@@ -82,7 +83,7 @@ let acc = ""
 const agregarOperacionesHTML = (arrayObj) => {
     const agregarOperaciones = arrayObj
     const lista = document.getElementById("operaciones-guardadas")
-    const listaDeReportes = document.querySelector(".lista-reporte")
+
 
     const operacionesString = agregarOperaciones.reduce((acc, elemento, index) => {
         return acc = acc + `
@@ -110,6 +111,8 @@ const agregarOperacionesHTML = (arrayObj) => {
             </div>
         `
     }, "");
+
+
     lista.innerHTML = ` <div class="columns has-text-weight-semibold is-hidden-mobile" id="operaciones-filtro">
     <div class="column is-3">Descripcion</div>
     <div class="column is-3">Categoria</div>
@@ -117,9 +120,7 @@ const agregarOperacionesHTML = (arrayObj) => {
     <div class="column is-2 has-text-right">Monton</div>
     <div class="column is-2 has-text-right">Acciones</div>
 </div>  ` + operacionesString
-    // listaDeReportes.innerHTML = `
 
-    // `
 }
 
 //Pagina de Categorias
@@ -145,7 +146,7 @@ const agregarCategoriasHTML = (arrayObj) => {
     }, "");
 
     const selectDeCategoria = agregarCategorias.reduce((acc, elemento) => {
-        return acc = acc + `<option value="${elemento.categoria}">${elemento.categoria}</option>`
+        return acc = acc + `<option id="catego" value="${elemento.categoria}">${elemento.categoria}</option>`
     }, "");
     categoriasCreadas.innerHTML = categoriasString;
     filtroCategoria.innerHTML = `
@@ -156,7 +157,17 @@ const agregarCategoriasHTML = (arrayObj) => {
     <option value = "Trabajo"> Trabajo </option>
 
     ` + selectDeCategoria;
+    categoriaDeOperacion.innerHTML = `
+   <option value = "Comida"> Comida </option>
+   <option value = "Servicio"> Servicio </option>
+   <option value = "Salidas"> Salidas </option>
+   <option value = "Transporte"> Transporte </option>
+   <option value = "Trabajo"> Trabajo </option>
+   ` + selectDeCategoria
+
 }
+
+
 
 
 //filtrar los montos por ganancia o gasto
@@ -386,11 +397,17 @@ const filtroGeneral = (arrayObj) => {
     agregarOperacionesHTML(mostrar);
     return mostrar;
 }
-
+//El estado de la pagina al entrar
+balancesection.style.display = "block";
+categoriasection.style.display = "none";
+sinResultadosBackgruond.style.display = "none";
+reportessection.style.display = "none";
+nuevaOperacionNuevaSeccion.style.display = "none";
+//Funcion para redirigir
 const funcionSegunElementosBotonNav = (cat, repor, nuevaO, balance) => {
     categoriasection.style.display = cat;
     reportessection.style.display = repor;
-    nuevasoperacionessection.style.display = nuevaO;
+    nuevaOperacionNuevaSeccion.style.display = nuevaO;
     balancesection.style.display = balance;
 }
 
@@ -432,9 +449,10 @@ navReportesboton.onclick = () => {
 navNuevasOperacionesboton.onclick = () => {
     funcionSegunElementosBotonNav("none", "none", "block", "none");
 }
-
+//Funcion de enviar formulario de operaciones
 botonSubmitOperacion.onclick = () => {
     sinResultadosBackgruond.style.display = "none";
+
     funcionSegunElementosBotonNav("none", "none", "none", "block");
     actualizarListasDelLocalStorage(operacionesRealizadas, tomarInfoDeOperacion(), 'operacionesRealizadas');
     agregarOperacionesHTML(operacionesRealizadas)
@@ -445,7 +463,7 @@ botonSubmitOperacion.onclick = () => {
     categoriaDeOperacion.value = "";
     dateOperacion.value = "";
 }
-
+//Funcion de enviar formulario de crear categorias
 botonCrearCategoria.onclick = () => {
     actualizarListasDelLocalStorage(arrayCategorias, generarNuevaCategoria(), 'categoriasAñadidas');
     agregarCategoriasHTML(arrayCategorias);
