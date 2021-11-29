@@ -110,7 +110,13 @@ const agregarOperacionesHTML = (arrayObj) => {
             </div>
         `
     }, "");
-    lista.innerHTML = operacionesString
+    lista.innerHTML = ` <div class="columns has-text-weight-semibold is-hidden-mobile" id="operaciones-filtro">
+    <div class="column is-3">Descripcion</div>
+    <div class="column is-3">Categoria</div>
+    <div class="column is-2 has-text-right">Fecha</div>
+    <div class="column is-2 has-text-right">Monton</div>
+    <div class="column is-2 has-text-right">Acciones</div>
+</div>  ` + operacionesString
     // listaDeReportes.innerHTML = `
 
     // `
@@ -338,20 +344,20 @@ const filtroGeneral = (arrayObj) => {
 }
 
 const funcionSegunElementosBotonNav = (cat, repor, nuevaO, balance) => {
-    categoriasection.classList.add = cat;
+    categoriasection.style.display = cat;
     reportessection.style.display = repor;
     nuevasoperacionessection.style.display = nuevaO;
     balancesection.style.display = balance;
 }
 
 //mostrar imagen de que no se encuentran resultados 
-const operacionesNoEncontradas = (mostrar) => {
-    if (mostrar === []) {
-        const parteHTML = document.getElementById("operaciones-filtro");
-        sinResultadosBackgruond.style.display = "block";
-        parteHTML.classList.add = "is-hidden";
-    }
-}
+// const operacionesNoEncontradas = (mostrar) => {
+//     if (mostrar === []) {
+//         const parteHTML = document.getElementById("operaciones-filtro");
+//         sinResultadosBackgruond.style.display = "block";
+//         parteHTML.classList.add = "is-hidden";
+//     }
+// }
 
 //actualizamos html de pagina
 //balance
@@ -385,7 +391,7 @@ navNuevasOperacionesboton.onclick = () => {
 }
 
 botonSubmitOperacion.onclick = () => {
-    sinResultadosBackgruond.style.display = "none"
+    sinResultadosBackgruond.style.display = "none";
     funcionSegunElementosBotonNav("none", "none", "none", "block");
     actualizarListasDelLocalStorage(operacionesRealizadas, tomarInfoDeOperacion(), 'operacionesRealizadas');
     agregarOperacionesHTML(operacionesRealizadas)
