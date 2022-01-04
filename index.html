@@ -8,6 +8,7 @@
     <script src="https://kit.fontawesome.com/eb84466c3b.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <!-- Estan pidiendo un archivo que se llama app.css, pero en la carpeta existe style.css. Eso causa un error en la consola -->
     <link rel="stylesheet" href="app.css" />
     <link rel="icon" type="image/ico" href="favicon.ico">
     <title>AhorrADAS</title>
@@ -16,6 +17,8 @@
 
 <body>
     <!--Barra de navegacion-->
+    <!-- La web está en español, por lo que esperamos que el usuario que usa lector de pantalla hable
+    español tambien: los aria-label deben estar en español.  -->
     <nav class="navbar is-primary is-spaced" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
             <a class="navbar-item">
@@ -35,6 +38,7 @@
 
         <div class="navbar-end">
             <div class="navbar-end">
+                <!-- "Navegar a balance" o "ir a balance" seria mejor opción -->
                 <a class="navbar-item pagina-principal-boton" aria-label="Boton Balance" href="#pagina-principal">
                     <span class="icon-text">
                         <span class="icon">
@@ -113,6 +117,7 @@
                             </a>
                         </div>
                     </div>
+                    <!-- este div y el siguiente se abren pero nunca se cierran -->
                 <div id="filtros">
                     <div class="field" >
                         <label class="label">
@@ -120,6 +125,7 @@
                         </label>
                         <div class="control">
                             <div class="select is-fullwidth">
+                                <!-- Los option del select no necesitan aria label  -->
                                 <select id="filtro-tipo" aria-label="Seleccionar tipo">
                                     <option value="todo" aria-label="Todos">Todos</option>
                                     <option value="gasto" aria-label="gastos" >Gastos</option>
@@ -128,18 +134,22 @@
                             </div>
                         </div>
 
+                        <!-- este div se abre pero nunca se cierra -->
                     <div class="field">
                         <label class="label">
                             Categoria
                         </label>
                         <div class="control ">
                             <div class="select is-fullwidth">
+                                <!-- ya hay un select con el id filtro categoria -->
                                 <select id="filtro-categoria" aria-label="Seleccioar Categorias">
                                 </select>
                             </div>
                         </div>
 
+                        <!-- este div se abre pero nunca se cierra -->
                     <div class="field">
+                        <!-- el for del label debe ser igual al id del elemento, no al tipo -->
                         <label class="label" for="date">
                             Date
                         </label>
@@ -168,6 +178,8 @@
             </div>
 
             <!--Seccion OPERACIONES -->
+
+            <!-- este section y el artcile se abren pero nunca se cierran -->
             <section id="operaciones" class="column is-7-widescreen is-8-desktop ">
                 <article class="box">
                     <div class="columns is-mobile is-vcentered">
@@ -194,6 +206,7 @@
         <div class="columns"    >
             <div class="column is-offset-3 is-6">
                 <div class="image">
+                    <!-- Las imagenes no llevan aria-label, llevan alt -->
                     <img src="image/undraw_wallet_aym5.svg" aria-label="Imagen de billetera">
                 </div>
 
@@ -211,7 +224,9 @@
             </div>
         </div>
 
-</div>        
+</div>     
+
+<!-- estas etiquetas de cierre estan mal puestas -->
         </article>
     </section>
     </section>
@@ -219,6 +234,7 @@
     <!-- Seccion de REPORTES-->
     <section id="reportes" class="column is-offset-3 is-7-widescreen is-8-desktop">
         <div class="columns">
+            <!-- ya hay un elemento con el id reportes (la section) -->
             <div class="box box-reportes" id="reportes">
                 <div class="column is-size-3">
                     <h4 class="title is-4">
@@ -228,6 +244,7 @@
 
                 <div class="column is-offset-3 is-6 is-hidden-mobile">
                     <div class="image">
+                        <!-- Usen alt en las imagenes en lugar de aria label -->
                         <img src="image/undraw_Charts_re_5qe9.svg" aria-label="Imagen de Reportes">
                     </div>
                     <div class="column mt-6">
@@ -494,6 +511,8 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- estos dos div de cierre no estan bien ubicados -->
             </div>
             </div>
 
@@ -508,6 +527,7 @@
             </div>
 
             <div class="field  is-fullwidth">
+                <!-- el for del label debe ser igual al id del elemento, no al tipo -->
                 <label class="label" for="date">Fecha</label>
                 <div class="control is-expanded is-full-widescreen">
                     <input class="input" id="date-operacion" type="date" aria-label="Fecha">
@@ -517,6 +537,8 @@
             <div class="buttons is-right pt-5" id="boton-submit-operacion">
                 <p>
                     <button class="button is-light is-hovered is-focused boton-cancelar-operaciones" aria-label="Boton Cancelar">Cancelar</button>
+
+                    <!-- ya hay un elemento con el id boton-submit-operacion -->
                     <button class="button is-success is-hovered is-focused boton-agregar-operaciones"
                         id="boton-submit-operacion" aria-label="Boton agregar">Agregar</button>
                 </p>

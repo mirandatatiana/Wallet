@@ -4,12 +4,16 @@ const navBalanceboton = document.querySelector(".pagina-principal-boton")
 const navCategoriasboton = document.querySelector(".boton-categorias")
 const navReportesboton = document.querySelector(".boton-reportes")
 const navNuevasOperacionesboton = document.querySelector("#boton-nuevas-operaciones")
+// usen camelCase: balanceSection,  categoriaSection, etc
 const balancesection = document.querySelector("#pagina-principal")
 const categoriasection = document.querySelector("#categorias")
 const reportessection = document.querySelector("#reportes")
+// esta variable se declara pero nunca se usa: mejor borrarla
 const nuevasoperacionessection = document.querySelector("#nuevas-operaciones")
 
 //InnerHTML
+
+// ojo con los nombres: "background". Este tipo de confusiones pueden ser fuente de errores dificiles de encontrar
 const sinResultadosBackgruond = document.getElementById("sin-resultados-operaciones")
 const nuevaOperacionNuevaSeccion = document.querySelector(".operaciones-nuevas")
 
@@ -38,20 +42,46 @@ const totalBalance = document.getElementById("total-balance");
 //sector generar nueva categoria
 const inputCrearCategoria = document.getElementById("input-crear-categoria");
 const botonCrearCategoria = document.getElementById("boton-crear-categoria");
+// esta variable se declara pero nunca se usa: mejor borrarla
 const botonEditarCategoria = document.querySelectorAll(".boton-editar-categoria");
 const botonesEliminarCategoria = document.querySelectorAll(".boton-eliminar-categoria");
+// esta variable se declara pero nunca se usa: mejor borrarla
 const editarCategoria = document.querySelector(".editar-categoria")
+
 //actualizacion de datos en el local storage
+
+// Ojo: un callback es una función que pasamos como parametro. Pasamos la función sin ejecutar, 
+// y la otra función la ejecuta. por ejemplo:
+
+// const funcion1 = (mensaje) => {
+//     console.log("funcion 2")
+// }
+
+// const funcion2 = (mensaje, callback) => {
+//     console.log(mensaje)
+//     callback()
+// }
+
+// funcion2("hola", funcion1)
+
+// Ustedes no estan haciendo esto. El parametro "callback" es en realidad lo que retornan otras funciones:
+// en general, objetos que representan operaciones o categorias. Seria mejor llamarlo "objeto" o "elemento"
+// ya que no es un callback. 
+
+
 const actualizarListasDelLocalStorage = (arrayObj, callback, nomLista) => {
     arrayObj.push(callback);
     const operacionesAJSON = JSON.stringify(arrayObj);
     localStorage.setItem(nomLista, operacionesAJSON);
 }
+
 const tomarInfoDelLocalStorage = (nomLista) => {
     const listaActualizada = localStorage.getItem(nomLista);
     const listaActualizadaJS = JSON.parse(listaActualizada);
     if (listaActualizadaJS === null) {
         if (nomLista === 'categoriasAñadidas') {
+            // No entiendo acá por qué retornan un montón de categorías vacías. 
+            // Esto hace que se vean opciones vacías en los select. 
             return [{ categoria: "todas" },
             { categoria: "" },
             { categoria: "" },
@@ -69,7 +99,9 @@ const tomarInfoDelLocalStorage = (nomLista) => {
 
 //generar el obj de nueva operacion
 const tomarInfoDeOperacion = () => {
+    // usen let o const, no var
     var operacion = {};
+    // descripcion, no desripcion!
     operacion.desripcion = descripcionDeOperacion.value;
     operacion.tipo = tipoDeOperacion.value;
     operacion.monto = montoOperacion.value;
@@ -84,8 +116,28 @@ const agregarOperacionesHTML = (arrayObj) => {
     const agregarOperaciones = arrayObj
     const lista = document.getElementById("operaciones-guardadas")
 
-
+// no es necesario declarar el index si no lo usan
     const operacionesString = agregarOperaciones.reduce((acc, elemento, index) => {
+
+     //   en el HTML que tienen aqui siempre queda de color rojo el texto del monto, 
+     // a pesar de que en el modelo
+    //   cuando es una ganancia aparece en verde, y rojo cuando es un gasto
+    //   hagan una funcion auxiliar que reciba el tipo y retorne el color que quieren: 
+
+    //   const aplicarColorAlMonto = (elemento) => {
+    //     if (elemento.tipo === "ganancia") {
+    //         return "has-text-success";
+    //     }
+    //     else {
+    //         return "has-text-danger";
+    //     }
+    // }
+
+    // y luego pueden usarla en la linea 152:
+    //  <div class=`${aplicarColorAlMonto(elemento.tipo)} column is-2-tablet is-6-mobile has-text-weight-bold has-text-right-tablet is-size-4-mobile`>
+   
+
+    // Ojo que estan diciendo "editarr" en lugar de "editar"
         return acc = acc + `
             <div class="columns is-multiline is-mobile is-vcentered">
                 <div class="column is-3-tablet is-6-mobile">
@@ -113,6 +165,7 @@ const agregarOperacionesHTML = (arrayObj) => {
     }, "");
 
 
+    // Monto, no monton
     lista.innerHTML = ` <div class="columns has-text-weight-semibold is-hidden-mobile" id="operaciones-filtro">
     <div class="column is-3">Descripcion</div>
     <div class="column is-3">Categoria</div>
@@ -363,6 +416,7 @@ const constadorCtaegoriasUtilizadas = () => {
 
 //funcion para cambio de numeros en estados de ganacia, gasto y total.
 
+// excelente esta parte del codigo
 const actualizacionDatosDeBalance = (arrayObj) => {
     //filtro los valores de tipo ganacia 
     const ganancias = filtroDeTipoDeOperacion(arrayObj, "ganancia");
@@ -550,6 +604,14 @@ modeloDeOrden.onchange = () => {
 
 //probamos con un conole.log botonEditarCategoria botonesEliminarCategoria
 //pero nos nos traia los botones de editar ni de borrar
+
+// Gracias por dejarme aclarado el problema. Quiza debamos hacer una call así se los explico mejor, pero 
+// el problema es basicamente este: este codigo se ejecuta apenas carga la pagina, y en ese momento 
+// los botones de editar y eliminar no existen. Solo existen una vez que se crean los botones en la funcion 
+// agregarCategoriasHTML. 
+// Se pone mas complicado: cada vez que creamos, editamos o eliminamos una categoria, esos botones se destruyen
+// y se vuelven a crear con la funcion agregarCategoriasHTML. Asi que tendriamos que ejecutar el codigo de abajo
+// cada vez que ejecutamos agregarCategoriasHTML. 
 for (let i = 0; i < botonesEliminarCategoria.length; i++) {
     botonesEliminarCategoria[i].onclick = () => {
         const id = botonesEliminarCategoria[i].id;
